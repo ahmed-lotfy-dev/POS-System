@@ -4,7 +4,9 @@ export default function Layout() {
   return (
     <div className='w-full p-6'>
       <div className='flex justify-between items-center w-full'>
-        <h1 className='text-3xl uppercase'>POS System</h1>
+        <Link to={"/"}>
+          <h1 className='text-3xl uppercase'>POS System</h1>
+        </Link>
         <nav>
           <ul className='flex gap-6'>
             <li>
