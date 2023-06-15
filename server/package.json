@@ -4,9 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "json-server --watch db.json -p 3001"
+    "start": "json-server --watch db.json -p 3001 --no-cors"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5"
+  }
 }

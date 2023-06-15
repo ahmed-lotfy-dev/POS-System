@@ -1,6 +1,5 @@
 import * as React from "react"
 import Button from "@mui/material/Button"
-import CssBaseline from "@mui/material/CssBaseline"
 import TextField from "@mui/material/TextField"
 import FormControlLabel from "@mui/material/FormControlLabel"
 import Checkbox from "@mui/material/Checkbox"
@@ -10,10 +9,43 @@ import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import Container from "@mui/material/Container"
 
+import toast, { Toaster } from "react-hot-toast"
+
+import bcrypt from "bcryptjs"
+
+const signIn = async (data: FormData) => {
+  try {
+    const email = data.get("email") as string
+    const password = data.get("password") as string
+
+    const res = await fetch("http://localhost:3001/users")
+    const resData = await res.json()
+    console.log(resData)
+    const user = await resData.find(
+      (user: { email: string }) => user.email === email
+    )
+    const decryptedPw = await bcrypt.compare(password, user.hashedPw)
+
+    if (!user) {
+      toast.error("User Not Found")
+      throw new Error("User Not Found ")
+    }
+
+    if (!decryptedPw) {
+      toast.error("Email or Password is wrong")
+      throw Error("User Not Found")
+    }
+    if (decryptedPw) toast.success("Successfully Signed In")
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export default function SignIn() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const data = new FormData(event.currentTarget)
+    signIn(data)
     console.log({
       email: data.get("email"),
       password: data.get("password"),
@@ -22,7 +54,6 @@ export default function SignIn() {
 
   return (
     <Container component='main' maxWidth='xs'>
-      <CssBaseline />
       <Box
         sx={{
           marginTop: 8,
@@ -81,6 +112,7 @@ export default function SignIn() {
           </Grid>
         </Box>
       </Box>
+      <Toaster />
     </Container>
   )
 }

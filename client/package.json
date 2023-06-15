@@ -16,12 +16,16 @@
     "@mui/material": "^5.13.5",
     "@reduxjs/toolkit": "^1.9.5",
     "@types/react-router-dom": "^5.3.3",
+    "bcryptjs": "^2.4.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hot-toast": "^2.4.1",
     "react-redux": "^8.1.0",
-    "react-router-dom": "^6.13.0"
+    "react-router-dom": "^6.13.0",
+    "sweetalert2": "^11.7.12"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.2",
     "@types/react": "^18.0.37",
     "@types/react-dom": "^18.0.11",
     "@types/react-router": "^5.1.20",

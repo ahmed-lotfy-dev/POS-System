@@ -1,19 +1,27 @@
 {
-  "posts": [
+  "products": [
     {
       "id": 1,
-      "title": "json-server",
-      "author": "typicode"
+      "name": "json-server",
+      "category": "placeholder",
+      "image": "placeholder",
+      "price": "placeholder",
+      "unit": "placeholder"
     }
   ],
-  "comments": [
+  "category": [
     {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
+      "name": "hello-world"
     }
   ],
-  "profile": {
+  "unit": {
     "name": "typicode"
-  }
+  },
+  "users": [
+    {
+      "email": "elshenawy19@gmail.com",
+      "hashedPw": "$2a$10$fvh/PXf6tGHOq.zx.3eqJe8PMgN.QRuINJPXN0YO0oDTXJhqKTxMi",
+      "id": 1
+    }
+  ]
 }
