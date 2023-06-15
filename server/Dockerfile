@@ -1,23 +1,22 @@
 FROM node:alpine
 
-# The /app directory should act as the main application directory
-WORKDIR /app
+# Set the working directory
+WORKDIR /app/server
 
 # Copy the app package and package-lock.json file
-COPY server/package*.json ./
+COPY /server/package*.json ./
 
 # Install node packages
 RUN npm install
 
-# Copy or project directory (locally) in the current directory of our docker image (/app)
-COPY server/ .
+# Copy the project directory (locally) to the current directory of the Docker image
+COPY . .
 
-# # Build the app
-# RUN npm run build
+# Build the app
+RUN npm run build
 
-# Expose $PORT on container.
-# We use a varibale here as the port is something that can differ on the environment.
-EXPOSE $3000
+# Expose port 3000
+EXPOSE 3000
 
 # Start the app
 CMD [ "npm", "start" ]
