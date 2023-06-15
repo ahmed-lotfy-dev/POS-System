@@ -12,9 +12,6 @@ RUN npm install
 # Copy the project directory (locally) to the current directory of the Docker image
 COPY . .
 
-# Build the app
-RUN npm run build
-
 # Expose port 3000
 EXPOSE 3000
 
