@@ -6,16 +6,16 @@ services:
       - api
     ports:
       - "3000:3000"
-    networks:
-      - network-backend
+    # networks:
+    #   - network-backend
   api:
     build: ./server
     # depends_on:
     #   - mongo
     ports:
       - "3001:3001"
-    networks:
-      - network-backend
+    # networks:
+    #   - network-backend
 
   # mongo:
   #   image: mongo
@@ -31,8 +31,8 @@ services:
   #   networks:
   #     - network-backend
 
-networks:
-  network-backend:
+# networks:
+#   network-backend:
 
 volumes:
   mongodb_data:
