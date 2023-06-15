@@ -9,9 +9,6 @@ COPY package*.json ./
 # Install node packages
 RUN npm install
 
-# Install json-server globally
-RUN npm install -g json-server
-
 # Copy the project directory (locally) to the current directory of the Docker image
 COPY . .
 
