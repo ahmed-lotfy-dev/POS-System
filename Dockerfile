@@ -4,14 +4,12 @@ FROM node:alpine as client-builder
 WORKDIR /app/client
 
 COPY client/package*.json ./
-COPY client/pnpm-lock.yaml ./
 
-RUN npm install -g pnpm
-RUN pnpm install
+RUN npm install
 
 COPY client .
 
-RUN pnpm run build
+RUN npm run build
 
 # Stage 2: Build the server app
 FROM node:alpine as server-builder
@@ -19,10 +17,8 @@ FROM node:alpine as server-builder
 WORKDIR /app/server
 
 COPY server/package*.json ./
-COPY server/pnpm-lock.yaml ./
 
-RUN npm install -g pnpm
-RUN pnpm install
+RUN npm install
 
 COPY server .
 
