@@ -1,5 +1,6 @@
-import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { Injectable, Param } from '@nestjs/common';
+import { PrismaService } from '../prisma/prisma.service';
+import { EditUserDto } from './dto';
 
 @Injectable()
 export class UserService {
@@ -7,6 +8,25 @@ export class UserService {
 
   async getallusers() {
     const users = await this.prisma.user.findMany();
-    return { msg: 'Users Fetched Successfully', users };
+    return { users };
+  }
+
+  async getuser(@Param() id: string) {
+    console.log(id);
+  }
+
+  async editUser(userId: number, dto: EditUserDto) {
+    const user = await this.prisma.user.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        ...dto,
+      },
+    });
+
+    delete user.password;
+
+    return user;
   }
 }

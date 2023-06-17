@@ -32,7 +32,7 @@ let AuthService = exports.AuthService = class AuthService {
             const user = await this.prisma.user.create({
                 data: { email: dto.email, password: hash },
             });
-            return this.signInToken(user.id, user.email, user.username, user.isAdmin, user.isConfirm);
+            return this.signToken(user.id, user.email, user.username, user.isAdmin, user.isConfirm);
         }
         catch (error) {
             throw error;
@@ -47,9 +47,9 @@ let AuthService = exports.AuthService = class AuthService {
         const pwMatches = await argon.verify(user.password, dto.password);
         if (!pwMatches)
             throw new common_1.ForbiddenException('Wrong Credentials');
-        return this.signInToken(user.id, user.email, user.username, user.isAdmin, user.isConfirm);
+        return this.signToken(user.id, user.email, user.username, user.isAdmin, user.isConfirm);
     }
-    signInToken(userId, email, username, isAdmin, isConfirm) {
+    async signToken(userId, email, username, isAdmin, isConfirm) {
         const payload = {
             sub: userId,
             email,
@@ -58,10 +58,13 @@ let AuthService = exports.AuthService = class AuthService {
             isConfirm,
         };
         const secret = this.config.get('JWT_SECRET');
-        return this.jwt.signAsync(payload, {
+        const token = await this.jwt.signAsync(payload, {
             expiresIn: '15m',
-            secret,
+            secret: secret,
         });
+        return {
+            access_token: token,
+        };
     }
 };
 exports.AuthService = AuthService = __decorate([
