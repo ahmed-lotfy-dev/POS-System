@@ -1,11 +1,8 @@
 import * as React from "react"
-import Button from "@mui/material/Button"
-import TextField from "@mui/material/TextField"
-import Link from "@mui/material/Link"
-import Grid from "@mui/material/Grid"
-import Box from "@mui/material/Box"
-import Typography from "@mui/material/Typography"
-import Container from "@mui/material/Container"
+
+import { Link } from "react-router-dom"
+import { Input } from "../components/ui/input"
+import { Button } from "../components/ui/button"
 
 import { addToLocalStorage } from "../lib/localStorage"
 import { useNavigate } from "react-router-dom"
@@ -26,9 +23,6 @@ export default function SignUp() {
 
     try {
       if (password !== confirmPassword) return
-
-      console.log(email, password)
-
       const res = await fetch("http://localhost:3001/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -46,70 +40,40 @@ export default function SignUp() {
   }
 
   return (
-    <Container component='main' maxWidth='xs'>
-      <Box
-        sx={{
-          marginTop: 8,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Typography component='h1' variant='h5'>
-          Sign up
-        </Typography>
-        <Box component='form' noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                id='email'
-                label='Email Address'
-                name='email'
-                autoComplete='email'
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                name='password'
-                label='Password'
-                type='password'
-                id='password'
-                autoComplete='new-password'
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                name='confirmPassword'
-                label='confirmPassword'
-                type='password'
-                id='confirmPassword'
-                autoComplete='new-password'
-              />
-            </Grid>
-          </Grid>
-          <Button
-            type='submit'
-            fullWidth
-            variant='contained'
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Sign Up
-          </Button>
-          <Grid container justifyContent='flex-end'>
-            <Grid item>
-              <Link href='/' variant='body2'>
-                Already have an account? Sign in
-              </Link>
-            </Grid>
-          </Grid>
-        </Box>
-      </Box>
-    </Container>
+    <div className='w-full h-full flex flex-col justify-center items-center mt-10'>
+      <div className='w-full'>
+        <h2 className='text-center text-3xl'>Sign In </h2>
+      </div>
+      <div>
+        <form action='' onSubmit={handleSubmit}>
+          <Input
+            className='my-6'
+            type='email'
+            name='email'
+            placeholder='Email...'
+          ></Input>
+
+          <Input
+            className='my-6'
+            type='password'
+            name='password'
+            placeholder='Password'
+          ></Input>
+
+          <Input
+            className='my-6'
+            type='password'
+            name='confirmPassword'
+            placeholder='Confirm Password'
+          ></Input>
+
+          <div>
+            <Link to='/signin'></Link>
+            <Link to='/signup'>Don't have an account? Sign Up</Link>
+          </div>
+          <Button>Submit</Button>
+        </form>
+      </div>
+    </div>
   )
 }
