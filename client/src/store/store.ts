@@ -1,7 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit"
+import userSlice from "./features/user/userSlice"
 
 export const store = configureStore({
-  reducer: {},
+  reducer: {
+    user: userSlice,
+  },
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

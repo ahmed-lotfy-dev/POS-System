@@ -6,47 +6,43 @@ import Grid from "@mui/material/Grid"
 import Box from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import Container from "@mui/material/Container"
-import toast, { Toaster } from "react-hot-toast"
 
-import bcrypt from "bcryptjs"
+import { addToLocalStorage } from "../lib/localStorage"
+import { useNavigate } from "react-router-dom"
+import { User, setUser } from "../store/features/user/userSlice"
+import jwt_decode from "jwt-decode"
+import { useDispatch } from "react-redux"
 
-const signUpUser = async (data: FormData) => {
-  try {
+export default function SignUp() {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    const data = new FormData(event.currentTarget)
     const email = data.get("email") as string
     const password = data.get("password") as string
     const confirmPassword = data.get("confirmPassword") as string
 
-    if (password !== confirmPassword) return
+    try {
+      if (password !== confirmPassword) return
 
-    const hashedPw = await bcrypt.hash(password, 10)
+      console.log(email, password)
 
-    console.log(email, password, hashedPw)
-
-    const res = await fetch("http://localhost:3001/users", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, hashedPw }),
-    })
-
-    if (res.ok) {
-      console.log("Signed In")
-      toast.success("Signed Up Successfully")
+      const res = await fetch("http://localhost:3001/auth/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      })
+      const resData = await res.json()
+      const token = resData.access_token
+      const user = jwt_decode(token)
+      addToLocalStorage("access_token", resData.access_token)
+      dispatch(setUser(user as User))
+      navigate("/home")
+    } catch (error) {
+      console.log(error)
     }
-  } catch (error) {
-    console.log(error)
-  }
-}
-
-export default function SignUp() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    const data = new FormData(event.currentTarget)
-    signUpUser(data)
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-      confirmPassword: data.get("confirmPassword"),
-    })
   }
 
   return (
@@ -107,14 +103,13 @@ export default function SignUp() {
           </Button>
           <Grid container justifyContent='flex-end'>
             <Grid item>
-              <Link href='/signin' variant='body2'>
+              <Link href='/' variant='body2'>
                 Already have an account? Sign in
               </Link>
             </Grid>
           </Grid>
         </Box>
       </Box>
-      <Toaster />
     </Container>
   )
 }

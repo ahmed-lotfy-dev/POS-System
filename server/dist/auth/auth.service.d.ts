@@ -15,7 +15,7 @@ export declare class AuthService {
     signin(dto: AuthDto): Promise<{
         access_token: string;
     }>;
-    signToken(userId: number, email: string, username: string, isAdmin: string, isConfirm: boolean): Promise<{
+    signToken(userId: number, email: string, username: string, isAdmin: boolean, isConfirm: boolean, createdAt: Date, updatedAt: Date): Promise<{
         access_token: string;
     }>;
 }

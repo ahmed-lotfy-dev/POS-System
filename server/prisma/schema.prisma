@@ -15,7 +15,7 @@ model User {
   username        String?   @unique
   email           String   @unique
   password        String
-  isAdmin         Role     @default(USER)
+  isAdmin         Boolean     @default(false)
   isConfirm       Boolean?  @default(false)
   forgetCode      Int?
   createdAt       DateTime @default(now())
@@ -47,9 +47,4 @@ model Unit {
   id   Int    @id @default(autoincrement())
   name String
   @@map("units")
-}
-
-enum Role {
-  USER
-  ADMIN
 }

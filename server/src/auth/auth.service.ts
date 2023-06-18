@@ -24,6 +24,7 @@ export class AuthService {
       const user = await this.prisma.user.create({
         data: { email: dto.email, password: hash },
       });
+      console.log(user);
 
       return this.signToken(
         user.id,
@@ -31,6 +32,8 @@ export class AuthService {
         user.username,
         user.isAdmin,
         user.isConfirm,
+        user.createdAt,
+        user.updatedAt,
       );
     } catch (error) {
       throw error;
@@ -52,6 +55,8 @@ export class AuthService {
       user.username,
       user.isAdmin,
       user.isConfirm,
+      user.createdAt,
+      user.updatedAt,
     );
   }
 
@@ -59,8 +64,10 @@ export class AuthService {
     userId: number,
     email: string,
     username: string,
-    isAdmin: string,
+    isAdmin: boolean,
     isConfirm: boolean,
+    createdAt: Date,
+    updatedAt: Date,
   ): Promise<{ access_token: string }> {
     const payload = {
       sub: userId,
@@ -68,6 +75,8 @@ export class AuthService {
       username,
       isAdmin,
       isConfirm,
+      createdAt,
+      updatedAt,
     };
     const secret = this.config.get('JWT_SECRET');
 
