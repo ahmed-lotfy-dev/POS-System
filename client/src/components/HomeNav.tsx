@@ -5,6 +5,7 @@ import { setUser } from "../store/features/user/userSlice"
 
 function HomeNav() {
   const user = useSelector((state: RootState) => state.user)
+  console.log(user)
   const navigate = useNavigate()
   const dispatch = useDispatch()
   return (

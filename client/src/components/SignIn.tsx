@@ -30,10 +30,9 @@ export default function SignIn() {
       if (!res.ok) {
         // toast({ title: resData.message })
       }
-      console.log(resData)
       const token = resData.access_token
       const user = jwt_decode(token)
-      localStorage.setItem("user", JSON.stringify(resData.access_token))
+      localStorage.setItem("user", JSON.stringify(user))
       dispatch(setUser(user as User))
       navigate("/")
     } catch (error) {
