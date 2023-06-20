@@ -1,13 +1,12 @@
 import { useDispatch, useSelector } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
-import { RootState } from "../../store/store"
-import { setUser } from "../../store/features/user/userSlice"
-type Props = {}
+import { RootState } from "../store/store"
+import { setUser } from "../store/features/user/userSlice"
 
-function DashboardNav({}: Props) {
+function HomeNav() {
   const user = useSelector((state: RootState) => state.user)
-  const dispatch = useDispatch()
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   return (
     <div className='flex justify-between items-center w-full'>
       <Link to={"/"}>
@@ -16,20 +15,27 @@ function DashboardNav({}: Props) {
       <nav>
         <ul className='flex gap-6'>
           <li>
-            <Link className='font-semibold' to='/dashboard'>
-              Dashboard Home
+            <Link className='font-semibold' to='/'>
+              Home
             </Link>
           </li>
           <li>
-            <Link className='font-semibold' to='/dashboard/categories'>
+            <Link className='font-semibold' to='/categories'>
               Categories
             </Link>
           </li>
           <li>
-            <Link className='font-semibold' to='/dashboard/products'>
+            <Link className='font-semibold' to='/products'>
               Products
             </Link>
           </li>
+          {user.user?.isAdmin ? (
+            <li>
+              <Link className='font-semibold' to='/dashboard'>
+                Dashboard
+              </Link>
+            </li>
+          ) : null}
           {user.user ? (
             <li>
               <button
@@ -50,4 +56,4 @@ function DashboardNav({}: Props) {
   )
 }
 
-export default DashboardNav
+export default HomeNav

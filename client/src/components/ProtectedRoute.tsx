@@ -10,7 +10,7 @@ interface ProtectedRouteProps {
 
 function ProtectedRoute({ children }: ProtectedRouteProps) {
   const user = useSelector((state: RootState) => state.user)
-
+  console.log(user)
   const path = useParams().toString()
   if (!user) {
     return <Navigate to='/signin' replace />

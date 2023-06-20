@@ -17,45 +17,41 @@ import AddCategory from "./components/DashboardComponents/AddCategory"
 import AddProduct from "./components/DashboardComponents/AddProduct"
 
 import { useEffect } from "react"
-import { getFromLocalStorage } from "./lib/localStorage"
 import { useDispatch } from "react-redux"
 import { User, setUser } from "./store/features/user/userSlice"
-import jwtDecode from "jwt-decode"
 
 function App() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const token = getFromLocalStorage("access_token")
 
+  const token = localStorage.getItem("user")
   useEffect(() => {
     if (token) {
-      const user = jwtDecode(token)
+      const user = JSON.parse(token)
       dispatch(setUser(user as User))
     }
+
     if (!token) navigate("/signin")
   }, [token])
 
   return (
     <div className=''>
       <Routes>
-        <Route path='' element={<Layout />}>
+        <Route path='/' element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path='/products' element={<Products />} />
-          <Route path='/categories' element={<Categories />} />
-          <Route path='/signin' element={<SignIn />} />
-          <Route path='/signup' element={<SignUp />} />
+          <Route path='products' element={<Products />} />
+          <Route path='categories' element={<Categories />} />
+          <Route path='signin' element={<SignIn />} />
+          <Route path='signup' element={<SignUp />} />
           <Route path='*' element={<NoMatch />} />
         </Route>
-        <Route path='/dashboard' element={<DashboardLayout />}>
+        <Route path='dashboard' element={<DashboardLayout />}>
           <Route index element={<Dashboard />} />
-          <Route path='/dashboard/products' element={<DashboardProducts />} />
-          <Route path='/dashboard/add-product' element={<AddProduct />} />
-          <Route
-            path='/dashboard/categories'
-            element={<DashboardCategories />}
-          />
-          <Route path='/dashboard/add-category' element={<AddCategory />} />
-          <Route path='/dashboard/units' element={<DashboardUnits />} />
+          <Route path='products' element={<DashboardProducts />} />
+          <Route path='add-product' element={<AddProduct />} />
+          <Route path='categories' element={<DashboardCategories />} />
+          <Route path='add-category' element={<AddCategory />} />
+          <Route path='units' element={<DashboardUnits />} />
         </Route>
       </Routes>
     </div>

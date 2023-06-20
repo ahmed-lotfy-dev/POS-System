@@ -1,19 +1,16 @@
 import * as React from "react"
 import { Link } from "react-router-dom"
-  import { Input } from "../components/ui/input"
+import { Input } from "../components/ui/input"
 import { Button } from "../components/ui/button"
 
-import { addToLocalStorage } from "../lib/localStorage"
 import { useDispatch } from "react-redux"
 import { User, setUser } from "../store/features/user/userSlice"
 import jwt_decode from "jwt-decode"
 import { useNavigate } from "react-router-dom"
-import { useToast } from "../components/ui/use-toast"
 
 export default function SignIn() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { toast } = useToast()
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
     event
@@ -31,12 +28,12 @@ export default function SignIn() {
       })
       const resData = await res.json()
       if (!res.ok) {
-        toast({ title: resData.message })
+        // toast({ title: resData.message })
       }
       console.log(resData)
       const token = resData.access_token
       const user = jwt_decode(token)
-      addToLocalStorage("access_token", resData.access_token)
+      localStorage.setItem("user", JSON.stringify(resData.access_token))
       dispatch(setUser(user as User))
       navigate("/")
     } catch (error) {
@@ -66,10 +63,13 @@ export default function SignIn() {
           ></Input>
 
           <div>
-            <Link to='/signin'></Link>
-            <Link to='/signup'>Don't have an account? Sign Up</Link>
+            <div className='w-full'>
+              <Button className='w-2/3 mt-2 mb-3 m-auto block'>Sign In</Button>
+            </div>
+            <div className='mt-4'>
+              <Link to='/signup'>Don't have an account? Sign Up</Link>
+            </div>
           </div>
-          <Button>Submit</Button>
         </form>
       </div>
     </div>

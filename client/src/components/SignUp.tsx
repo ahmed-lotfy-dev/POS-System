@@ -2,9 +2,8 @@ import * as React from "react"
 
 import { Link } from "react-router-dom"
 import { Input } from "../components/ui/input"
-import { Button } from "../components/ui/button"
+import { Button } from "./ui/button"
 
-import { addToLocalStorage } from "../lib/localStorage"
 import { useNavigate } from "react-router-dom"
 import { User, setUser } from "../store/features/user/userSlice"
 import jwt_decode from "jwt-decode"
@@ -31,7 +30,7 @@ export default function SignUp() {
       const resData = await res.json()
       const token = resData.access_token
       const user = jwt_decode(token)
-      addToLocalStorage("access_token", resData.access_token)
+      localStorage.setItem("user", resData.access_token)
       dispatch(setUser(user as User))
       navigate("/home")
     } catch (error) {
@@ -52,26 +51,24 @@ export default function SignUp() {
             name='email'
             placeholder='Email...'
           ></Input>
-
           <Input
             className='my-6'
             type='password'
             name='password'
             placeholder='Password'
           ></Input>
-
           <Input
             className='my-6'
             type='password'
             name='confirmPassword'
             placeholder='Confirm Password'
           ></Input>
-
-          <div>
-            <Link to='/signin'></Link>
-            <Link to='/signup'>Don't have an account? Sign Up</Link>
+          <div className='w-full'>
+            <Button className='w-2/3 mt-2 mb-3 m-auto block'>Sign Up</Button>
           </div>
-          <Button>Submit</Button>
+          <div className='mt-5'>
+            <Link to='/signin'>Already have an acount? Sign Up</Link>
+          </div>
         </form>
       </div>
     </div>
