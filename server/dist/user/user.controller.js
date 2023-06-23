@@ -22,6 +22,9 @@ let UserController = exports.UserController = class UserController {
     constructor(userService) {
         this.userService = userService;
     }
+    getAllUsers(users) {
+        return this.userService.getAllUsers();
+    }
     getMe(user) {
         return user;
     }
@@ -30,6 +33,14 @@ let UserController = exports.UserController = class UserController {
     }
 };
 __decorate([
+    (0, common_1.Get)(''),
+    __param(0, (0, decorator_1.GetUser)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Array]),
+    __metadata("design:returntype", void 0)
+], UserController.prototype, "getAllUsers", null);
+__decorate([
+    (0, common_1.UseGuards)(guard_1.JwtGuard),
     (0, common_1.Get)('me'),
     __param(0, (0, decorator_1.GetUser)()),
     __metadata("design:type", Function),
@@ -37,6 +48,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "getMe", null);
 __decorate([
+    (0, common_1.UseGuards)(guard_1.JwtGuard),
     (0, common_1.Patch)(),
     __param(0, (0, decorator_1.GetUser)('id')),
     __param(1, (0, common_1.Body)()),
@@ -45,7 +57,6 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "editUser", null);
 exports.UserController = UserController = __decorate([
-    (0, common_1.UseGuards)(guard_1.JwtGuard),
     (0, common_1.Controller)('users'),
     __metadata("design:paramtypes", [user_service_1.UserService])
 ], UserController);

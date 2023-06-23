@@ -8,9 +8,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CategoryModule = void 0;
 const common_1 = require("@nestjs/common");
+const category_service_1 = require("./category.service");
+const category_controller_1 = require("./category.controller");
 let CategoryModule = exports.CategoryModule = class CategoryModule {
 };
 exports.CategoryModule = CategoryModule = __decorate([
-    (0, common_1.Module)({})
+    (0, common_1.Module)({
+        providers: [category_service_1.CategoryService],
+        controllers: [category_controller_1.CategoryController]
+    })
 ], CategoryModule);
 //# sourceMappingURL=category.module.js.map

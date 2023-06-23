@@ -6,9 +6,11 @@ import { EditUserDto } from './dto';
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
-  async getallusers() {
+  async getAllUsers() {
     const users = await this.prisma.user.findMany();
-    return { users };
+    console.log(users);
+
+    return users
   }
 
   async getuser(@Param() id: string) {
