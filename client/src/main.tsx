@@ -21,11 +21,11 @@ import SignUp from "./routes/SignUp.js"
 import DashboardLayout from "./components/Dashboard/AdminLayout.js"
 import NoMatch from "./routes/NoMatch.js"
 import Dashboard from "./components/Dashboard/AdminHome.js"
-import AdminProducts from "./components/Dashboard/AdminProducts.js"
-import AddProduct from "./components/Dashboard/AddProduct.js"
-import AdminCategories from "./components/Dashboard/AdminCategories.js"
-import AddCategory from "./components/Dashboard/AddCategory.js"
-import DashboardUnits from "./components/Dashboard/AdminUnits.js"
+import AdminProducts from "./components/Dashboard/products/AdminProducts.js"
+import AddProduct from "./components/Dashboard/products/AddProduct.js"
+import AdminCategories from "./components/Dashboard/categories/AdminCategories.js"
+import AddCategory from "./components/Dashboard/categories/AddCategory.js"
+import DashboardUnits from "./components/Dashboard/units/AdminUnits.js"
 
 const router = createBrowserRouter(
   createRoutesFromElements(

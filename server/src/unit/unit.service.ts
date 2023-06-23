@@ -1,4 +1,10 @@
-import { Body, Injectable, Param, ParseIntPipe } from '@nestjs/common';
+import {
+  Body,
+  ConflictException,
+  Injectable,
+  Param,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { IUnit } from './unit.controller';
 
@@ -7,12 +13,23 @@ export class UnitService {
   constructor(private prisma: PrismaService) {}
 
   async addUnit(@Body() dto: IUnit) {
-    const newUnit = await this.prisma.unit.create({
-      data: { ...dto },
-    });
+    try {
+      const existed = await this.prisma.unit.findUnique({
+        where: { name: dto.name },
+      });
+      console.log(existed);
+      if (existed) {
+        throw new ConflictException('Unit already exist');
+      }
 
-    console.log(dto.name);
-    return newUnit;
+      const newUnit = await this.prisma.unit.create({
+        data: { ...dto },
+      });
+
+      return newUnit;
+    } catch (error) {
+      return new ConflictException(error.message);
+    }
   }
 
   async getUnits() {

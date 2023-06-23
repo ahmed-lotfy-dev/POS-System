@@ -28,9 +28,9 @@ model Product {
   name      String
   code      Int
   category  String
-  image     String
   price     Int
   unit      String
+  image     String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   @@map("products")
@@ -46,6 +46,6 @@ model Category {
 
 model Unit {
   id   Int    @id @default(autoincrement())
-  name String
+  name String @unique
   @@map("units")
 }

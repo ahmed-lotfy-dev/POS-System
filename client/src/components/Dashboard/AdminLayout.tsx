@@ -6,7 +6,7 @@ import { Outlet } from "react-router-dom"
 function DashboardLayout() {
   const user = useSelector((state: RootState) => state.user)
   return (
-    <div className='w-full h-screen p-3'>
+    <div className='w-full h-screen p-2'>
       {!user.user?.isAdmin ? (
         <div className='w-full'>
           <DashboardNav />
@@ -15,7 +15,7 @@ function DashboardLayout() {
           </div>
         </div>
       ) : (
-        <div className='w-full h-full flex border-[1px] border-blue-100 rounded-xl p-6'>
+        <div className='w-full h-full flex border-[1px] border-blue-100 rounded-xl pt-8 pl-3'>
           <DashboardNav />
           <div className='w-full shrink'>
             <Outlet />

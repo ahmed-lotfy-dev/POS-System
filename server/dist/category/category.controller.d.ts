@@ -4,7 +4,7 @@ export declare class CategoryController {
     constructor(categoryService: CategoryService);
     addCategory(dto: {
         name: string;
-    }): Promise<import("@prisma/client").Category>;
+    }): Promise<import("@prisma/client").Category | import("@nestjs/common").ConflictException>;
     getAllCategories(): Promise<import("@prisma/client").Category[]>;
     getSingleCategory(id: number): Promise<import("@prisma/client").Category | {
         msg: string;

@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../store/store"
 import { User, setUser } from "../store/features/user/userSlice"
-
+import decode from "jwt-decode"
 interface ProtectedRouteProps {
   children: ReactNode
 }
@@ -19,7 +19,8 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   useEffect(() => {
     if (!token) navigate("/signin")
     else {
-      const user = JSON.parse(token)
+      const parseDtoken = JSON.parse(token)
+      const user = decode(parseDtoken)
       dispatch(setUser(user as User))
     }
   }, [dispatch, navigate, token])
@@ -32,5 +33,5 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
     return <Navigate to='/signin' replace />
   }
 
-  return <div className='h-full p-2'>{children}</div>
+  return <div className='h-full'>{children}</div>
 }

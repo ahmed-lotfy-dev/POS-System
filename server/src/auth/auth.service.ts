@@ -1,6 +1,6 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
-import { AuthDto } from './dto';
+import { SignUpAuth, SignInAuth } from './dto';
 import * as argon from 'argon2';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
@@ -13,7 +13,7 @@ export class AuthService {
     private config: ConfigService,
   ) {}
 
-  async signup(dto: AuthDto) {
+  async signup(dto: SignUpAuth) {
     try {
       const hash = await argon.hash(dto.password);
       const isExisted = await this.prisma.user.findFirst({
@@ -22,7 +22,7 @@ export class AuthService {
       if (isExisted) return { msg: 'User already exist' };
 
       const user = await this.prisma.user.create({
-        data: { email: dto.email, password: hash },
+        data: { username: dto.username, email: dto.email, password: hash },
       });
       console.log(user);
 
@@ -40,7 +40,7 @@ export class AuthService {
     }
   }
 
-  async signin(dto: AuthDto) {
+  async signin(dto: SignInAuth) {
     const user = await this.prisma.user.findUnique({
       where: { email: dto.email },
     });

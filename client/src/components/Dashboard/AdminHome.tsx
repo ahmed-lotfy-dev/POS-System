@@ -1,6 +1,6 @@
 function Dashboard() {
   return (
-    <div className='w-full col-start-2 col-span-full justify-center items-center'>
+    <div className='w-full col-start-2 col-span-full flex justify-center items-center'>
       Dashboard
     </div>
   )

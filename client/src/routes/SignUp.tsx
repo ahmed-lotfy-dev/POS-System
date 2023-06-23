@@ -2,17 +2,15 @@ import * as React from "react"
 import { Link } from "react-router-dom"
 
 import { useNavigate } from "react-router-dom"
-import { User, setUser } from "../store/features/user/userSlice"
-import jwt_decode from "jwt-decode"
-import { useDispatch } from "react-redux"
 
 export default function SignUp() {
   const navigate = useNavigate()
-  const dispatch = useDispatch()
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
     const data = new FormData(event.currentTarget)
+    const username = data.get("username") as string
+    console.log(username)
     const email = data.get("email") as string
     const password = data.get("password") as string
     const confirmPassword = data.get("confirmPassword") as string
@@ -22,14 +20,12 @@ export default function SignUp() {
       const res = await fetch("http://localhost:3001/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ username, email, password }),
       })
       const resData = await res.json()
       const token = resData.access_token
-      const user = jwt_decode(token)
-      localStorage.setItem("user", resData.access_token)
-      dispatch(setUser(user as User))
-      navigate("/home")
+      localStorage.setItem("user", JSON.stringify(token))
+      navigate("/")
     } catch (error) {
       console.log(error)
     }
@@ -47,6 +43,13 @@ export default function SignUp() {
           action=''
           onSubmit={handleSubmit}
         >
+          <input
+            className='input input-bordered border-b-gray-100 input-xs w-full max-w-xs my-6 m-auto'
+            type='text'
+            name='username'
+            placeholder='Your name...'
+          />
+
           <input
             className='input input-bordered border-b-gray-100 input-xs w-full max-w-xs my-6 m-auto'
             type='email'

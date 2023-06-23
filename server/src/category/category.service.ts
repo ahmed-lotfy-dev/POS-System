@@ -1,4 +1,10 @@
-import { Body, Injectable, Param, ParseIntPipe } from '@nestjs/common';
+import {
+  Body,
+  ConflictException,
+  Injectable,
+  Param,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
@@ -6,12 +12,23 @@ export class CategoryService {
   constructor(private prisma: PrismaService) {}
 
   async addCategory(@Body() dto: { name: string }) {
-    const newCategory = await this.prisma.category.create({
-      data: { name: dto.name },
-    });
+    try {
+      const existed = await this.prisma.category.findUnique({
+        where: { name: dto.name },
+      });
+      console.log(existed);
+      if (existed) {
+        throw new ConflictException('Category already exist');
+      }
 
-    console.log(dto.name);
-    return newCategory;
+      const newCategory = await this.prisma.category.create({
+        data: { name: dto.name },
+      });
+
+      return newCategory;
+    } catch (error) {
+      return new ConflictException(error.message);
+    }
   }
 
   async getCategories() {

@@ -1,14 +1,10 @@
 import * as React from "react"
 import { Link } from "react-router-dom"
 
-import { useDispatch } from "react-redux"
-import { User, setUser } from "../store/features/user/userSlice"
-import jwt_decode from "jwt-decode"
 import { useNavigate } from "react-router-dom"
 
 export default function SignIn() {
   const navigate = useNavigate()
-  const dispatch = useDispatch()
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
     event
@@ -29,9 +25,10 @@ export default function SignIn() {
         // toast({ title: resData.message })
       }
       const token = resData.access_token
-      const user = jwt_decode(token)
-      localStorage.setItem("user", JSON.stringify(user))
-      dispatch(setUser(user as User))
+      console.log(resData)
+      console.log(token)
+      const userToken = localStorage.setItem("user", JSON.stringify(token))
+      console.log(userToken)
       navigate("/")
     } catch (error) {
       console.log(error)
