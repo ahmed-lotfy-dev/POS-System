@@ -4,14 +4,13 @@ import { IProduct } from './product.controller';
 
 @Injectable()
 export class ProductService {
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
-  async addProduct(@Body() dto: IProduct) {
+  async addProduct(@Body() dto: IProduct, code: number, price: number) {
     const newProduct = await this.prisma.product.create({
-      data: { ...dto },
+      data: { ...dto, code, price },
     });
 
-    console.log(dto.name);
     return newProduct;
   }
 
@@ -27,7 +26,6 @@ export class ProductService {
       where: { id },
     });
     if (!singleProduct) return { msg: 'product not found' };
-
     return singleProduct;
   }
 

@@ -2,10 +2,15 @@ import axios from "axios"
 import { ToastContainer } from "react-toastify"
 import { notify } from "../../../lib/toast"
 
-import { ChangeEvent, FormEvent, useState } from "react"
+import { ChangeEvent, FormEvent, useRef, useState } from "react"
+import { useRevalidator } from "react-router-dom"
 
-function AddCategory() {
+export default function AddCategory() {
   const [imagePreview, setImagePreview] = useState<string | undefined>("")
+  const [imageLink, setImageLink] = useState<string>("")
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
+  const revalidator = useRevalidator()
 
   const onAddHandler = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -15,23 +20,35 @@ function AddCategory() {
     const category = formData.get("category")
     const price = formData.get("price")
     const unit = formData.get("unit")
-    const image = formData.get("image")
-    const { data } = await axios.post("http://localhost:3001/category/add", {
+
+    const { data } = await axios.post("/api/product/add", {
       name,
       code,
       category,
       price,
       unit,
-      image,
+      image: imageLink,
     })
     console.log(data)
     if (data.status === 409) notify(data.response.message, false)
+    revalidator.revalidate()
   }
 
-  const imageUploadHandler = (event: ChangeEvent<HTMLInputElement>) => {
+  const uploadHandler = async (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
+      const { data } = await axios.post(
+        "/api/upload/product",
+        { image: event.target.files[0] },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
+      console.log(data)
       const imagePreviewUrl = URL.createObjectURL(event.target.files[0])
       setImagePreview(imagePreviewUrl)
+      setImageLink(data.image)
     }
   }
 
@@ -111,19 +128,36 @@ function AddCategory() {
             <label className='m-auto' htmlFor='productCategory'>
               Product Image
             </label>
-            <input
+            <>
+              <button
+                className='input text-center w-full bg-gray-700 text-gray-200'
+                onClick={() => fileInputRef.current?.click()}
+              >
+                Upload
+              </button>
+              <input
+                className='hidden'
+                type='file'
+                name='image'
+                ref={fileInputRef}
+                onChange={uploadHandler}
+              />
+            </>
+            {/* <input
               className='input input-bordered border-b-gray-100 input-xs w-full max-w-xs mt-2 m-auto '
               type='file'
               name='image'
               id='image'
               onChange={imageUploadHandler}
-            />
+            /> */}
           </div>
           <div>
             <img
               src={imagePreview}
               alt='product image'
-              className='w-80 m-auto my-10'
+              className={`${
+                imagePreview ? "block" : "hidden"
+              } w-80 m-auto my-10`}
             />
           </div>
           <button
@@ -141,5 +175,3 @@ function AddCategory() {
     </div>
   )
 }
-
-export default AddCategory

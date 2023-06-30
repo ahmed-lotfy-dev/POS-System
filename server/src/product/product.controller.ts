@@ -7,10 +7,14 @@ import {
   Param,
   Body,
   ParseIntPipe,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
 
+import { Express } from 'express';
 import { ProductService } from './product.service';
-  
+import { FileInterceptor } from '@nestjs/platform-express';
+
 export interface IProduct {
   name: string;
   code: number;
@@ -25,8 +29,12 @@ export class ProductController {
   constructor(private productService: ProductService) {}
 
   @Post('add')
-  addProduct(@Body() dto: IProduct) {
-    return this.productService.addProduct(dto);
+  addProduct(
+    @Body() dto: IProduct,
+    @Body('code', ParseIntPipe) code: number,
+    @Body('price', ParseIntPipe) price: number,
+  ) {
+    return this.productService.addProduct(dto, code, price);
   }
 
   @Get('getAll')

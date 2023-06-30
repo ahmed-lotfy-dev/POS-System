@@ -22,9 +22,7 @@ import DashboardLayout from "./components/Dashboard/AdminLayout.js"
 import NoMatch from "./routes/NoMatch.js"
 import Dashboard from "./components/Dashboard/AdminHome.js"
 import AdminProducts from "./components/Dashboard/products/AdminProducts.js"
-import AddProduct from "./components/Dashboard/products/AddProduct.js"
 import AdminCategories from "./components/Dashboard/categories/AdminCategories.js"
-import AddCategory from "./components/Dashboard/categories/AddCategory.js"
 import DashboardUnits from "./components/Dashboard/units/AdminUnits.js"
 
 const router = createBrowserRouter(
@@ -54,11 +52,27 @@ const router = createBrowserRouter(
         }
       >
         <Route index element={<Dashboard />} />
-        <Route path='/dashboard/products' element={<AdminProducts />} />
-        <Route path='/dashboard/add-product' element={<AddProduct />} />
-        <Route path='/dashboard/categories' element={<AdminCategories />} />
-        <Route path='/dashboard/add-category' element={<AddCategory />} />
-        <Route path='/dashboard/units' element={<DashboardUnits />} />
+        <Route
+          path='/dashboard/products'
+          loader={async () => {
+            return fetch("/api/product/getAll")
+          }}
+          element={<AdminProducts />}
+        />
+        <Route
+          path='/dashboard/categories'
+          loader={async () => {
+            return fetch("/api/category/getAll")
+          }}
+          element={<AdminCategories />}
+        />
+        <Route
+          path='/dashboard/units'
+          loader={async () => {
+            return fetch("/api/unit/getAll")
+          }}
+          element={<DashboardUnits />}
+        />
       </Route>
     </Route>
   )

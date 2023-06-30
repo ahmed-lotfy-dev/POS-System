@@ -1,7 +1,8 @@
 import * as React from "react"
 import { Link } from "react-router-dom"
-
 import { useNavigate } from "react-router-dom"
+import { ToastContainer } from "react-toastify"
+import { notify } from "../lib/toast"
 
 export default function SignIn() {
   const navigate = useNavigate()
@@ -21,15 +22,18 @@ export default function SignIn() {
         body: JSON.stringify({ email, password }),
       })
       const resData = await res.json()
-      if (!res.ok) {
-        // toast({ title: resData.message })
-      }
-      const token = resData.access_token
       console.log(resData)
+      const token = resData.access_token
       console.log(token)
-      const userToken = localStorage.setItem("user", JSON.stringify(token))
-      console.log(userToken)
-      navigate("/")
+      if (resData.statusCode === 403) {
+        notify(resData.message, false)
+      } else {
+        console.log(resData)
+        console.log(token)
+        const userToken = localStorage.setItem("user", JSON.stringify(token))
+        console.log(userToken)
+        navigate("/")
+      }
     } catch (error) {
       console.log(error)
     }
@@ -71,6 +75,7 @@ export default function SignIn() {
             </div>
           </div>
         </form>
+        <ToastContainer />
       </div>
     </div>
   )

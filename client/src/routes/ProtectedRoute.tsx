@@ -14,17 +14,17 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   const navigate = useNavigate()
   const token = localStorage.getItem("user")
 
-  const user = useSelector((state: RootState) => state.user)
-
   useEffect(() => {
-    if (!token) navigate("/signin")
-    else {
-      const parseDtoken = JSON.parse(token)
-      const user = decode(parseDtoken)
+    if (token) {
+      const parsedToken = JSON.parse(token!)
+      const user = decode(parsedToken)
       dispatch(setUser(user as User))
+    } else {
+      navigate("/signin")
     }
-  }, [dispatch, navigate, token])
+  }, [token])
 
+  const user = useSelector((state: RootState) => state.user)
   const path = useParams().toString()
   if (!user) {
     return <Navigate to='/signin' replace />
@@ -32,6 +32,5 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   if (path === "/dashboard" && !user.user!.isAdmin) {
     return <Navigate to='/signin' replace />
   }
-
   return <div className='h-full'>{children}</div>
 }

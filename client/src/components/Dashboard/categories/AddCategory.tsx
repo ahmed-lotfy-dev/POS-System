@@ -3,19 +3,23 @@ import { ToastContainer } from "react-toastify"
 import { notify } from "../../../lib/toast"
 
 import { FormEvent } from "react"
-
-const onAddHandler = async (event: FormEvent<HTMLFormElement>) => {
-  event.preventDefault()
-  const formData = new FormData(event.currentTarget)
-  const category = formData.get("category")
-  const { data } = await axios.post("http://localhost:3001/category/add", {
-    name: category,
-  })
-  console.log(data)
-  if (data.status === 409) notify(data.response.message, false)
-}
+import { useRevalidator } from "react-router-dom"
 
 function AddCategory() {
+  const revalidator = useRevalidator()
+
+  const onAddHandler = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    const formData = new FormData(event.currentTarget)
+    const category = formData.get("category")
+    const { data } = await axios.post("/api/category/add", {
+      name: category,
+    })
+    console.log(data)
+    if (data.status === 409) notify(data.response.message, false)
+    revalidator.revalidate()
+  }
+
   return (
     <div className='flex justify-center items-center mt-10'>
       <button className='btn' onClick={() => window.my_modal_2.showModal()}>
