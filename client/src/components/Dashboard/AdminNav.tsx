@@ -25,7 +25,8 @@ function DashboardNav() {
         >
           <h1>POS</h1>
         </Link>
-        <nav className='self-start mt-12'>
+
+        <nav className='menu rounded-box self-start mt-12'>
           <ul className='menu space-y-5'>
             <li>
               <Link className='font-semibold flex items-center' to='/'>

@@ -76,7 +76,7 @@ export default function Table<T extends Record<string, any>>({
                       </>
                     ) : (
                       <input
-                        className='input text-center w-full bg-gray-700 text-gray-200'
+                        className='input file-input w-full max-w-xs text-center bg-gray-700 text-gray-200'
                         type='text'
                         name={key}
                         value={editableItem![key]}

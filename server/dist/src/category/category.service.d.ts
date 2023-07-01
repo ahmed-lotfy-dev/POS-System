@@ -5,7 +5,7 @@ export declare class CategoryService {
     constructor(prisma: PrismaService);
     addCategory(dto: {
         name: string;
-    }): Promise<ConflictException | import("@prisma/client").Category>;
+    }): Promise<import("@prisma/client").Category | ConflictException>;
     getCategories(): Promise<import("@prisma/client").Category[]>;
     getSingleCategory(id: number): Promise<import("@prisma/client").Category | {
         msg: string;
