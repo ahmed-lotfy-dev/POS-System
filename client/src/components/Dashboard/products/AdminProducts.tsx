@@ -1,6 +1,6 @@
 import AddProduct from "./AddProduct"
 import Table from "../../Table/Table"
-import { useLoaderData } from "react-router-dom"
+import { useRouteLoaderData } from "react-router-dom"
 import axios from "axios"
 import { useRevalidator } from "react-router-dom"
 import { ChangeEvent, useState } from "react"
@@ -16,9 +16,10 @@ type Product = {
 }
 
 export default function DashboardProducts() {
+  const data = useRouteLoaderData("root") as any
+  const tableData = data.product
   const [imageLink, setImageLink] = useState<string>("")
 
-  const tableData = useLoaderData() as Product[]
   const revalidator = useRevalidator()
 
   const handleSave = async (item: Product) => {

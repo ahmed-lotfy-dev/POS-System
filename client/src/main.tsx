@@ -4,6 +4,7 @@ import "./index.css"
 
 import { Provider } from "react-redux"
 import { store } from "./store/store.js"
+
 import {
   createRoutesFromElements,
   createBrowserRouter,
@@ -25,11 +26,26 @@ import AdminProducts from "./components/Dashboard/products/AdminProducts.js"
 import AdminCategories from "./components/Dashboard/categories/AdminCategories.js"
 import DashboardUnits from "./components/Dashboard/units/AdminUnits.js"
 
+const allData = async () => {
+  const response = await Promise.all([
+    fetch("/api/category/getAll"),
+    fetch("/api/product/getAll"),
+    fetch("/api/unit/getAll"),
+  ])
+
+  const [categoryResponse, productsResponse, unitsResponse] = response
+
+  const category = await categoryResponse.json()
+  const product = await productsResponse.json()
+  const unit = await unitsResponse.json()
+  return { category, product, unit }
+}
+
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route>
+    <Route id='root' loader={allData}>
       <Route
-        path=''
+        path='/'
         element={
           <ProtectedRoute>
             <Root />
@@ -52,27 +68,9 @@ const router = createBrowserRouter(
         }
       >
         <Route index element={<Dashboard />} />
-        <Route
-          path='/dashboard/products'
-          loader={async () => {
-            return fetch("/api/product/getAll")
-          }}
-          element={<AdminProducts />}
-        />
-        <Route
-          path='/dashboard/categories'
-          loader={async () => {
-            return fetch("/api/category/getAll")
-          }}
-          element={<AdminCategories />}
-        />
-        <Route
-          path='/dashboard/units'
-          loader={async () => {
-            return fetch("/api/unit/getAll")
-          }}
-          element={<DashboardUnits />}
-        />
+        <Route path='/dashboard/products' element={<AdminProducts />} />
+        <Route path='/dashboard/categories' element={<AdminCategories />} />
+        <Route path='/dashboard/units' element={<DashboardUnits />} />
       </Route>
     </Route>
   )

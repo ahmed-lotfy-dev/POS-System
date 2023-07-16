@@ -32,5 +32,5 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   if (path === "/dashboard" && !user.user!.isAdmin) {
     return <Navigate to='/signin' replace />
   }
-  return <div className='h-full'>{children}</div>
+  return <div className='h-full bg-slate-400 dark:bg-slate-800'>{children}</div>
 }

@@ -1,6 +1,6 @@
 import AddCategory from "./AddCategory"
 import Table from "../../Table/Table"
-import { useLoaderData } from "react-router-dom"
+import { useRouteLoaderData } from "react-router-dom"
 import axios from "axios"
 import { useRevalidator } from "react-router-dom"
 
@@ -9,7 +9,8 @@ type Category = {
 }
 
 function DashboardCategories() {
-  const tableData = useLoaderData() as Category[]
+  const data = useRouteLoaderData("root") as any
+  const tableData = data.category
   console.log(tableData)
   const revalidator = useRevalidator()
 

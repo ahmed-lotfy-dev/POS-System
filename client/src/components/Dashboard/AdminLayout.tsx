@@ -2,23 +2,15 @@ import { useSelector } from "react-redux"
 import { RootState } from "../../store/store"
 import Nav from "../Home/Nav"
 import { Outlet } from "react-router-dom"
-import { useEffect } from "react"
 
 function DashboardLayout() {
   const user = useSelector((state: RootState) => state.user)
-  const theme = useSelector((state: RootState) => state.theme)
-
-  useEffect(() => {
-    document.querySelector("html")?.setAttribute("data-theme", theme.theme)
-  }, [theme])
 
   return (
     <div className='w-full h-screen'>
       {!user.user?.isAdmin ? (
         <div
-          className={`w-full h-full border-[3px] border-primary rounded-xl ${
-            theme ? "dark" : ""
-          }`}
+          className={`w-full h-full border-[3px] border-primary rounded-xl`}
         >
           {" "}
           <Nav />
@@ -28,9 +20,7 @@ function DashboardLayout() {
         </div>
       ) : (
         <div
-          className={`w-full h-full border-[3px] border-primary rounded-xl ${
-            theme ? "dark" : ""
-          }`}
+          className={`w-full h-full border-[3px] border-primary rounded-xl`}
         >
           {" "}
           <Nav />

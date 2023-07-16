@@ -1,7 +1,7 @@
 import AddUnit from "./AddUnit"
 import Table from "../../Table/Table"
 import axios from "axios"
-import { useLoaderData, useRevalidator } from "react-router-dom"
+import { useRevalidator, useRouteLoaderData } from "react-router-dom"
 
 type Unit = {
   id: number
@@ -9,7 +9,8 @@ type Unit = {
 }
 
 function DashboardUnits() {
-  const tableData = useLoaderData() as Unit[]
+  const data = useRouteLoaderData("root") as any
+  const tableData = data.unit
   console.log(tableData)
   const revalidator = useRevalidator()
 

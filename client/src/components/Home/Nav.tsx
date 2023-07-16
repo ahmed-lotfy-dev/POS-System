@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { Link, useNavigate } from "react-router-dom"
 import { RootState } from "../../store/store"
 import { setUser } from "../../store/features/user/userSlice"
+import { Button, Navbar, Typography } from "@material-tailwind/react"
 
 import {
   TbCategory2,
@@ -11,54 +12,58 @@ import {
 } from "react-icons/tb"
 import { BsBoxSeam } from "react-icons/bs"
 import { GiWeight } from "react-icons/gi"
-import { toggleTheme } from "../../store/features/theme/themeSlice"
 import { useState } from "react"
 
 function HomeNav() {
   const user = useSelector((state: RootState) => state.user)
-  const theme = useSelector((state: RootState) => state.theme)
-  const [isChecked, setIsChecked] = useState(false)
-
+  const [darkMode, setDarkMode] = useState(false)
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  console.log(theme)
 
   const handleTheme = () => {
-    dispatch(toggleTheme())
-    setIsChecked(!isChecked)
+    const isDarkMode = !darkMode
+    setDarkMode(isDarkMode)
   }
 
   return (
-    <div
-      className={`navbar w-full justify-between items-center ${
-        isChecked ? "dark" : ""
-      }`}
-    >
-      <Link
-        to={"/"}
-        className='btn btn-neutral text-slate-300 text-3xl mr-auto ml-6 font-extrabold uppercase'
-      >
-        <h1>POS</h1>
-      </Link>
-
-      <nav className='p-4'>
-        <ul className='menu rounded-box flex flex-row gap-6'>
-          <li>
+    <div className={`w-full justify-between items-center `}>
+      <Navbar className="rounded-box flex justify-between items-center gap-6'">
+        <ul className='flex justify-center items-center h-full'>
+          <Typography className='rounded text-slate-300 text-3xl mr-auto ml-6 font-extrabold uppercase'>
+            <Link to={"/"}>
+              <h1>POS</h1>
+            </Link>
+          </Typography>
+          <Typography
+            as='li'
+            variant='small'
+            color='blue-gray'
+            className='p-1 font-normal'
+          >
             <Link className='font-semibold flex items-center' to='/'>
               <TbBrandGoogleHome size={25} />
               <span className='ml-1 text-lg font-bold'>Home</span>
             </Link>
-          </li>
+          </Typography>
           {user.user?.isAdmin ? (
-            <li>
+            <Typography
+              as='li'
+              variant='small'
+              color='blue-gray'
+              className='p-1 font-normal'
+            >
               <Link className='font-semibold flex items-center' to='/dashboard'>
                 <TbLayoutDashboard size={25} />
                 <span className='ml-1 text-lg font-bold'>Dashboard</span>
               </Link>
-            </li>
+            </Typography>
           ) : null}
-
-          <li>
+          <Typography
+            as='li'
+            variant='small'
+            color='blue-gray'
+            className='p-1 font-normal'
+          >
             <Link
               className='font-semibold flex items-center'
               to='/dashboard/categories'
@@ -66,8 +71,13 @@ function HomeNav() {
               <TbCategory2 size={25} />
               <span className='ml-1 text-lg font-bold'>Categories</span>
             </Link>
-          </li>
-          <li>
+          </Typography>
+          <Typography
+            as='li'
+            variant='small'
+            color='blue-gray'
+            className='p-1 font-normal'
+          >
             <Link
               className='font-semibold flex items-center'
               to='/dashboard/products'
@@ -75,8 +85,13 @@ function HomeNav() {
               <BsBoxSeam size={25} />
               <span className='ml-1 text-lg font-bold'>Products</span>
             </Link>
-          </li>
-          <li>
+          </Typography>
+          <Typography
+            as='li'
+            variant='small'
+            color='blue-gray'
+            className='p-1 font-normal'
+          >
             <Link
               className='font-semibold flex items-center'
               to='/dashboard/units'
@@ -84,9 +99,14 @@ function HomeNav() {
               <GiWeight size={25} />
               <span className='ml-1 text-lg font-bold'>Units</span>
             </Link>
-          </li>
+          </Typography>
           {user.user ? (
-            <li>
+            <Typography
+              as='li'
+              variant='small'
+              color='blue-gray'
+              className='p-1 font-normal'
+            >
               <button
                 className='font-semibold flex items-center'
                 onClick={() => {
@@ -98,16 +118,10 @@ function HomeNav() {
                 <TbLogout size={25} />
                 <span className='ml-1 text-lg font-bold'>LogOut</span>
               </button>
-            </li>
+            </Typography>
           ) : null}
         </ul>
-        <input
-          type='checkbox'
-          className='toggle toggle-md '
-          checked={isChecked}
-          onChange={handleTheme}
-        />
-      </nav>
+      </Navbar>
     </div>
   )
 }
