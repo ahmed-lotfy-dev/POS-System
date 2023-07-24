@@ -1,15 +1,12 @@
-import { ReactNode, useEffect } from "react"
-import { Navigate, useNavigate } from "react-router-dom"
+import { useEffect } from "react"
+import { Navigate, Outlet, useNavigate } from "react-router-dom"
 import { useParams } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../store/store"
 import { User, setUser } from "../store/features/user/userSlice"
 import decode from "jwt-decode"
-interface ProtectedRouteProps {
-  children: ReactNode
-}
 
-export default function ProtectedRoute({ children }: ProtectedRouteProps) {
+export default function ProtectedRoute() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const token = localStorage.getItem("user")
@@ -32,5 +29,9 @@ export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   if (path === "/dashboard" && !user.user!.isAdmin) {
     return <Navigate to='/signin' replace />
   }
-  return <div className='h-full bg-slate-400 dark:bg-slate-800'>{children}</div>
+  return (
+    <div className='h-full bg-slate-400 dark:bg-slate-800'>
+      <Outlet />
+    </div>
+  )
 }

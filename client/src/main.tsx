@@ -43,15 +43,8 @@ const allData = async () => {
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route id='root' loader={allData}>
-      <Route
-        path='/'
-        element={
-          <ProtectedRoute>
-            <Root />
-          </ProtectedRoute>
-        }
-      >
+    <Route id='root' loader={allData} element={<ProtectedRoute />}>
+      <Route path='/' element={<Root />}>
         <Route index element={<Home />} />
         <Route path='/products' element={<Products />} />
         <Route path='/categories' element={<Categories />} />
@@ -59,14 +52,7 @@ const router = createBrowserRouter(
         <Route path='/signup' element={<SignUp />} />
         <Route path='*' element={<NoMatch />} />
       </Route>
-      <Route
-        path='/dashboard'
-        element={
-          <ProtectedRoute>
-            <DashboardLayout />
-          </ProtectedRoute>
-        }
-      >
+      <Route path='/dashboard' element={<DashboardLayout />}>
         <Route index element={<Dashboard />} />
         <Route path='/dashboard/products' element={<AdminProducts />} />
         <Route path='/dashboard/categories' element={<AdminCategories />} />
