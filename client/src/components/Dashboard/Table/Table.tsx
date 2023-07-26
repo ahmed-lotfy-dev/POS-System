@@ -1,7 +1,7 @@
 import React, { useRef } from "react"
 import { useState, ChangeEvent } from "react"
 import { TbDeviceFloppy, TbEdit, TbTrash, TbX } from "react-icons/tb"
-import { useDeleteImage } from "../../hooks/useDeleteImage"
+import { useDeleteImage } from "../../../hooks/useDeleteImage"
 type TableProps<T> = {
   tableData: T[]
   handleSave: (data: T) => Promise<void>

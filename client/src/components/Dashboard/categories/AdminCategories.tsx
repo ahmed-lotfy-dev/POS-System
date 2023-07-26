@@ -1,6 +1,6 @@
-import AddCategory from "./AddCategory"
-import Table from "../../Table/Table"
-import { useRouteLoaderData } from "react-router-dom"
+import { AddCategory } from "./AddCategory"
+import Table from "../Table/Table"
+import { Link, useRouteLoaderData } from "react-router-dom"
 import axios from "axios"
 import { useRevalidator } from "react-router-dom"
 import { ChangeEvent, useState } from "react"
@@ -48,7 +48,9 @@ function AdminCategories() {
 
   return (
     <div className='flex flex-col justify-center items-center'>
-      <AddCategory />
+      <Link className='btn' to={"/dashboard/categories/add"}>
+        Add Category
+      </Link>
       <Table<Category>
         tableData={categories}
         handleSave={handleSave}

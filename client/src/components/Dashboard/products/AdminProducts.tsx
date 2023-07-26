@@ -1,6 +1,6 @@
-import AddProduct from "./AddProduct"
-import Table from "../../Table/Table"
-import { useRouteLoaderData } from "react-router-dom"
+import { AddProduct } from "./AddProduct"
+import Table from "../Table/Table"
+import { Link, useRouteLoaderData } from "react-router-dom"
 import axios from "axios"
 import { useRevalidator } from "react-router-dom"
 import { ChangeEvent, useState } from "react"
@@ -54,7 +54,9 @@ const AdminProducts = () => {
 
   return (
     <div className='flex flex-col justify-center items-center'>
-      <AddProduct />
+      <Link className='btn' to={"/dashboard/products/add"}>
+        Add Product
+      </Link>
       <Table<Product>
         tableData={products}
         handleSave={handleSave}

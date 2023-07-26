@@ -1,7 +1,7 @@
-import AddUnit from "./AddUnit"
-import Table from "../../Table/Table"
+import { AddUnit } from "./AddUnit"
+import Table from "../Table/Table"
 import axios from "axios"
-import { useRevalidator, useRouteLoaderData } from "react-router-dom"
+import { Link, useRevalidator, useRouteLoaderData } from "react-router-dom"
 
 type Unit = {
   id: number
@@ -27,7 +27,9 @@ const AdminUnits = () => {
 
   return (
     <div className='flex flex-col justify-center items-center'>
-      <AddUnit />
+      <Link className='btn' to={"/dashboard/units/add"}>
+        Add Unit
+      </Link>{" "}
       <Table<Unit>
         tableData={units}
         handleSave={handleSave}
