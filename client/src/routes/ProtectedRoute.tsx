@@ -30,7 +30,7 @@ export default function ProtectedRoute() {
     return <Navigate to='/signin' replace />
   }
   return (
-    <div className='h-full bg-slate-400 dark:bg-slate-800'>
+    <div className='h-full'>
       <Outlet />
     </div>
   )

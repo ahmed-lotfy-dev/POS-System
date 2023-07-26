@@ -1,12 +1,12 @@
 import { Body, Injectable, Param, ParseIntPipe } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { IProduct } from './product.controller';
+import { Product } from '@prisma/client';
 
 @Injectable()
 export class ProductService {
   constructor(private prisma: PrismaService) { }
 
-  async addProduct(@Body() dto: IProduct, code: number, price: number) {
+  async addProduct(@Body() dto: Product, code: number, price: number) {
     const newProduct = await this.prisma.product.create({
       data: { ...dto, code, price },
     });
@@ -30,7 +30,7 @@ export class ProductService {
   }
 
   async editProduct(
-    @Body() dto: IProduct,
+    @Body() dto: Product,
     @Param('id', ParseIntPipe) id: number,
   ) {
     const updatedProduct = await this.prisma.product.update({

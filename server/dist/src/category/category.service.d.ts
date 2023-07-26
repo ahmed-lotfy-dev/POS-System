@@ -1,21 +1,18 @@
-import { ConflictException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 export declare class CategoryService {
     private prisma;
     constructor(prisma: PrismaService);
     addCategory(dto: {
         name: string;
-    }): Promise<import("@prisma/client").Category | ConflictException>;
-    getCategories(): Promise<import("@prisma/client").Category[]>;
-    getSingleCategory(id: number): Promise<import("@prisma/client").Category | {
+        image: string;
+    }): Promise<any>;
+    getCategories(): Promise<import("@prisma/client").Category[] | {
         msg: string;
     }>;
+    getSingleCategory(id: number): Promise<any>;
     editCategory(dto: {
         name: string;
-    }, id: number): Promise<import("@prisma/client").Category | {
-        msg: string;
-    }>;
-    deleteCategory(id: number): Promise<import("@prisma/client").Category | {
-        msg: string;
-    }>;
+        image: string;
+    }, id: number): Promise<any>;
+    deleteCategory(id: number): Promise<any>;
 }

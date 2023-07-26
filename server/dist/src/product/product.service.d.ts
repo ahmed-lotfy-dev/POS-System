@@ -1,17 +1,17 @@
 import { PrismaService } from 'src/prisma/prisma.service';
-import { IProduct } from './product.controller';
+import { Product } from '@prisma/client';
 export declare class ProductService {
     private prisma;
     constructor(prisma: PrismaService);
-    addProduct(dto: IProduct, code: number, price: number): Promise<import("@prisma/client").Product>;
-    getAllProducts(): Promise<import("@prisma/client").Product[]>;
-    getSingleProduct(id: number): Promise<import("@prisma/client").Product | {
+    addProduct(dto: Product, code: number, price: number): Promise<Product>;
+    getAllProducts(): Promise<Product[]>;
+    getSingleProduct(id: number): Promise<Product | {
         msg: string;
     }>;
-    editProduct(dto: IProduct, id: number): Promise<import("@prisma/client").Product | {
+    editProduct(dto: Product, id: number): Promise<Product | {
         msg: string;
     }>;
-    deleteProduct(id: number): Promise<import("@prisma/client").Product | {
+    deleteProduct(id: number): Promise<Product | {
         msg: string;
     }>;
 }

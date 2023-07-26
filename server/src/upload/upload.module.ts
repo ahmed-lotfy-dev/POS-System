@@ -3,7 +3,6 @@ import { UploadService } from './upload.service';
 import { UploadController } from './upload.controller';
 import { AwsSdkModule } from 'aws-sdk-v3-nest';
 import { S3Client } from '@aws-sdk/client-s3';
-import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -21,4 +20,4 @@ import { ConfigModule } from '@nestjs/config';
   controllers: [UploadController],
   providers: [UploadService],
 })
-export class UploadModule {}
+export class UploadModule { }

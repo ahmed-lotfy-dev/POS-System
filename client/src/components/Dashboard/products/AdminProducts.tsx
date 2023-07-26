@@ -15,9 +15,9 @@ type Product = {
   unit: string
 }
 
-export default function DashboardProducts() {
-  const data = useRouteLoaderData("root") as any
-  const tableData = data.product
+const AdminProducts = () => {
+  const { products } = useRouteLoaderData("root") as any
+  console.log(products)
   const [imageLink, setImageLink] = useState<string>("")
 
   const revalidator = useRevalidator()
@@ -56,7 +56,7 @@ export default function DashboardProducts() {
     <div className='flex flex-col justify-center items-center'>
       <AddProduct />
       <Table<Product>
-        tableData={tableData}
+        tableData={products}
         handleSave={handleSave}
         handleDelete={handleDelete}
         uploadHandler={uploadHandler}
@@ -64,3 +64,5 @@ export default function DashboardProducts() {
     </div>
   )
 }
+
+export { AdminProducts }

@@ -4,7 +4,12 @@ export declare class UploadController {
     private uploadService;
     constructor(uploadService: UploadService);
     private readonly s3;
-    uploadProductImage(image: Express.Multer.File): Promise<{
+    uploadImage(image: Express.Multer.File): Promise<{
         image: string;
+    }>;
+    deleteImage(dto: {
+        image: string;
+    }): Promise<{
+        msg: string;
     }>;
 }

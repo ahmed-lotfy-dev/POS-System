@@ -3,20 +3,24 @@ import Table from "../../Table/Table"
 import { useRouteLoaderData } from "react-router-dom"
 import axios from "axios"
 import { useRevalidator } from "react-router-dom"
+import { ChangeEvent, useState } from "react"
 
 type Category = {
   id: number
+  image: string
 }
 
-function DashboardCategories() {
-  const data = useRouteLoaderData("root") as any
-  const tableData = data.category
-  console.log(tableData)
+function AdminCategories() {
+  const { categories } = useRouteLoaderData("root") as any
+  console.log(categories)
+  const [imageLink, setImageLink] = useState<string>("")
+
   const revalidator = useRevalidator()
 
   const handleSave = async (item: Category) => {
     const response = await axios.patch(`/api/category/edit/${item?.id}`, {
       ...item,
+      image: imageLink,
     })
     revalidator.revalidate()
   }
@@ -26,16 +30,33 @@ function DashboardCategories() {
     revalidator.revalidate()
   }
 
+  const uploadHandler = async (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      const { data } = await axios.post(
+        "/api/upload/product",
+        { image: event.target.files[0] },
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      )
+      console.log(data)
+      setImageLink(data.image)
+    }
+  }
+
   return (
     <div className='flex flex-col justify-center items-center'>
       <AddCategory />
       <Table<Category>
-        tableData={tableData}
+        tableData={categories}
         handleSave={handleSave}
         handleDelete={handleDelete}
+        uploadHandler={uploadHandler}
       />
     </div>
   )
 }
 
-export default DashboardCategories
+export { AdminCategories }

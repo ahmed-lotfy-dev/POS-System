@@ -1,5 +1,7 @@
 import {
+  Body,
   Controller,
+  Delete,
   Post,
   UploadedFile,
   UseInterceptors,
@@ -11,12 +13,17 @@ import { S3Client } from '@aws-sdk/client-s3';
 
 @Controller('upload')
 export class UploadController {
-  constructor(private uploadService: UploadService) {}
+  constructor(private uploadService: UploadService) { }
 
   @InjectAws(S3Client) private readonly s3: S3Client;
-  @Post('product')
+  @Post('')
   @UseInterceptors(FileInterceptor('image'))
-  uploadProductImage(@UploadedFile() image: Express.Multer.File) {
-    return this.uploadService.uploadProductImage(this.s3, image);
+  uploadImage(@UploadedFile() image: Express.Multer.File) {
+    return this.uploadService.uploadImage(this.s3, image);
+  }
+
+  @Delete('')
+  deleteImage(@Body() dto: { image: string }) {
+    return this.uploadService.deleteImage(this.s3, dto)
   }
 }

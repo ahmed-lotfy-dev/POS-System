@@ -17,7 +17,7 @@ export default function Table<T extends Record<string, any>>({
 }: TableProps<T>) {
   const [editableRow, setEditableRow] = useState<number | null>(null)
   const [editableItem, setEditableItem] = useState<T>()
-
+  const data = tableData || []
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -32,7 +32,7 @@ export default function Table<T extends Record<string, any>>({
     setEditableItem({ ...data })
   }
 
-  const keys = Object.keys(tableData[0] || {}).slice(1, -2)
+  const keys = Object.keys(data[0] || {}).slice(1, -2)
 
   const tHead = () => {
     return (
@@ -48,7 +48,7 @@ export default function Table<T extends Record<string, any>>({
   }
 
   const tdData = () => {
-    return tableData.map((data, index) => {
+    return data.map((data, index) => {
       return (
         <tr className='text-gray-600 text-lg font-semibold' key={index}>
           <td>{index + 1}</td>

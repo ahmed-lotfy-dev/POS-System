@@ -22,8 +22,11 @@ let UploadController = exports.UploadController = class UploadController {
     constructor(uploadService) {
         this.uploadService = uploadService;
     }
-    uploadProductImage(image) {
-        return this.uploadService.uploadProductImage(this.s3, image);
+    uploadImage(image) {
+        return this.uploadService.uploadImage(this.s3, image);
+    }
+    deleteImage(dto) {
+        return this.uploadService.deleteImage(this.s3, dto);
     }
 };
 __decorate([
@@ -31,13 +34,20 @@ __decorate([
     __metadata("design:type", client_s3_1.S3Client)
 ], UploadController.prototype, "s3", void 0);
 __decorate([
-    (0, common_1.Post)('product'),
+    (0, common_1.Post)(''),
     (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('image')),
     __param(0, (0, common_1.UploadedFile)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
-], UploadController.prototype, "uploadProductImage", null);
+], UploadController.prototype, "uploadImage", null);
+__decorate([
+    (0, common_1.Delete)(''),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], UploadController.prototype, "deleteImage", null);
 exports.UploadController = UploadController = __decorate([
     (0, common_1.Controller)('upload'),
     __metadata("design:paramtypes", [upload_service_1.UploadService])

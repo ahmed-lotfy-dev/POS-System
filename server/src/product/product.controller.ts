@@ -7,30 +7,19 @@ import {
   Param,
   Body,
   ParseIntPipe,
-  UseInterceptors,
-  UploadedFile,
+
 } from '@nestjs/common';
 
-import { Express } from 'express';
 import { ProductService } from './product.service';
-import { FileInterceptor } from '@nestjs/platform-express';
-
-export interface IProduct {
-  name: string;
-  code: number;
-  category: string;
-  image: string;
-  price: number;
-  unit: string;
-}
+import { Product } from '@prisma/client';
 
 @Controller('product')
 export class ProductController {
-  constructor(private productService: ProductService) {}
+  constructor(private productService: ProductService) { }
 
   @Post('add')
   addProduct(
-    @Body() dto: IProduct,
+    @Body() dto: Product,
     @Body('code', ParseIntPipe) code: number,
     @Body('price', ParseIntPipe) price: number,
   ) {
@@ -48,7 +37,7 @@ export class ProductController {
   }
 
   @Patch('edit/:id')
-  editProduct(@Body() dto: IProduct, @Param('id', ParseIntPipe) id: number) {
+  editProduct(@Body() dto: Product, @Param('id', ParseIntPipe) id: number) {
     return this.productService.editProduct(dto, id);
   }
 

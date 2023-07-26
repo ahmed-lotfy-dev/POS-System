@@ -9,31 +9,35 @@ async function main() {
             username: "Ahmed Lotfy",
             isAdmin: true,
             isConfirm: true,
-            password: "$argon2id$v=19$m=65536,t=3,p=4$YmKW1FCs7JNA4EPrs9E+dA$kt3MebnV3SWXhcmZPGt9a2Yu3mx87aVdcfz5cjw6tGo"
-        }
-    });
-    const product = await prisma.product.create({
-        data: {
-            id: 1,
-            name: "banana",
-            code: 122,
-            category: "fruits",
-            price: 399,
-            unit: "kg",
-            image: "https://pos-images.ahmedlotfy.me/linux_software.jpg"
-        }
-    });
-    const category = await prisma.category.create({
-        data: {
-            id: 1,
-            name: "fruits",
-        }
+            password: "$argon2id$v=19$m=65536,t=3,p=4$YmKW1FCs7JNA4EPrs9E+dA$kt3MebnV3SWXhcmZPGt9a2Yu3mx87aVdcfz5cjw6tGo",
+        },
     });
     const unit = await prisma.unit.create({
         data: {
             id: 1,
             name: "kg",
-        }
+        },
+    });
+    const category = await prisma.category.create({
+        data: {
+            id: 1,
+            image: "",
+            name: "fruits",
+        },
+    });
+    const product = await prisma.product.create({
+        data: {
+            name: "banana",
+            code: 122,
+            price: 399,
+            unit: {
+                connect: { id: unit.id },
+            },
+            category: {
+                connect: { id: category.id },
+            },
+            image: "https://pos-images.ahmedlotfy.me/linux_software.jpg",
+        },
     });
 }
 main()

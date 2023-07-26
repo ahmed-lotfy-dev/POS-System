@@ -4,13 +4,16 @@ import { notify } from "../../../lib/toast"
 
 import { ChangeEvent, FormEvent, useRef, useState } from "react"
 import { useRevalidator } from "react-router-dom"
+import { useUpload } from "../../../hooks/useUpload"
+import { Loader } from "@mantine/core"
 
 export default function AddCategory() {
-  const [imagePreview, setImagePreview] = useState<string | undefined>("")
-  const [imageLink, setImageLink] = useState<string>("")
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const formRef = useRef<HTMLFormElement>(null)
 
   const revalidator = useRevalidator()
+
+  const { uploadImage, imageLink, isPending, error } = useUpload()
 
   const onAddHandler = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -32,23 +35,12 @@ export default function AddCategory() {
     console.log(data)
     if (data.status === 409) notify(data.response.message, false)
     revalidator.revalidate()
+    formRef.current?.reset()
   }
 
   const uploadHandler = async (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
-      const { data } = await axios.post(
-        "/api/upload/product",
-        { image: event.target.files[0] },
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      )
-      console.log(data)
-      const imagePreviewUrl = URL.createObjectURL(event.target.files[0])
-      setImagePreview(imagePreviewUrl)
-      setImageLink(data.image)
+      uploadImage(event.target.files[0])
     }
   }
 
@@ -59,6 +51,7 @@ export default function AddCategory() {
       </button>
       <dialog id='my_modal_2' className='modal'>
         <form
+          ref={formRef}
           action=''
           method='dialog'
           className='modal-box flex flex-col'
@@ -143,21 +136,17 @@ export default function AddCategory() {
                 onChange={uploadHandler}
               />
             </>
-            {/* <input
-              className='input input-bordered border-b-gray-100 input-xs w-full max-w-xs mt-2 m-auto '
-              type='file'
-              name='image'
-              id='image'
-              onChange={imageUploadHandler}
-            /> */}
+            {isPending ? (
+              <div className='flex justify-center items-center mt-6'>
+                <Loader />
+              </div>
+            ) : null}
           </div>
           <div>
             <img
-              src={imagePreview}
+              src={imageLink ?? ""}
               alt='product image'
-              className={`${
-                imagePreview ? "block" : "hidden"
-              } w-80 m-auto my-10`}
+              className={`${imageLink ? "block" : "hidden"} w-80 m-auto my-10`}
             />
           </div>
           <button

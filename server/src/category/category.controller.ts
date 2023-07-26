@@ -13,10 +13,10 @@ import { CategoryService } from './category.service';
 
 @Controller('category')
 export class CategoryController {
-  constructor(private categoryService: CategoryService) {}
+  constructor(private categoryService: CategoryService) { }
 
   @Post('add')
-  addCategory(@Body() dto: { name: string }) {
+  addCategory(@Body() dto: { name: string, image: string }) {
     return this.categoryService.addCategory(dto);
   }
 
@@ -32,7 +32,7 @@ export class CategoryController {
 
   @Patch('edit/:id')
   editCategory(
-    @Body() dto: { name: string },
+    @Body() dto: { name: string, image: string },
     @Param('id', ParseIntPipe) id: number,
   ) {
     return this.categoryService.editCategory(dto, id);

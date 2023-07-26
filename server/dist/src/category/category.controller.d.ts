@@ -4,17 +4,15 @@ export declare class CategoryController {
     constructor(categoryService: CategoryService);
     addCategory(dto: {
         name: string;
-    }): Promise<import("@prisma/client").Category | import("@nestjs/common").ConflictException>;
-    getAllCategories(): Promise<import("@prisma/client").Category[]>;
-    getSingleCategory(id: number): Promise<import("@prisma/client").Category | {
+        image: string;
+    }): Promise<any>;
+    getAllCategories(): Promise<import("@prisma/client").Category[] | {
         msg: string;
     }>;
+    getSingleCategory(id: number): Promise<any>;
     editCategory(dto: {
         name: string;
-    }, id: number): Promise<import("@prisma/client").Category | {
-        msg: string;
-    }>;
-    deleteCategory(id: number): Promise<import("@prisma/client").Category | {
-        msg: string;
-    }>;
+        image: string;
+    }, id: number): Promise<any>;
+    deleteCategory(id: number): Promise<any>;
 }

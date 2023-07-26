@@ -1,9 +1,10 @@
 import React from "react"
 import ReactDOM from "react-dom/client"
 import "./index.css"
-
+import axios from "axios"
 import { Provider } from "react-redux"
 import { store } from "./store/store.js"
+import { AllDataResponse } from "./types/globals.js"
 
 import {
   createRoutesFromElements,
@@ -15,30 +16,25 @@ import {
 import ProtectedRoute from "./routes/ProtectedRoute.js"
 import Root from "./routes/Root.js"
 import Home from "./components/Home/Home.js"
-import Products from "./routes/Products.js"
-import Categories from "./routes/Categories.js"
 import SignIn from "./routes/SignIn.js"
 import SignUp from "./routes/SignUp.js"
 import DashboardLayout from "./components/Dashboard/AdminLayout.js"
 import NoMatch from "./routes/NoMatch.js"
 import Dashboard from "./components/Dashboard/AdminHome.js"
-import AdminProducts from "./components/Dashboard/products/AdminProducts.js"
-import AdminCategories from "./components/Dashboard/categories/AdminCategories.js"
-import DashboardUnits from "./components/Dashboard/units/AdminUnits.js"
+import { AdminProducts } from "./components/Dashboard/products/AdminProducts.js"
+import { AdminCategories } from "./components/Dashboard/categories/AdminCategories.js"
+import { AdminUnits } from "./components/Dashboard/units/AdminUnits.js"
 
-const allData = async () => {
+const allData = async (): Promise<AllDataResponse> => {
   const response = await Promise.all([
-    fetch("/api/category/getAll"),
-    fetch("/api/product/getAll"),
-    fetch("/api/unit/getAll"),
+    axios.get("/api/category/getAll"),
+    axios.get("/api/product/getAll"),
+    axios.get("/api/unit/getAll"),
   ])
 
-  const [categoryResponse, productsResponse, unitsResponse] = response
+  const [category, product, unit] = response
 
-  const category = await categoryResponse.json()
-  const product = await productsResponse.json()
-  const unit = await unitsResponse.json()
-  return { category, product, unit }
+  return { categories: category.data, products: product.data, units: unit.data }
 }
 
 const router = createBrowserRouter(
@@ -46,8 +42,6 @@ const router = createBrowserRouter(
     <Route id='root' loader={allData} element={<ProtectedRoute />}>
       <Route path='/' element={<Root />}>
         <Route index element={<Home />} />
-        <Route path='/products' element={<Products />} />
-        <Route path='/categories' element={<Categories />} />
         <Route path='/signin' element={<SignIn />} />
         <Route path='/signup' element={<SignUp />} />
         <Route path='*' element={<NoMatch />} />
@@ -56,7 +50,7 @@ const router = createBrowserRouter(
         <Route index element={<Dashboard />} />
         <Route path='/dashboard/products' element={<AdminProducts />} />
         <Route path='/dashboard/categories' element={<AdminCategories />} />
-        <Route path='/dashboard/units' element={<DashboardUnits />} />
+        <Route path='/dashboard/units' element={<AdminUnits />} />
       </Route>
     </Route>
   )

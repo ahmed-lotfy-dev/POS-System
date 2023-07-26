@@ -8,10 +8,9 @@ type Unit = {
   name: string
 }
 
-function DashboardUnits() {
-  const data = useRouteLoaderData("root") as any
-  const tableData = data.unit
-  console.log(tableData)
+const AdminUnits = () => {
+  const { units } = useRouteLoaderData("root") as any
+  console.log(units)
   const revalidator = useRevalidator()
 
   const handleSave = async (item: Unit) => {
@@ -30,7 +29,7 @@ function DashboardUnits() {
     <div className='flex flex-col justify-center items-center'>
       <AddUnit />
       <Table<Unit>
-        tableData={tableData}
+        tableData={units}
         handleSave={handleSave}
         handleDelete={handleDelete}
       />
@@ -38,4 +37,4 @@ function DashboardUnits() {
   )
 }
 
-export default DashboardUnits
+export { AdminUnits }
