@@ -20,11 +20,12 @@ const useUpload = () => {
           },
         }
       )
+      console.log(data)
       setImageLink(data.image)
+      setIsPending(false)
     } catch (error) {
       setError("Failed to upload the image")
     } finally {
-      setIsPending(false)
     }
   }
 

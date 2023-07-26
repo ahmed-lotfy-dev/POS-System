@@ -1,7 +1,7 @@
 import React, { useRef } from "react"
 import { useState, ChangeEvent } from "react"
 import { TbDeviceFloppy, TbEdit, TbTrash, TbX } from "react-icons/tb"
-
+import { useDeleteImage } from "../../hooks/useDeleteImage"
 type TableProps<T> = {
   tableData: T[]
   handleSave: (data: T) => Promise<void>
@@ -20,6 +20,7 @@ export default function Table<T extends Record<string, any>>({
   const data = tableData || []
   const fileInputRef = useRef<HTMLInputElement>(null)
 
+  const { deleteImage } = useDeleteImage()
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setEditableItem({
       ...editableItem!,
@@ -32,6 +33,10 @@ export default function Table<T extends Record<string, any>>({
     setEditableItem({ ...data })
   }
 
+  const deleteHandler = (data: any) => {
+    handleDelete(data.id)
+    deleteImage(data.image)
+  }
   const keys = Object.keys(data[0] || {}).slice(1, -2)
 
   const tHead = () => {
@@ -122,7 +127,7 @@ export default function Table<T extends Record<string, any>>({
             )}
           </td>
           <td>
-            <button onClick={() => handleDelete(data.id)}>
+            <button onClick={() => deleteHandler(data)}>
               <TbTrash size={25} />
             </button>
           </td>
