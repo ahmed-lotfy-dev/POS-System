@@ -4,7 +4,7 @@ import { notify } from "../../../lib/toast"
 
 import { ChangeEvent, FormEvent, useRef } from "react"
 import { useRevalidator } from "react-router-dom"
-import { useUpload } from "../../../hooks/useUpload"
+import { useUpload } from "../../../hooks/useUploadImage"
 import { Loader } from "@mantine/core"
 
 function AddCategory() {
