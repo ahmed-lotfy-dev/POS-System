@@ -6,13 +6,13 @@ declare global {
   }
 }
 
-export type category = {
+export type Category = {
   id: number
   name: string
   image: string
 }
 
-export type product = {
+export type Product = {
   id: number
   name: string
   code: number
@@ -22,7 +22,7 @@ export type product = {
   categoryId: number
 }
 
-export type unit = {
+export type Unit = {
   id: number
   name: string
 }

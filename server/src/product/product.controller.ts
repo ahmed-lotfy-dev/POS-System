@@ -22,8 +22,10 @@ export class ProductController {
     @Body() dto: Product,
     @Body('code', ParseIntPipe) code: number,
     @Body('price', ParseIntPipe) price: number,
+    @Body('categoryId', ParseIntPipe) categoryId: number,
+    @Body('unitId', ParseIntPipe) unitId: number,
   ) {
-    return this.productService.addProduct(dto, code, price);
+    return this.productService.addProduct(dto, code, price, categoryId, unitId);
   }
 
   @Get('getAll')

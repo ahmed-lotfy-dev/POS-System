@@ -21,7 +21,7 @@ function AsideNav() {
     dispatch(setUser(null))
     navigate("/")
   }
-  console.log(user.user?.isAdmin)
+
   return (
     <nav className='rounded-box gap-6 bg-slate-100 dark:bg-gray-600 rounded-r-none rounded-l-xl flex flex-col justify-between'>
       <div className='p-5 text-5xl font-extrabold'>

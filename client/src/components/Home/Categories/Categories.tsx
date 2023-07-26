@@ -8,7 +8,7 @@ function Categories({}: Props) {
   return (
     <div className=''>
       {categories.map((category) => (
-        <h1>{category.name}</h1>
+        <h1 key={category.id}>{category.name}</h1>
       ))}
     </div>
   )

@@ -3,7 +3,7 @@ import { Product } from '@prisma/client';
 export declare class ProductController {
     private productService;
     constructor(productService: ProductService);
-    addProduct(dto: Product, code: number, price: number): Promise<Product>;
+    addProduct(dto: Product, code: number, price: number, categoryId: number, unitId: number): Promise<Product>;
     getAllProducts(): Promise<Product[]>;
     getSingleProduct(id: number): Promise<Product | {
         msg: string;

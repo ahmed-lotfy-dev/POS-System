@@ -19,8 +19,8 @@ let ProductController = exports.ProductController = class ProductController {
     constructor(productService) {
         this.productService = productService;
     }
-    addProduct(dto, code, price) {
-        return this.productService.addProduct(dto, code, price);
+    addProduct(dto, code, price, categoryId, unitId) {
+        return this.productService.addProduct(dto, code, price, categoryId, unitId);
     }
     getAllProducts() {
         return this.productService.getAllProducts();
@@ -40,8 +40,10 @@ __decorate([
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Body)('code', common_1.ParseIntPipe)),
     __param(2, (0, common_1.Body)('price', common_1.ParseIntPipe)),
+    __param(3, (0, common_1.Body)('categoryId', common_1.ParseIntPipe)),
+    __param(4, (0, common_1.Body)('unitId', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Number, Number]),
+    __metadata("design:paramtypes", [Object, Number, Number, Number, Number]),
     __metadata("design:returntype", void 0)
 ], ProductController.prototype, "addProduct", null);
 __decorate([

@@ -4,7 +4,7 @@ import { IUnit } from './unit.controller';
 export declare class UnitService {
     private prisma;
     constructor(prisma: PrismaService);
-    addUnit(dto: IUnit): Promise<ConflictException | import("@prisma/client").Unit>;
+    addUnit(dto: IUnit): Promise<import("@prisma/client").Unit | ConflictException>;
     getUnits(): Promise<import("@prisma/client").Unit[]>;
     getSingleUnit(id: number): Promise<import("@prisma/client").Unit | {
         msg: string;

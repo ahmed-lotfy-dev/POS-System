@@ -6,11 +6,11 @@ import { Product } from '@prisma/client';
 export class ProductService {
   constructor(private prisma: PrismaService) { }
 
-  async addProduct(@Body() dto: Product, code: number, price: number) {
+  async addProduct(@Body() dto: Product, code: number, price: number, categoryId: number, unitId: number) {
     const newProduct = await this.prisma.product.create({
-      data: { ...dto, code, price },
+      data: { ...dto, code, price, categoryId, unitId },
     });
-
+    console.log(dto)
     return newProduct;
   }
 

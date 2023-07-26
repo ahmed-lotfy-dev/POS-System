@@ -5,7 +5,7 @@ export interface IUnit {
 export declare class UnitController {
     private unitService;
     constructor(unitService: UnitService);
-    addUnit(dto: IUnit): Promise<import("@nestjs/common").ConflictException | import("@prisma/client").Unit>;
+    addUnit(dto: IUnit): Promise<import("@prisma/client").Unit | import("@nestjs/common").ConflictException>;
     getAllUnits(): Promise<import("@prisma/client").Unit[]>;
     getSingleUnit(id: number): Promise<import("@prisma/client").Unit | {
         msg: string;

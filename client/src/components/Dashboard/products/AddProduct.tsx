@@ -2,12 +2,14 @@ import axios from "axios"
 import { ToastContainer } from "react-toastify"
 import { notify } from "../../../lib/toast"
 
-import { ChangeEvent, FormEvent, useRef, useState } from "react"
-import { useRevalidator } from "react-router-dom"
+import { ChangeEvent, FormEvent, useRef } from "react"
+import { useRevalidator, useRouteLoaderData } from "react-router-dom"
 import { useUpload } from "../../../hooks/useUpload"
 import { Loader } from "@mantine/core"
+import { AllDataResponse, Category, Unit } from "../../../types/globals"
 
 export default function AddCategory() {
+  const { categories, units } = useRouteLoaderData("root") as AllDataResponse
   const fileInputRef = useRef<HTMLInputElement>(null)
   const formRef = useRef<HTMLFormElement>(null)
 
@@ -20,16 +22,16 @@ export default function AddCategory() {
     const formData = new FormData(event.currentTarget)
     const name = formData.get("name")
     const code = formData.get("code")
-    const category = formData.get("category")
     const price = formData.get("price")
-    const unit = formData.get("unit")
+    const categoryId = formData.get("categoryId")
+    const unitId = formData.get("unitId")
 
     const { data } = await axios.post("/api/product/add", {
       name,
       code,
-      category,
       price,
-      unit,
+      categoryId,
+      unitId,
       image: imageLink,
     })
     console.log(data)
@@ -42,6 +44,10 @@ export default function AddCategory() {
     if (event.target.files && event.target.files.length > 0) {
       uploadImage(event.target.files[0])
     }
+  }
+
+  const selectHandler = (e: ChangeEvent<HTMLSelectElement>) => {
+    console.log(e.target.value)
   }
 
   return (
@@ -82,18 +88,6 @@ export default function AddCategory() {
           </div>
 
           <div className='flex flex-col my-5'>
-            <label className='m-auto' htmlFor='productCategory'>
-              Product Category
-            </label>
-            <input
-              className='input input-bordered border-b-gray-100 input-xs w-full max-w-xs mt-2 m-auto '
-              type='text'
-              name='category'
-              id='category'
-            />
-          </div>
-
-          <div className='flex flex-col my-5'>
             <label className='m-auto' htmlFor='productPrice'>
               Product Price
             </label>
@@ -106,15 +100,30 @@ export default function AddCategory() {
           </div>
 
           <div className='flex flex-col my-5'>
+            <select onChange={selectHandler} name='categoryId'>
+              {categories.map((category: Category) => {
+                return (
+                  <option value={category.id} key={category.id}>
+                    {category.name}
+                  </option>
+                )
+              })}
+            </select>
+          </div>
+
+          <div className='flex flex-col my-5'>
             <label className='m-auto' htmlFor='productUnit'>
               Product Unit
             </label>
-            <input
-              className='input input-bordered border-b-gray-100 input-xs w-full max-w-xs mt-2 m-auto '
-              type='text'
-              name='unit'
-              id='unit'
-            />
+            <select onChange={selectHandler} name='unitId'>
+              {units.map((unit: Unit) => {
+                return (
+                  <option value={unit.id} key={unit.id}>
+                    {unit.name}
+                  </option>
+                )
+              })}
+            </select>
           </div>
 
           <div className='flex flex-col my-5'>
