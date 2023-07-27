@@ -22,7 +22,6 @@ export const unitSlice = createSlice({
   },
 })
 
-// Action creator generated for the "Products" case reducer function
 export const { setUnits } = unitSlice.actions
 
 export default unitSlice.reducer

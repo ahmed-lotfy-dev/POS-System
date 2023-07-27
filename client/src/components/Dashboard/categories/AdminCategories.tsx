@@ -1,5 +1,4 @@
-import { AddCategory } from "./AddCategory"
-import Table from "../Table/Table"
+import { TableComponent } from "../Table/Table"
 import { Link, useRouteLoaderData } from "react-router-dom"
 import axios from "axios"
 import { useRevalidator } from "react-router-dom"
@@ -51,7 +50,7 @@ function AdminCategories() {
       <Link className='btn' to={"/dashboard/categories/add"}>
         Add Category
       </Link>
-      <Table<Category>
+      <TableComponent<Category>
         tableData={categories}
         handleSave={handleSave}
         handleDelete={handleDelete}

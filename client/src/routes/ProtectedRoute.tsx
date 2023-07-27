@@ -6,7 +6,7 @@ import { RootState } from "../store/store"
 import { User, setUser } from "../store/features/user/userSlice"
 import decode from "jwt-decode"
 
-export default function ProtectedRoute() {
+const ProtectedRoute = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const token = localStorage.getItem("user")
@@ -35,3 +35,5 @@ export default function ProtectedRoute() {
     </div>
   )
 }
+
+export { ProtectedRoute }

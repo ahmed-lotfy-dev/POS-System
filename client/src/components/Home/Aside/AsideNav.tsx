@@ -23,7 +23,7 @@ function AsideNav() {
   }
 
   return (
-    <nav className='rounded-box gap-6 bg-slate-100 dark:bg-gray-600 rounded-r-none rounded-l-xl flex flex-col justify-between'>
+    <nav className='rounded-box gap-6 bg-gray-300 dark:bg-slate-600 rounded-r-none rounded-t-none rounded-l-xl flex flex-col justify-between'>
       <div className='p-5 text-5xl font-extrabold'>
         <h1>P</h1>
       </div>

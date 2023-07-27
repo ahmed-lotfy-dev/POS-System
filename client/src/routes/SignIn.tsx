@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom"
 import { ToastContainer } from "react-toastify"
 import { notify } from "../lib/toast"
 
-export default function SignIn() {
+const SignIn = () => {
   const navigate = useNavigate()
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (
@@ -80,3 +80,5 @@ export default function SignIn() {
     </div>
   )
 }
+
+export { SignIn }

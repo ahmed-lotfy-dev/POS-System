@@ -2,12 +2,14 @@ import { configureStore } from "@reduxjs/toolkit"
 import userSlice from "./features/user/userSlice"
 import themeSlice from "./features/theme/themeSlice"
 import searchSlice from "./features/search/searchSlice"
+import itemSlice from "./features/Item/itemSlice"
 
 export const store = configureStore({
   reducer: {
     user: userSlice,
     theme: themeSlice,
-    search: searchSlice
+    search: searchSlice,
+    item: itemSlice
   },
 })
 

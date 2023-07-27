@@ -28,7 +28,6 @@ export const productsSlice = createSlice({
   },
 })
 
-// Action creator generated for the "Products" case reducer function
 export const { setProducts } = productsSlice.actions
 
 export default productsSlice.reducer

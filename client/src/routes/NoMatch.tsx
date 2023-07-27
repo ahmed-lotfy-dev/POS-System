@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 
-export default function NoMatch() {
+const NoMatch = () => {
   return (
     <div className='w-full flex justify-center items-center mt-10'>
       <h2>Nothing to see here!</h2>
@@ -10,3 +10,5 @@ export default function NoMatch() {
     </div>
   )
 }
+
+export { NoMatch }

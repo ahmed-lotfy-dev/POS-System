@@ -1,5 +1,4 @@
-import { AddProduct } from "./AddProduct"
-import Table from "../Table/Table"
+import { TableComponent } from "../Table/Table"
 import { Link, useRouteLoaderData } from "react-router-dom"
 import axios from "axios"
 import { useRevalidator } from "react-router-dom"
@@ -57,7 +56,7 @@ const AdminProducts = () => {
       <Link className='btn' to={"/dashboard/products/add"}>
         Add Product
       </Link>
-      <Table<Product>
+      <TableComponent<Product>
         tableData={products}
         handleSave={handleSave}
         handleDelete={handleDelete}

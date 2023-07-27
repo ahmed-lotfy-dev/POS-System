@@ -3,7 +3,7 @@ import { Link } from "react-router-dom"
 
 import { useNavigate } from "react-router-dom"
 
-export default function SignUp() {
+const SignUp = () => {
   const navigate = useNavigate()
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -86,3 +86,5 @@ export default function SignUp() {
     </div>
   )
 }
+
+export { SignUp }

@@ -1,5 +1,4 @@
-import { AddUnit } from "./AddUnit"
-import Table from "../Table/Table"
+import { TableComponent } from "../Table/Table"
 import axios from "axios"
 import { Link, useRevalidator, useRouteLoaderData } from "react-router-dom"
 
@@ -30,7 +29,7 @@ const AdminUnits = () => {
       <Link className='btn' to={"/dashboard/units/add"}>
         Add Unit
       </Link>{" "}
-      <Table<Unit>
+      <TableComponent<Unit>
         tableData={units}
         handleSave={handleSave}
         handleDelete={handleDelete}

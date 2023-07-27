@@ -3,7 +3,7 @@ import { useSelector } from "react-redux"
 import { RootState } from "../store/store"
 import { AsideNav } from "../components/Home/Aside/AsideNav"
 
-export default function Root() {
+const Root = () => {
   const theme = useSelector((state: RootState) => state.theme.theme)
 
   return (
@@ -17,3 +17,5 @@ export default function Root() {
     </div>
   )
 }
+
+export { Root }

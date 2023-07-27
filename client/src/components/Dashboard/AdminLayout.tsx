@@ -4,7 +4,7 @@ import { AsideNav } from "../Home/Aside/AsideNav"
 import { Outlet } from "react-router-dom"
 import { HomeNav } from "../Ui/HomeNav/HomeNav"
 
-function DashboardLayout() {
+const DashboardLayout = () => {
   const theme = useSelector((state: RootState) => state.theme.theme)
 
   return (
@@ -22,4 +22,4 @@ function DashboardLayout() {
   )
 }
 
-export default DashboardLayout
+export { DashboardLayout }

@@ -5,7 +5,7 @@ import { useSelector } from "react-redux"
 import { Search } from "./Search/Search"
 import { Categories } from "./Categories/Categories"
 
-export default function Home() {
+const Home = () => {
   const data = useRouteLoaderData("root")
   console.log(data)
   const user = useSelector((state: RootState) => state.user)
@@ -21,3 +21,5 @@ export default function Home() {
     </div>
   )
 }
+
+export { Home }
