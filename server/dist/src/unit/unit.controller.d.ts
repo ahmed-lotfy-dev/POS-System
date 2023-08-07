@@ -5,15 +5,40 @@ export interface IUnit {
 export declare class UnitController {
     private unitService;
     constructor(unitService: UnitService);
-    addUnit(dto: IUnit): Promise<import("@nestjs/common").ConflictException | import("@prisma/client").Unit>;
-    getAllUnits(): Promise<import("@prisma/client").Unit[]>;
-    getSingleUnit(id: number): Promise<import("@prisma/client").Unit | {
+    addUnit(dto: IUnit): Promise<{
+        id: number;
+        name: string;
+        createdAt: Date;
+        updatedAt: Date;
+    } | import("@nestjs/common").ConflictException>;
+    getAllUnits(): Promise<{
+        id: number;
+        name: string;
+        createdAt: Date;
+        updatedAt: Date;
+    }[]>;
+    getSingleUnit(id: number): Promise<{
+        id: number;
+        name: string;
+        createdAt: Date;
+        updatedAt: Date;
+    } | {
         msg: string;
     }>;
-    editUnit(dto: IUnit, id: number): Promise<import("@prisma/client").Unit | {
+    editUnit(dto: IUnit, id: number): Promise<{
+        id: number;
+        name: string;
+        createdAt: Date;
+        updatedAt: Date;
+    } | {
         msg: string;
     }>;
-    deleteUnit(id: number): Promise<import("@prisma/client").Unit | {
+    deleteUnit(id: number): Promise<{
+        id: number;
+        name: string;
+        createdAt: Date;
+        updatedAt: Date;
+    } | {
         msg: string;
     }>;
 }

@@ -14,11 +14,10 @@ function BackButton() {
 
   return (
     <div
-      className='flex justify-normal items-start h-full ml-10'
+      className='flex justify-normal items-start h-full ml-10 absolute left-0 mt-10'
       onClick={goBack}
     >
-
-      <BsArrowLeft size={30} color={"orange"} />
+      <BsArrowLeft size={30} color={"blue"} />
     </div>
   )
 }

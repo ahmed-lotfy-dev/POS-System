@@ -4,15 +4,40 @@ import { IUnit } from './unit.controller';
 export declare class UnitService {
     private prisma;
     constructor(prisma: PrismaService);
-    addUnit(dto: IUnit): Promise<ConflictException | import("@prisma/client").Unit>;
-    getUnits(): Promise<import("@prisma/client").Unit[]>;
-    getSingleUnit(id: number): Promise<import("@prisma/client").Unit | {
+    addUnit(dto: IUnit): Promise<{
+        id: number;
+        name: string;
+        createdAt: Date;
+        updatedAt: Date;
+    } | ConflictException>;
+    getUnits(): Promise<{
+        id: number;
+        name: string;
+        createdAt: Date;
+        updatedAt: Date;
+    }[]>;
+    getSingleUnit(id: number): Promise<{
+        id: number;
+        name: string;
+        createdAt: Date;
+        updatedAt: Date;
+    } | {
         msg: string;
     }>;
-    editUnit(dto: IUnit, id: number): Promise<import("@prisma/client").Unit | {
+    editUnit(dto: IUnit, id: number): Promise<{
+        id: number;
+        name: string;
+        createdAt: Date;
+        updatedAt: Date;
+    } | {
         msg: string;
     }>;
-    deleteUnit(id: number): Promise<import("@prisma/client").Unit | {
+    deleteUnit(id: number): Promise<{
+        id: number;
+        name: string;
+        createdAt: Date;
+        updatedAt: Date;
+    } | {
         msg: string;
     }>;
 }

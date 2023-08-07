@@ -27,7 +27,6 @@ import { AdminUnits } from "./components/Dashboard/units/AdminUnits.js"
 import { AddCategory } from "./components/Dashboard/categories/AddCategory.js"
 import { AddUnit } from "./components/Dashboard/units/AddUnit.js"
 import { AddProduct } from "./components/Dashboard/products/AddProduct.js"
-import { Edit } from "./components/Dashboard/Edit/Edit.js"
 
 const allData = async (): Promise<AllDataResponse> => {
   const response = await Promise.all([
@@ -54,13 +53,13 @@ const router = createBrowserRouter(
         <Route index element={<Dashboard />} />
         <Route path='/dashboard/categories' element={<AdminCategories />} />
         <Route path='/dashboard/categories/add' element={<AddCategory />} />
-        <Route path='/dashboard/categories/edit' element={<Edit />} />
+        <Route path='/dashboard/categories/edit' element={<AddCategory />} />
         <Route path='/dashboard/products' element={<AdminProducts />} />
         <Route path='/dashboard/products/add' element={<AddProduct />} />
-        <Route path='/dashboard/products/edit' element={<Edit />} />
+        <Route path='/dashboard/products/edit' element={<AddProduct />} />
         <Route path='/dashboard/units' element={<AdminUnits />} />
         <Route path='/dashboard/units/add' element={<AddUnit />} />
-        <Route path='/dashboard/units/edit' element={<Edit />} />
+        <Route path='/dashboard/units/edit' element={<AddUnit />} />
       </Route>
     </Route>
   )

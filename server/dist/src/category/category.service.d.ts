@@ -6,7 +6,13 @@ export declare class CategoryService {
         name: string;
         image: string;
     }): Promise<any>;
-    getCategories(): Promise<import("@prisma/client").Category[] | {
+    getCategories(): Promise<{
+        id: number;
+        name: string;
+        image: string;
+        createdAt: Date;
+        updatedAt: Date;
+    }[] | {
         msg: string;
     }>;
     getSingleCategory(id: number): Promise<any>;

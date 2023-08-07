@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import axios from "axios"
 
-const useUpload = () => {
+const useUploadImage = () => {
   const [imageFile, setImageFile] = useState<File | null>()
   const [imageLink, setImageLink] = useState<string | null>()
   const [isPending, setIsPending] = useState<boolean>(false)
@@ -25,10 +25,8 @@ const useUpload = () => {
       setIsPending(false)
     } catch (error) {
       setError("Failed to upload the image")
-    } finally {
-    }
   }
-
+  }
   useEffect(() => {
     if (!imageFile) {
       setError("Please Provide An Image")
@@ -42,8 +40,7 @@ const useUpload = () => {
       setImageLink(null)
     }
   }, [imageFile])
-
   return { uploadImage, imageLink, isPending, error }
 }
 
-export { useUpload }
+export { useUploadImage }

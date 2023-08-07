@@ -47,7 +47,10 @@ function AdminCategories() {
 
   return (
     <div className='flex flex-col justify-center items-center'>
-      <Link className='btn' to={"/dashboard/categories/add"}>
+      <Link
+        className='btn'
+        to={"/dashboard/categories/add"}
+      >
         Add Category
       </Link>
       <TableComponent<Category>
