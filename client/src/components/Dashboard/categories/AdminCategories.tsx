@@ -3,6 +3,7 @@ import { Link, useRouteLoaderData } from "react-router-dom"
 import axios from "axios"
 import { useRevalidator } from "react-router-dom"
 import { ChangeEvent, useState } from "react"
+import { AllDataResponse } from "../../../types/globals"
 
 type Category = {
   id: number
@@ -10,14 +11,14 @@ type Category = {
 }
 
 function AdminCategories() {
-  const { categories } = useRouteLoaderData("root") as any
+  const { categories } = useRouteLoaderData("root") as AllDataResponse
   console.log(categories)
   const [imageLink, setImageLink] = useState<string>("")
 
   const revalidator = useRevalidator()
 
   const handleSave = async (item: Category) => {
-    const response = await axios.patch(`/api/category/edit/${item?.id}`, {
+    await axios.patch(`/api/category/edit/${item?.id}`, {
       ...item,
       image: imageLink,
     })
@@ -25,7 +26,7 @@ function AdminCategories() {
   }
 
   const handleDelete = async (id: number) => {
-    const response = await axios.delete(`/api/category/delete/${id}`)
+    await axios.delete(`/api/category/delete/${id}`)
     revalidator.revalidate()
   }
 

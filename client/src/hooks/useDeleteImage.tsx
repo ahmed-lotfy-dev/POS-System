@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import {  useState } from "react"
 import axios from "axios"
 
 const useDeleteImage = () => {
@@ -9,7 +9,6 @@ const useDeleteImage = () => {
     console.log(image)
     setIsPending(true)
     try {
-      //@ts-ignore
       const { data } = await axios.delete("/api/upload", { data: { image } })
       console.log(data)
       setIsPending(false)

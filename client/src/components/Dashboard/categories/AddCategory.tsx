@@ -4,7 +4,7 @@ import { notify } from "../../../lib/toast"
 
 import { ChangeEvent, FormEvent, useRef } from "react"
 import { useNavigate, useRevalidator } from "react-router-dom"
-import { useUpload } from "../../../hooks/useUploadImage"
+import { useUploadImage } from "../../../hooks/useUploadImage"
 import { Loader } from "@mantine/core"
 import { BackButton } from "../../Ui/BackButton/BackButton"
 import { useDispatch, useSelector } from "react-redux"
@@ -19,7 +19,9 @@ const AddCategory = () => {
   const navigate = useNavigate()
 
   const editItem = useSelector((state: RootState) => state.item.item)
-  const { uploadImage, imageLink, isPending, error } = useUpload()
+  const { uploadImage, imageLink, isPending,
+    //error
+   } = useUploadImage()
 
   const onAddHandler = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()

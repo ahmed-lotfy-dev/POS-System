@@ -1,6 +1,7 @@
 import { TableComponent } from "../Table/Table"
 import axios from "axios"
 import { Link, useRevalidator, useRouteLoaderData } from "react-router-dom"
+import { AllDataResponse } from "../../../types/globals"
 
 type Unit = {
   id: number
@@ -8,19 +9,19 @@ type Unit = {
 }
 
 const AdminUnits = () => {
-  const { units } = useRouteLoaderData("root") as any
+  const { units } = useRouteLoaderData("root") as AllDataResponse
   console.log(units)
   const revalidator = useRevalidator()
 
   const handleSave = async (item: Unit) => {
-    const response = await axios.patch(`/api/unit/edit/${item?.id}`, {
+    await axios.patch(`/api/unit/edit/${item?.id}`, {
       ...item,
     })
     revalidator.revalidate()
   }
 
   const handleDelete = async (id: number) => {
-    const response = await axios.delete(`/api/unit/delete/${id}`)
+    await axios.delete(`/api/unit/delete/${id}`)
     revalidator.revalidate()
   }
 

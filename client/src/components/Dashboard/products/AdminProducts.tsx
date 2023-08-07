@@ -3,6 +3,7 @@ import { Link, useRouteLoaderData } from "react-router-dom"
 import axios from "axios"
 import { useRevalidator } from "react-router-dom"
 import { ChangeEvent, useState } from "react"
+import { AllDataResponse } from "../../../types/globals"
 
 type Product = {
   id: number
@@ -15,14 +16,14 @@ type Product = {
 }
 
 const AdminProducts = () => {
-  const { products } = useRouteLoaderData("root") as any
+  const { products } = useRouteLoaderData("root") as AllDataResponse
   console.log(products)
   const [imageLink, setImageLink] = useState<string>("")
 
   const revalidator = useRevalidator()
 
   const handleSave = async (item: Product) => {
-    const response = await axios.patch(`/api/product/edit/${item?.id}`, {
+    await axios.patch(`/api/product/edit/${item?.id}`, {
       ...item,
       code: +item.code,
       image: imageLink,
@@ -31,7 +32,7 @@ const AdminProducts = () => {
   }
 
   const handleDelete = async (id: number) => {
-    const response = await axios.delete(`/api/product/delete/${id}`)
+    await axios.delete(`/api/product/delete/${id}`)
     revalidator.revalidate()
   }
 

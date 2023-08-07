@@ -4,7 +4,7 @@ import { notify } from "../../../lib/toast"
 
 import { ChangeEvent, FormEvent, useRef } from "react"
 import { useRevalidator, useRouteLoaderData } from "react-router-dom"
-import { useUpload } from "../../../hooks/useUploadImage"
+import { useUploadImage } from "../../../hooks/useUploadImage"
 import { Loader } from "@mantine/core"
 import { AllDataResponse, Category, Unit } from "../../../types/globals"
 import { BackButton } from "../../Ui/BackButton/BackButton"
@@ -16,7 +16,9 @@ const AddProduct = () => {
 
   const revalidator = useRevalidator()
 
-  const { uploadImage, imageLink, isPending, error } = useUpload()
+  const { uploadImage, imageLink, isPending, 
+    //error
+   } = useUploadImage()
 
   const onAddHandler = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
