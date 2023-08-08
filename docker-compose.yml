@@ -1,8 +1,9 @@
 version: '3'
 services:
   pos-system-backend:
-    image: pos-system-backend:latest
+    # image: pos-system-backend:latest
     build: ./server
+    restart: always
     environment:
         PORT: ${PORT}
         DATABASE_URL: ${DATABASE_URL}
@@ -14,11 +15,9 @@ services:
     ports:
       - 3001:3001
   pos-system-frontend:
-    image: pos-system-frontend:latest
+    # image: pos-system-frontend:latest
     build: ./client
     restart: always
-    depends_on:
-      - pos-system-backend
     environment:
       VITE_BACKEND_URL: ${VITE_BACKEND_URL}
     ports:
