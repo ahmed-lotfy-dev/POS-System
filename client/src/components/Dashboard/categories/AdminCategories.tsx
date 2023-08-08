@@ -18,7 +18,7 @@ function AdminCategories() {
   const revalidator = useRevalidator()
 
   const handleSave = async (item: Category) => {
-    await axios.patch(`/api/category/edit/${item?.id}`, {
+    await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/category/edit/${item?.id}`, {
       ...item,
       image: imageLink,
     })
@@ -26,14 +26,14 @@ function AdminCategories() {
   }
 
   const handleDelete = async (id: number) => {
-    await axios.delete(`/api/category/delete/${id}`)
+    await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/category/delete/${id}`)
     revalidator.revalidate()
   }
 
   const uploadHandler = async (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       const { data } = await axios.post(
-        "/api/upload/product",
+        `${import.meta.env.VITE_BACKEND_URL}/upload/product`,
         { image: event.target.files[0] },
         {
           headers: {

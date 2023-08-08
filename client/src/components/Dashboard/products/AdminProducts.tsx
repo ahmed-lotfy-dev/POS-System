@@ -23,7 +23,7 @@ const AdminProducts = () => {
   const revalidator = useRevalidator()
 
   const handleSave = async (item: Product) => {
-    await axios.patch(`/api/product/edit/${item?.id}`, {
+    await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/product/edit/${item?.id}`, {
       ...item,
       code: +item.code,
       image: imageLink,
@@ -32,14 +32,14 @@ const AdminProducts = () => {
   }
 
   const handleDelete = async (id: number) => {
-    await axios.delete(`/api/product/delete/${id}`)
+    await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/product/delete/${id}`)
     revalidator.revalidate()
   }
 
   const uploadHandler = async (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       const { data } = await axios.post(
-        "/api/upload/product",
+        `${import.meta.env.VITE_BACKEND_URL}/upload/product`,
         { image: event.target.files[0] },
         {
           headers: {

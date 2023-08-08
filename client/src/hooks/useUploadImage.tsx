@@ -12,7 +12,7 @@ const useUploadImage = () => {
     setIsPending(true)
     try {
       const { data } = await axios.post(
-        "/api/upload",
+        `${import.meta.env.VITE_BACKEND_URL}/upload`,
         { image },
         {
           headers: {

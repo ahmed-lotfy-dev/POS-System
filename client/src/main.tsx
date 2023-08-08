@@ -30,9 +30,9 @@ import { AddProduct } from "./components/Dashboard/products/AddProduct.js"
 
 const allData = async (): Promise<AllDataResponse> => {
   const response = await Promise.all([
-    axios.get("/api/category/getAll"),
-    axios.get("/api/product/getAll"),
-    axios.get("/api/unit/getAll"),
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/category/getAll`),
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/product/getAll`),
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/unit/getAll`),
   ])
 
   const [category, product, unit] = response

@@ -9,7 +9,7 @@ const useDeleteImage = () => {
     console.log(image)
     setIsPending(true)
     try {
-      const { data } = await axios.delete("/api/upload", { data: { image } })
+      const { data } = await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/upload`, { data: { image } })
       console.log(data)
       setIsPending(false)
     } catch (error) {

@@ -14,14 +14,14 @@ const AdminUnits = () => {
   const revalidator = useRevalidator()
 
   const handleSave = async (item: Unit) => {
-    await axios.patch(`/api/unit/edit/${item?.id}`, {
+    await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/unit/edit/${item?.id}`, {
       ...item,
     })
     revalidator.revalidate()
   }
 
   const handleDelete = async (id: number) => {
-    await axios.delete(`/api/unit/delete/${id}`)
+    await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/unit/delete/${id}`)
     revalidator.revalidate()
   }
 

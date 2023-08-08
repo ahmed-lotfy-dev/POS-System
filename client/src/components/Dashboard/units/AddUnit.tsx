@@ -13,7 +13,7 @@ function AddUnit() {
     event.preventDefault()
     const formData = new FormData(event.currentTarget)
     const unit = formData.get("unit")
-    const { data } = await axios.post("/api/unit/add", {
+    const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/unit/add`, {
       name: unit,
     })
     console.log(data)

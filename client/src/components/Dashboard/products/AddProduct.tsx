@@ -29,7 +29,7 @@ const AddProduct = () => {
     const categoryId = formData.get("categoryId")
     const unitId = formData.get("unitId")
 
-    const { data } = await axios.post("/api/product/add", {
+    const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/product/add`, {
       name,
       code,
       price,

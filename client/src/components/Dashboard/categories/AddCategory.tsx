@@ -28,7 +28,7 @@ const AddCategory = () => {
     const formData = new FormData(event.currentTarget)
     const name = formData.get("name")
     const image = imageLink
-    const { data } = await axios.post("/api/category/add", {
+    const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/category/add`, {
       name,
       image,
     })
@@ -44,7 +44,7 @@ const AddCategory = () => {
 
   const onEditHandler = async (id: number) => {
     console.log("on edit handler")
-    const response = await axios.patch(`/api/category/edit/${id}`, {
+    const response = await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/category/edit/${id}`, {
       ...editItem,
     })
     console.log(response)
