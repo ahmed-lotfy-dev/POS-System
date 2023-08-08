@@ -3,62 +3,62 @@ import { Product } from '@prisma/client';
 export declare class ProductController {
     private productService;
     constructor(productService: ProductService);
-    addProduct(dto: Product, code: number, price: number, categoryId: number, unitId: number): Promise<{
-        id: number;
+    addProduct(dto: Product, code: number, price: number): Promise<{
+        id: string;
         name: string;
         code: number;
         price: number;
         image: string;
-        unitId: number;
-        categoryId: number;
+        unitId: string;
+        categoryId: string;
         createdAt: Date;
         updatedAt: Date;
     }>;
     getAllProducts(): Promise<{
-        id: number;
+        id: string;
         name: string;
         code: number;
         price: number;
         image: string;
-        unitId: number;
-        categoryId: number;
+        unitId: string;
+        categoryId: string;
         createdAt: Date;
         updatedAt: Date;
     }[]>;
-    getSingleProduct(id: number): Promise<{
-        id: number;
+    getSingleProduct(id: string): Promise<{
+        id: string;
         name: string;
         code: number;
         price: number;
         image: string;
-        unitId: number;
-        categoryId: number;
+        unitId: string;
+        categoryId: string;
         createdAt: Date;
         updatedAt: Date;
     } | {
         msg: string;
     }>;
-    editProduct(dto: Product, id: number): Promise<{
-        id: number;
+    editProduct(dto: Product, id: string): Promise<{
+        id: string;
         name: string;
         code: number;
         price: number;
         image: string;
-        unitId: number;
-        categoryId: number;
+        unitId: string;
+        categoryId: string;
         createdAt: Date;
         updatedAt: Date;
     } | {
         msg: string;
     }>;
-    deleteProduct(id: number): Promise<{
-        id: number;
+    deleteProduct(id: string): Promise<{
+        id: string;
         name: string;
         code: number;
         price: number;
         image: string;
-        unitId: number;
-        categoryId: number;
+        unitId: string;
+        categoryId: string;
         createdAt: Date;
         updatedAt: Date;
     } | {

@@ -1,17 +1,14 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id         Int      @id @default(autoincrement())
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
   username   String?  @unique
   email      String   @unique
   password   String
@@ -25,14 +22,14 @@ model User {
 }
 
 model Product {
-  id         Int       @id @default(autoincrement())
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
   name       String
   code       Int
   price      Int
   image      String
-  unitId     Int?
+  unitId     String?   @db.ObjectId
   unit       Unit?     @relation(fields: [unitId], references: [id])
-  categoryId Int?
+  categoryId String?   @db.ObjectId
   category   Category? @relation(fields: [categoryId], references: [id])
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
@@ -41,22 +38,22 @@ model Product {
 }
 
 model Category {
-  id        Int       @id @default(autoincrement())
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
   name      String    @unique
   image     String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  Product   Product[]
+  products  Product[]
 
   @@map("categories")
 }
 
 model Unit {
-  id        Int       @id @default(autoincrement())
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
   name      String    @unique
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  Product   Product[]
+  products  Product[]
 
   @@map("units")
 }

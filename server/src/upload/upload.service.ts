@@ -1,16 +1,20 @@
-import { PutObjectCommand, DeleteObjectCommand, S3Client } from '@aws-sdk/client-s3';
+import {
+  PutObjectCommand,
+  DeleteObjectCommand,
+  S3Client,
+} from '@aws-sdk/client-s3';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { v4 } from "uuid"
+import { v4 } from 'uuid';
 
 @Injectable()
 export class UploadService {
-  constructor(config: ConfigService) { }
+  constructor(config: ConfigService) {}
 
   async uploadImage(s3: S3Client, image: Express.Multer.File) {
-    const id = v4()
+    const id = v4();
     console.log(image);
-    if (!image) throw new Error("No Image Provided")
+    if (!image) throw new Error('No Image Provided');
     try {
       const uploadedImage = await s3.send(
         new PutObjectCommand({
@@ -29,29 +33,29 @@ export class UploadService {
 
       return { image: imageUrl };
     } catch (error) {
-      throw new Error("Failed To Upload Image")
+      throw new Error('Failed To Upload Image');
     }
   }
 
   async deleteImage(s3: S3Client, dto: { image: string }) {
-    const image = dto.image
+    const image = dto.image;
     console.log(image);
-    if (!image) throw new Error("No Image Provided")
-    const filePathname = image.split(process.env.CF_IMAGES_SUBDOMAIN)[1]
+    if (!image) throw new Error('No Image Provided');
+    const filePathname = image.split(process.env.CF_IMAGES_SUBDOMAIN)[1];
 
-    console.log(filePathname)
+    console.log(filePathname);
     try {
       const deletedImage = await s3.send(
         new DeleteObjectCommand({
           Bucket: 'pos-system',
-          Key: filePathname
+          Key: filePathname,
         }),
       );
       console.log(deletedImage);
 
-      return { msg: "Image Deleted Successfully" };
+      return { msg: 'Image Deleted Successfully' };
     } catch (error) {
-      throw new Error("Failed To Delete Image")
+      throw new Error('Failed To Delete Image');
     }
   }
 }

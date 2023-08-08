@@ -10,14 +10,14 @@ export class UserService {
     const users = await this.prisma.user.findMany();
     console.log(users);
 
-    return users
+    return users;
   }
 
   async getuser(@Param() id: string) {
     console.log(id);
   }
 
-  async editUser(userId: number, dto: EditUserDto) {
+  async editUser(userId: string, dto: EditUserDto) {
     const user = await this.prisma.user.update({
       where: {
         id: userId,

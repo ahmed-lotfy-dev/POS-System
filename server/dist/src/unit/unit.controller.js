@@ -52,7 +52,7 @@ __decorate([
     (0, common_1.Get)('get/:id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], UnitController.prototype, "getSingleUnit", null);
 __decorate([
@@ -60,14 +60,14 @@ __decorate([
     __param(0, (0, common_1.Body)()),
     __param(1, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Number]),
+    __metadata("design:paramtypes", [Object, String]),
     __metadata("design:returntype", void 0)
 ], UnitController.prototype, "editUnit", null);
 __decorate([
     (0, common_1.Delete)('delete/:id'),
     __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number]),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], UnitController.prototype, "deleteUnit", null);
 exports.UnitController = UnitController = __decorate([

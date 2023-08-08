@@ -61,7 +61,7 @@ export class AuthService {
   }
 
   async signToken(
-    userId: number,
+    userId: string,
     email: string,
     username: string,
     isAdmin: boolean,

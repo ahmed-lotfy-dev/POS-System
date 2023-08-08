@@ -5,7 +5,7 @@ export declare class UserController {
     private userService;
     constructor(userService: UserService);
     getAllUsers(users: User[]): Promise<{
-        id: number;
+        id: string;
         username: string;
         email: string;
         password: string;
@@ -16,7 +16,7 @@ export declare class UserController {
         updatedAt: Date;
     }[]>;
     getMe(user: User): {
-        id: number;
+        id: string;
         username: string;
         email: string;
         password: string;
@@ -26,8 +26,8 @@ export declare class UserController {
         createdAt: Date;
         updatedAt: Date;
     };
-    editUser(userId: number, dto: EditUserDto): Promise<{
-        id: number;
+    editUser(userId: string, dto: EditUserDto): Promise<{
+        id: string;
         username: string;
         email: string;
         password: string;

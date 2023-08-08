@@ -9,9 +9,9 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 @Injectable()
 export class CategoryService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
-  async addCategory(@Body() dto: { name: string, image: string }) {
+  async addCategory(@Body() dto: { name: string; image: string }) {
     try {
       console.log(dto);
 
@@ -28,9 +28,9 @@ export class CategoryService {
       });
       console.log(newCategory);
 
-      return { msg: "Category Add Succssfully", newCategory }
+      return { msg: 'Category Add Succssfully', newCategory };
     } catch (error) {
-      return error
+      return error;
     }
   }
 
@@ -38,14 +38,14 @@ export class CategoryService {
     try {
       const categories = await this.prisma.category.findMany();
       console.log(categories);
-      return categories
+      return categories;
     } catch (error) {
       console.log(error);
-      return { msg: "No Categoris" }
+      return { msg: 'No Categoris' };
     }
   }
 
-  async getSingleCategory(@Param('id', ParseIntPipe) id: number) {
+  async getSingleCategory(@Param('id', ParseIntPipe) id: string) {
     try {
       const singleCategory = await this.prisma.category.findFirst({
         where: { id },
@@ -53,13 +53,13 @@ export class CategoryService {
       if (!singleCategory) return { msg: 'category not found' };
       return singleCategory;
     } catch (error) {
-      return error
+      return error;
     }
   }
 
   async editCategory(
-    @Body() dto: { name: string, image: string },
-    @Param('id', ParseIntPipe) id: number,
+    @Body() dto: { name: string; image: string },
+    @Param('id', ParseIntPipe) id: string,
   ) {
     try {
       console.log(id);
@@ -71,11 +71,11 @@ export class CategoryService {
       console.log(id);
       return updatedCategory;
     } catch (error) {
-      return error
+      return error;
     }
   }
 
-  async deleteCategory(@Param('id', ParseIntPipe) id: number) {
+  async deleteCategory(@Param('id', ParseIntPipe) id: string) {
     try {
       const deletedCategory = await this.prisma.category.delete({
         where: { id },
@@ -85,7 +85,7 @@ export class CategoryService {
 
       return deletedCategory;
     } catch (error) {
-      return error
+      return error;
     }
   }
 }

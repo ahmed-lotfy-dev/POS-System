@@ -4,7 +4,7 @@ export declare class UserService {
     private prisma;
     constructor(prisma: PrismaService);
     getAllUsers(): Promise<{
-        id: number;
+        id: string;
         username: string;
         email: string;
         password: string;
@@ -15,8 +15,8 @@ export declare class UserService {
         updatedAt: Date;
     }[]>;
     getuser(id: string): Promise<void>;
-    editUser(userId: number, dto: EditUserDto): Promise<{
-        id: number;
+    editUser(userId: string, dto: EditUserDto): Promise<{
+        id: string;
         username: string;
         email: string;
         password: string;

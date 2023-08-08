@@ -53,7 +53,7 @@ __decorate([
     __param(0, (0, decorator_1.GetUser)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, dto_1.EditUserDto]),
+    __metadata("design:paramtypes", [String, dto_1.EditUserDto]),
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "editUser", null);
 exports.UserController = UserController = __decorate([

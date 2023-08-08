@@ -20,4 +20,4 @@ import { S3Client } from '@aws-sdk/client-s3';
   controllers: [UploadController],
   providers: [UploadService],
 })
-export class UploadModule { }
+export class UploadModule {}

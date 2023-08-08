@@ -7,7 +7,7 @@ export declare class CategoryService {
         image: string;
     }): Promise<any>;
     getCategories(): Promise<{
-        id: number;
+        id: string;
         name: string;
         image: string;
         createdAt: Date;
@@ -15,10 +15,10 @@ export declare class CategoryService {
     }[] | {
         msg: string;
     }>;
-    getSingleCategory(id: number): Promise<any>;
+    getSingleCategory(id: string): Promise<any>;
     editCategory(dto: {
         name: string;
         image: string;
-    }, id: number): Promise<any>;
-    deleteCategory(id: number): Promise<any>;
+    }, id: string): Promise<any>;
+    deleteCategory(id: string): Promise<any>;
 }

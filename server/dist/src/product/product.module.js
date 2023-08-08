@@ -15,7 +15,7 @@ let ProductModule = exports.ProductModule = class ProductModule {
 exports.ProductModule = ProductModule = __decorate([
     (0, common_1.Module)({
         controllers: [product_controller_1.ProductController],
-        providers: [product_service_1.ProductService]
+        providers: [product_service_1.ProductService],
     })
 ], ProductModule);
 //# sourceMappingURL=product.module.js.map

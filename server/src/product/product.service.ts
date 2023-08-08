@@ -4,13 +4,13 @@ import { Product } from '@prisma/client';
 
 @Injectable()
 export class ProductService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
-  async addProduct(@Body() dto: Product, code: number, price: number, categoryId: number, unitId: number) {
+  async addProduct(@Body() dto: Product, code: number, price: number) {
     const newProduct = await this.prisma.product.create({
-      data: { ...dto, code, price, categoryId, unitId },
+      data: { ...dto, code, price },
     });
-    console.log(dto)
+    console.log(dto);
     return newProduct;
   }
 
@@ -21,7 +21,7 @@ export class ProductService {
     return products;
   }
 
-  async getSingleProduct(@Param('id', ParseIntPipe) id: number) {
+  async getSingleProduct(@Param('id', ParseIntPipe) id: string) {
     const singleProduct = await this.prisma.product.findFirst({
       where: { id },
     });
@@ -31,7 +31,7 @@ export class ProductService {
 
   async editProduct(
     @Body() dto: Product,
-    @Param('id', ParseIntPipe) id: number,
+    @Param('id', ParseIntPipe) id: string,
   ) {
     const updatedProduct = await this.prisma.product.update({
       where: { id },
@@ -44,7 +44,7 @@ export class ProductService {
     return updatedProduct;
   }
 
-  async deleteProduct(@Param('id', ParseIntPipe) id: number) {
+  async deleteProduct(@Param('id', ParseIntPipe) id: string) {
     const deletedProduct = await this.prisma.product.delete({
       where: { id },
     });

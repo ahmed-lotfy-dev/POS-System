@@ -14,13 +14,11 @@ async function main() {
     });
     const unit = await prisma.unit.create({
         data: {
-            id: 1,
             name: "kg",
         },
     });
     const category = await prisma.category.create({
         data: {
-            id: 1,
             image: "",
             name: "fruits",
         },

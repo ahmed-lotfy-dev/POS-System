@@ -39,7 +39,7 @@ export class UnitService {
     return units;
   }
 
-  async getSingleUnit(@Param('id', ParseIntPipe) id: number) {
+  async getSingleUnit(@Param('id', ParseIntPipe) id: string) {
     const singleUnit = await this.prisma.unit.findFirst({
       where: { id },
     });
@@ -48,7 +48,7 @@ export class UnitService {
     return singleUnit;
   }
 
-  async editUnit(@Body() dto: IUnit, @Param('id', ParseIntPipe) id: number) {
+  async editUnit(@Body() dto: IUnit, @Param('id', ParseIntPipe) id: string) {
     const updatedUnit = await this.prisma.unit.update({
       where: { id },
       data: { ...dto },
@@ -60,7 +60,7 @@ export class UnitService {
     return updatedUnit;
   }
 
-  async deleteUnit(@Param('id', ParseIntPipe) id: number) {
+  async deleteUnit(@Param('id', ParseIntPipe) id: string) {
     const deletedUnit = await this.prisma.unit.delete({
       where: { id },
     });

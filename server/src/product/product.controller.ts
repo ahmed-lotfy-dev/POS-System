@@ -7,7 +7,6 @@ import {
   Param,
   Body,
   ParseIntPipe,
-
 } from '@nestjs/common';
 
 import { ProductService } from './product.service';
@@ -15,17 +14,15 @@ import { Product } from '@prisma/client';
 
 @Controller('product')
 export class ProductController {
-  constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService) {}
 
   @Post('add')
   addProduct(
     @Body() dto: Product,
     @Body('code', ParseIntPipe) code: number,
     @Body('price', ParseIntPipe) price: number,
-    @Body('categoryId', ParseIntPipe) categoryId: number,
-    @Body('unitId', ParseIntPipe) unitId: number,
   ) {
-    return this.productService.addProduct(dto, code, price, categoryId, unitId);
+    return this.productService.addProduct(dto, code, price);
   }
 
   @Get('getAll')
@@ -34,17 +31,17 @@ export class ProductController {
   }
 
   @Get('get/:id')
-  getSingleProduct(@Param('id', ParseIntPipe) id: number) {
+  getSingleProduct(@Param('id', ParseIntPipe) id: string) {
     return this.productService.getSingleProduct(id);
   }
 
   @Patch('edit/:id')
-  editProduct(@Body() dto: Product, @Param('id', ParseIntPipe) id: number) {
+  editProduct(@Body() dto: Product, @Param('id', ParseIntPipe) id: string) {
     return this.productService.editProduct(dto, id);
   }
 
   @Delete('delete/:id')
-  deleteProduct(@Param('id', ParseIntPipe) id: number) {
+  deleteProduct(@Param('id', ParseIntPipe) id: string) {
     return this.productService.deleteProduct(id);
   }
 }
