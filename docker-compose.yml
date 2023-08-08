@@ -21,4 +21,4 @@ services:
     environment:
       VITE_BACKEND_URL: ${VITE_BACKEND_URL}
     ports:
-      - 3000:3000
+      - 3002:3000
