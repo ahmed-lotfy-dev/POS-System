@@ -1,0 +1,25 @@
+version: '3'
+services:
+  pos-system-backend:
+    image: pos-system-backend:latest
+    build: ./server
+    environment:
+        PORT: ${PORT}
+        DATABASE_URL: ${DATABASE_URL}
+        JWT_SECRET: ${JWT_SECRET}
+        CF_ACCOUNT_ID: ${CF_ACCOUNT_ID}
+        CF_ACCESS_KEY_ID: ${CF_ACCESS_KEY_ID}
+        CF_SECRET_ACCESS_KEY: ${CF_SECRET_ACCESS_KEY}
+        CF_IMAGES_SUBDOMAIN: ${CF_IMAGES_SUBDOMAIN}
+    ports:
+      - 3001:3001
+  pos-system-frontend:
+    image: pos-system-frontend:latest
+    build: ./client
+    restart: always
+    depends_on:
+      - pos-system-backend
+    environment:
+      VITE_BACKEND_URL: ${VITE_BACKEND_URL}
+    ports:
+      - 3000:3000

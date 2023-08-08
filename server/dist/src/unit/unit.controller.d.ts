@@ -5,12 +5,12 @@ export interface IUnit {
 export declare class UnitController {
     private unitService;
     constructor(unitService: UnitService);
-    addUnit(dto: IUnit): Promise<import("@nestjs/common").ConflictException | {
+    addUnit(dto: IUnit): Promise<{
         id: number;
         name: string;
         createdAt: Date;
         updatedAt: Date;
-    }>;
+    } | import("@nestjs/common").ConflictException>;
     getAllUnits(): Promise<{
         id: number;
         name: string;

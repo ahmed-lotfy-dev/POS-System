@@ -1,0 +1,16 @@
+FROM node:alpine
+WORKDIR /app/
+COPY /package*.json ./
+ENV PORT: ${PORT}
+ENV DATABASE_URL: ${DATABASE_URL}
+ENV JWT_SECRET: ${JWT_SECRET}
+ENV CF_ACCOUNT_ID: ${CF_ACCOUNT_ID}
+ENV CF_ACCESS_KEY_ID: ${CF_ACCESS_KEY_ID}
+ENV CF_SECRET_ACCESS_KEY: ${CF_SECRET_ACCESS_KEY}
+ENV CF_IMAGES_SUBDOMAIN: ${CF_IMAGES_SUBDOMAIN}
+RUN npm install
+COPY . .
+RUN npx prisma generate
+RUN npm run build
+COPY . .
+CMD ["npm","run","start:dev"]
