@@ -4,12 +4,12 @@ import { IUnit } from './unit.controller';
 export declare class UnitService {
     private prisma;
     constructor(prisma: PrismaService);
-    addUnit(dto: IUnit): Promise<ConflictException | {
+    addUnit(dto: IUnit): Promise<{
         id: string;
         name: string;
         createdAt: Date;
         updatedAt: Date;
-    }>;
+    } | ConflictException>;
     getUnits(): Promise<{
         id: string;
         name: string;
