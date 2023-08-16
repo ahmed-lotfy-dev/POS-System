@@ -4,7 +4,6 @@ import { notify } from "../../../lib/toast"
 
 import { FormEvent } from "react"
 import { useRevalidator } from "react-router-dom"
-import { BackButton } from "../../Ui/BackButton/BackButton"
 
 function AddUnit() {
   const revalidator = useRevalidator()
@@ -23,7 +22,6 @@ function AddUnit() {
 
   return (
     <div className='flex justify-center items-center'>
-      <BackButton />
       <form
         action=''
         method='dialog'

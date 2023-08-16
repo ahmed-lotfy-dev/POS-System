@@ -1,143 +1,126 @@
-import axios from "axios"
-import { ToastContainer } from "react-toastify"
-import { notify } from "../../../lib/toast"
+import axios from "axios";
 
-import { ChangeEvent, FormEvent, useRef } from "react"
-import { useNavigate, useRevalidator } from "react-router-dom"
-import { useUploadImage } from "../../../hooks/useUploadImage"
-import { Loader } from "@mantine/core"
-import { BackButton } from "../../Ui/BackButton/BackButton"
-import { useDispatch, useSelector } from "react-redux"
-import { RootState } from "../../../store/store"
-import { setItem } from "../../../store/features/Item/itemSlice"
+import { ToastContainer } from "react-toastify";
+import { notify } from "../../../lib/toast";
+
+import { ChangeEvent, FormEvent, useRef, useState } from "react";
+import { useRevalidator } from "react-router-dom";
+import { useUploadImage } from "../../../hooks/useUploadImage";
+import { Loader } from "@mantine/core";
+import {
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogHeader,
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { AlertDialogTitle } from "@radix-ui/react-alert-dialog";
 
 const AddCategory = () => {
-  const fileInputRef = useRef<HTMLInputElement>(null)
-  const formRef = useRef<HTMLFormElement>(null)
-  const revalidator = useRevalidator()
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+  const [itemName, setItemName] = useState<string>();
+  const revalidator = useRevalidator();
 
-  const editItem = useSelector((state: RootState) => state.item.item)
-  const { uploadImage, imageLink, isPending,
+  const {
+    uploadImage,
+    imageLink,
+    isPending,
     //error
-   } = useUploadImage()
+  } = useUploadImage();
 
   const onAddHandler = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    const formData = new FormData(event.currentTarget)
-    const name = formData.get("name")
-    const image = imageLink
-    const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/category/add`, {
-      name,
-      image,
-    })
-    console.log(data)
-    if (data.status === 409) notify(data.response.message, false)
-    revalidator.revalidate()
-    formRef.current?.reset()
-    dispatch(setItem(null))
+    event.preventDefault();
+    const { data } = await axios.post(
+      `${import.meta.env.VITE_BACKEND_URL}/category/add`,
+      { name: itemName, image: imageLink }
+    );
+    console.log(data);
+    if (data.status === 409) notify(data.response.message, false);
+    revalidator.revalidate();
+    formRef.current?.reset();
     if (fileInputRef.current) {
-      fileInputRef.current.value = ""
+      fileInputRef.current.value = "";
     }
-  }
+  };
 
-  const onEditHandler = async (id: number) => {
-    console.log("on edit handler")
-    const response = await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/category/edit/${id}`, {
-      ...editItem,
-    })
-    console.log(response)
-    setTimeout(() => {
-      dispatch(setItem(null))
-      revalidator.revalidate()
-    }, 100)
-  }
-
-  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    if (editItem) {
-      await onEditHandler(editItem.id)
-    } else {
-      onAddHandler(event)
-    }
-    navigate(-1)
-  }
-
-  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target
-    dispatch(setItem({ ...editItem, [name]: value }))
-  }
+  const nameChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setItemName(value);
+  };
 
   const uploadHandler = async (event: ChangeEvent<HTMLInputElement>) => {
+    console.log(event.target.files);
     if (event.target.files && event.target.files.length > 0) {
-      uploadImage(event.target.files[0])
-      dispatch(setItem({ ...editItem, image: imageLink }))
+      await uploadImage(event.target.files[0]);
     }
-  }
+  };
+
+  console.log({ itemName });
+  console.log(imageLink);
 
   return (
-    <div className='flex justify-center items-center mt-10 w-full '>
-      <BackButton />
+    <AlertDialogContent className="flex flex-col justify-center items-center w-full">
+      <AlertDialogHeader>
+        <AlertDialogTitle className="font-semibold">
+          Add New Category
+        </AlertDialogTitle>
+      </AlertDialogHeader>
       <form
         ref={formRef}
-        action=''
-        method='dialog'
-        className='modal-box flex flex-col'
-        onSubmit={onSubmit}
+        action=""
+        method="dialog"
+        className="modal-box flex flex-col"
+        onSubmit={onAddHandler}
       >
-        <label className='m-auto' htmlFor='name'>
+        <Label className="m-auto my-4 font-semibold" htmlFor="name">
           Category Name
-        </label>
-        <input
-          className='input input-bordered border-b-gray-100 input-xs w-full max-w-xs my-6 mt-10 m-auto focus:bg-gray-200 bg-gray-100'
-          type='text'
-          name='name'
-          id='name'
-          value={editItem?.name || ""}
-          onChange={onChange}
+        </Label>
+        <Input
+          className="input input-bordered border-b-gray-100 input-xs w-full max-w-xs my-6 mt-10 m-auto focus:bg-gray-200 bg-gray-100"
+          type="text"
+          name="name"
+          id="name"
+          value={itemName || ""}
+          onChange={nameChangeHandler}
         />
         <>
-          <button
-            className='input text-center w-full bg-gray-700 text-gray-200'
-            onClick={() => uploadHandler}
+          <Button
+            className="my-5"
+            type="button"
+            onClick={() => fileInputRef.current?.click()}
           >
-            Upload
-          </button>
+            Upload Image
+          </Button>
           <input
-            className='hidden'
-            type='file'
-            name='image'
+            className="hidden"
+            type="file"
+            name="image"
+            id="hiddenFileInput"
             ref={fileInputRef}
             onChange={uploadHandler}
           />
         </>
-        {isPending ? (
-          <div className='flex justify-center items-center mt-6'>
-            <Loader />
-          </div>
-        ) : null}
-        {editItem?.image && (
+        {isPending ? <Loader className="m-auto my-7" /> : null}
+        {imageLink && (
           <div>
             <img
-              src={editItem.image}
-              alt={`${editItem.name} image`}
-              className={`${
-                editItem?.image ? "block" : "hidden"
-              } w-80 m-auto my-10`}
+              src={imageLink}
+              alt={`${itemName} image`}
+              className={`${imageLink ? "block" : "hidden"} w-80 m-auto my-10`}
             />
           </div>
         )}
-        <button
-          type='submit'
-          className='btn-neutral rounded-lg w-1/4 py-2 m-auto'
-        >
-          {editItem ? "Save" : "Add"}
-        </button>
+        <div className="flex gap-5 m-auto">
+          <AlertDialogAction type="submit">Add</AlertDialogAction>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+        </div>
       </form>
       <ToastContainer />
-    </div>
-  )
-}
+    </AlertDialogContent>
+  );
+};
 
-export { AddCategory }
+export { AddCategory };

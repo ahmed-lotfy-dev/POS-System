@@ -12,5 +12,5 @@ async function bootstrap() {
   });
   await app.listen(3001);
 }
-console.log(process.env.FRONTEND_URL);
+
 bootstrap();

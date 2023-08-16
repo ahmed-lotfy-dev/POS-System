@@ -13,8 +13,8 @@ export class UploadService {
 
   async uploadImage(s3: S3Client, image: Express.Multer.File) {
     const id = v4();
-    console.log(image);
     if (!image) throw new Error('No Image Provided');
+    console.log(image);
     try {
       const uploadedImage = await s3.send(
         new PutObjectCommand({
@@ -26,13 +26,11 @@ export class UploadService {
         }),
       );
       const imageUrl = `${process.env.CF_IMAGES_SUBDOMAIN}/${id}-${image.originalname}`;
-
-      console.log(imageUrl);
-
-      console.log(uploadedImage);
-
+      console.log({ uploadedImage });
+      console.log({ imageUrl });
       return { image: imageUrl };
     } catch (error) {
+      console.log(error);
       throw new Error('Failed To Upload Image');
     }
   }

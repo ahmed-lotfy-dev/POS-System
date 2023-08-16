@@ -25,16 +25,13 @@ export class CategoryController {
   }
 
   @Get('get/:id')
-  getSingleCategory(@Param() id: string) {
+  getSingleCategory(@Body() id: string) {
     return this.categoryService.getSingleCategory(id);
   }
 
   @Patch('edit/:id')
-  editCategory(
-    @Body() dto: { name: string; image: string },
-    @Param() id: string,
-  ) {
-    return this.categoryService.editCategory(dto, id);
+  editCategory(@Body() dto: { id: string; name: string; image: string }) {
+    return this.categoryService.editCategory(dto);
   }
 
   @Delete('delete/:id')

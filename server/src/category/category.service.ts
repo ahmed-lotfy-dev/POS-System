@@ -45,7 +45,7 @@ export class CategoryService {
     }
   }
 
-  async getSingleCategory(@Param('id', ParseIntPipe) id: string) {
+  async getSingleCategory(@Param('id') id: string) {
     try {
       const singleCategory = await this.prisma.category.findFirst({
         where: { id },
@@ -57,25 +57,22 @@ export class CategoryService {
     }
   }
 
-  async editCategory(
-    @Body() dto: { name: string; image: string },
-    @Param('id', ParseIntPipe) id: string,
-  ) {
+  async editCategory(@Body() dto: { id: string; name: string; image: string }) {
+    const { id, name, image } = dto;
     try {
-      console.log(id);
       const updatedCategory = await this.prisma.category.update({
         where: { id },
-        data: { name: dto.name, image: dto.image },
+        data: { name, image },
       });
       if (!updatedCategory) return { msg: 'category not found' };
-      console.log(id);
       return updatedCategory;
     } catch (error) {
       return error;
     }
   }
 
-  async deleteCategory(@Param('id', ParseIntPipe) id: string) {
+  async deleteCategory(@Param('id') id: string) {
+    console.log(id);
     try {
       const deletedCategory = await this.prisma.category.delete({
         where: { id },
@@ -85,6 +82,7 @@ export class CategoryService {
 
       return deletedCategory;
     } catch (error) {
+      console.log(error);
       return error;
     }
   }

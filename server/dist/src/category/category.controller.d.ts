@@ -17,8 +17,9 @@ export declare class CategoryController {
     }>;
     getSingleCategory(id: string): Promise<any>;
     editCategory(dto: {
+        id: string;
         name: string;
         image: string;
-    }, id: string): Promise<any>;
+    }): Promise<any>;
     deleteCategory(id: string): Promise<any>;
 }

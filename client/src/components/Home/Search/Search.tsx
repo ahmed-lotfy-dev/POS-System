@@ -1,33 +1,32 @@
-import { useDispatch, useSelector } from "react-redux"
-import { RootState } from "../../../store/store"
-import { InputComponent } from "../../Ui/Input/Input"
-import { setSearchValue } from "../../../store/features/search/searchSlice"
-import { ChangeEvent } from "react"
-import { FiSearch } from "react-icons/fi"
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
+import { setSearchValue } from "../../../store/features/search/searchSlice";
+import { ChangeEvent } from "react";
+import { FiSearch } from "react-icons/fi";
 function Search() {
-  const searchValue = useSelector((state: RootState) => state.search.value)
-  const dispatch = useDispatch()
+  const searchValue = useSelector((state: RootState) => state.search.value);
+  const dispatch = useDispatch();
 
   const searchHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(setSearchValue(e.target.value))
-    console.log(e.target.value)
-  }
+    dispatch(setSearchValue(e.target.value));
+    console.log(e.target.value);
+  };
 
   return (
-    <div className='flex w-full justify-start items-center pl-10'>
-      <InputComponent
-        className='font-extrabold relative w-1/5'
-        name='search'
+    <div className="flex w-full justify-start items-center pl-10">
+      <input
+        className="font-extrabold relative w-1/5"
+        name="search"
         value={searchValue}
-        type='search'
+        type="search"
         onChange={searchHandler}
-        placeholder='Search...'
+        placeholder="Search..."
       />
-      <div className='mr-3 absolute ml-[16%]'>
+      <div className="mr-3 absolute ml-[16%]">
         <FiSearch size={20} color={"gray"} />
       </div>
     </div>
-  )
+  );
 }
 
-export { Search }
+export { Search };

@@ -1,40 +1,45 @@
-import { TableComponent } from "../Table/Table"
-import { Link, useRouteLoaderData } from "react-router-dom"
-import axios from "axios"
-import { useRevalidator } from "react-router-dom"
-import { ChangeEvent, useState } from "react"
-import { AllDataResponse } from "../../../types/globals"
+import { TableComponent } from "../Table/Table";
+import { Link, useRouteLoaderData } from "react-router-dom";
+import axios from "axios";
+import { useRevalidator } from "react-router-dom";
+import { ChangeEvent, useState } from "react";
+import { AllDataResponse } from "../../../types/globals";
 
 type Product = {
-  id: number
-  name: string
-  code: number
-  category: string
-  image: string
-  price: number
-  unit: string
-}
+  id: string;
+  name: string;
+  code: number;
+  category: string;
+  image: string;
+  price: number;
+  unit: string;
+};
 
 const AdminProducts = () => {
-  const { products } = useRouteLoaderData("root") as AllDataResponse
-  console.log(products)
-  const [imageLink, setImageLink] = useState<string>("")
+  const { products } = useRouteLoaderData("root") as AllDataResponse;
+  console.log(products);
+  const [imageLink, setImageLink] = useState<string>("");
 
-  const revalidator = useRevalidator()
+  const revalidator = useRevalidator();
 
   const handleSave = async (item: Product) => {
-    await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/product/edit/${item?.id}`, {
-      ...item,
-      code: +item.code,
-      image: imageLink,
-    })
-    revalidator.revalidate()
-  }
+    await axios.patch(
+      `${import.meta.env.VITE_BACKEND_URL}/product/edit/${item?.id}`,
+      {
+        ...item,
+        code: +item.code,
+        image: imageLink,
+      }
+    );
+    revalidator.revalidate();
+  };
 
-  const handleDelete = async (id: number) => {
-    await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/product/delete/${id}`)
-    revalidator.revalidate()
-  }
+  const handleDelete = async (id: string) => {
+    await axios.delete(
+      `${import.meta.env.VITE_BACKEND_URL}/product/delete/${id}`
+    );
+    revalidator.revalidate();
+  };
 
   const uploadHandler = async (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
@@ -46,15 +51,15 @@ const AdminProducts = () => {
             "Content-Type": "multipart/form-data",
           },
         }
-      )
-      console.log(data)
-      setImageLink(data.image)
+      );
+      console.log(data);
+      setImageLink(data.image);
     }
-  }
+  };
 
   return (
-    <div className='flex flex-col justify-center items-center'>
-      <Link className='btn' to={"/dashboard/products/add"}>
+    <div className="flex flex-col justify-center items-center w-full">
+      <Link className="btn" to={"/dashboard/product/add"}>
         Add Product
       </Link>
       <TableComponent<Product>
@@ -64,7 +69,7 @@ const AdminProducts = () => {
         uploadHandler={uploadHandler}
       />
     </div>
-  )
-}
+  );
+};
 
-export { AdminProducts }
+export { AdminProducts };

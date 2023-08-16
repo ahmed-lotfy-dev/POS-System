@@ -1,11 +1,11 @@
-import { useSelector } from "react-redux"
-import { RootState } from "../../store/store"
-import { AsideNav } from "../Home/Aside/AsideNav"
-import { Outlet } from "react-router-dom"
-import { HomeNav } from "../Ui/HomeNav/HomeNav"
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+import { AsideNav } from "../Home/Aside/AsideNav";
+import { Outlet } from "react-router-dom";
+import { HomeNav } from "../HomeNav/HomeNav";
 
 const DashboardLayout = () => {
-  const theme = useSelector((state: RootState) => state.theme.theme)
+  const theme = useSelector((state: RootState) => state.theme.theme);
 
   return (
     <div
@@ -14,12 +14,12 @@ const DashboardLayout = () => {
       }`}
     >
       <HomeNav />
-      <div className='flex'>
+      <div className="flex">
         <AsideNav />
         <Outlet />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export { DashboardLayout }
+export { DashboardLayout };

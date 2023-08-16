@@ -7,7 +7,6 @@ import { useRevalidator, useRouteLoaderData } from "react-router-dom"
 import { useUploadImage } from "../../../hooks/useUploadImage"
 import { Loader } from "@mantine/core"
 import { AllDataResponse, Category, Unit } from "../../../types/globals"
-import { BackButton } from "../../Ui/BackButton/BackButton"
 
 const AddProduct = () => {
   const { categories, units } = useRouteLoaderData("root") as AllDataResponse
@@ -58,7 +57,6 @@ const AddProduct = () => {
 
   return (
     <div className='flex justify-center items-center mt-10'>
-      <BackButton />
       <form
         ref={formRef}
         action=''

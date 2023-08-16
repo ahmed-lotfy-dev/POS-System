@@ -28,8 +28,8 @@ let CategoryController = exports.CategoryController = class CategoryController {
     getSingleCategory(id) {
         return this.categoryService.getSingleCategory(id);
     }
-    editCategory(dto, id) {
-        return this.categoryService.editCategory(dto, id);
+    editCategory(dto) {
+        return this.categoryService.editCategory(dto);
     }
     deleteCategory(id) {
         return this.categoryService.deleteCategory(id);
@@ -50,7 +50,7 @@ __decorate([
 ], CategoryController.prototype, "getAllCategories", null);
 __decorate([
     (0, common_1.Get)('get/:id'),
-    __param(0, (0, common_1.Param)()),
+    __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
@@ -58,9 +58,8 @@ __decorate([
 __decorate([
     (0, common_1.Patch)('edit/:id'),
     __param(0, (0, common_1.Body)()),
-    __param(1, (0, common_1.Param)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], CategoryController.prototype, "editCategory", null);
 __decorate([
