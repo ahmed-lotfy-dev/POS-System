@@ -16,6 +16,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ToastContainer } from "react-toastify";
 import { useRevalidator } from "react-router-dom";
+import axios from "axios";
 type Props = {};
 
 function EditCategory({}: Props) {
@@ -27,8 +28,15 @@ function EditCategory({}: Props) {
 
   const objectKeys = editItem ? Object.keys(editItem).slice(1, -2) : [];
 
-  const onSaveHandler = () => {
+  const onSaveHandler = async () => {
+    console.log({ onsave: editItem });
     console.log("saving item");
+    const { data } = await axios.patch(
+      `${import.meta.env.VITE_BACKEND_URL}/category/edit/${editItem.id}`,
+      editItem
+    );
+    revalidator.revalidate();
+    dispatch(setItem({}));
   };
 
   const {
@@ -65,7 +73,7 @@ function EditCategory({}: Props) {
         action=""
         method="dialog"
         className="modal-box flex flex-col"
-        onSubmit={onSaveHandler}
+        onSubmit={() => onSaveHandler()}
       >
         <Label className="m-auto my-4 font-semibold" htmlFor="name">
           Category Name
@@ -120,61 +128,3 @@ function EditCategory({}: Props) {
 }
 
 export { EditCategory };
-
-// return (
-//   <AlertDialogContent className="flex justify-center items-center w-full relative">
-//     <AlertDialogHeader>
-//       <AlertDialogTitle className="font-semibold">
-//         Edit Category
-//       </AlertDialogTitle>
-//     </AlertDialogHeader>
-//     <form className="flex flex-col space-y-4">
-//       {objectKeys.map((key) =>
-//         key === "image" ? (
-//           <div key="key">
-//             <Button
-//               className="input text-center w-full bg-gray-700 text-gray-200"
-//               type="button"
-//               onClick={() => fileInputRef.current?.click()}
-//             >
-//               Upload
-//             </Button>
-//             <Input
-//               className="hidden"
-//               type="file"
-//               name="image"
-//               id="hiddenFileInput"
-//               ref={fileInputRef}
-//               onChange={uploadHandler}
-//             />
-//             {isPending ? (
-//               <div className="flex justify-center items-center mt-6">
-//                 <Loader />
-//               </div>
-//             ) : null}
-//             <img
-//               src={editItem.image}
-//               alt={`${editItem.name} image`}
-//               className={`${
-//                 editItem.image ? "block" : "hidden"
-//               } w-80 m-auto my-5`}
-//             />
-//           </div>
-//         ) : (
-//           <Input
-//             key={key}
-//             onChange={onChangeHandler}
-//             value={editItem[key] || ""}
-//           />
-//         )
-//       )}
-
-//       <div className="flex gap-5 m-auto">
-//         <AlertDialogAction type="submit" onClick={onSaveHandler}>
-//           Save
-//         </AlertDialogAction>
-//         <AlertDialogCancel>Cancel</AlertDialogCancel>
-//       </div>
-//     </form>
-//   </AlertDialogContent>
-// );

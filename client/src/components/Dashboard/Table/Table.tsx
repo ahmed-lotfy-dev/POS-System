@@ -15,9 +15,10 @@ import { useDeleteImage } from "../../../hooks/useDeleteImage";
 import { useDispatch, useSelector } from "react-redux";
 import { setItem } from "../../../store/features/Item/itemSlice";
 import { RootState } from "../../../store/store";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useRouteLoaderData } from "react-router-dom";
 import { AlertDialog, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { EditCategory } from "../categories/EditCategory";
+import { AllDataResponse } from "@/types/globals";
 
 type TableProps<T> = {
   tableData: T[];
@@ -40,6 +41,9 @@ const TableComponent = <T extends Record<string, any>>({
   const { deleteImage } = useDeleteImage();
 
   const location = useLocation().pathname.split("/dashboard/")[1];
+
+  const { categories } = useRouteLoaderData("root") as AllDataResponse;
+  const { units } = useRouteLoaderData("root") as AllDataResponse;
 
   const onEditHandler = (data: T) => {
     dispatch(setItem({ ...data }));
@@ -90,8 +94,14 @@ const TableComponent = <T extends Record<string, any>>({
                     <img
                       src={data[key]}
                       alt="Image"
-                      className="h-40 w-28 m-auto"
+                      className="h-[200px] w-[300px] m-auto"
                     />
+                  ) : key === "unitId" ? (
+                    units.find((unit) => unit.id === data[key])?.name ||
+                    data[key]
+                  ) : key === "categoryId" ? (
+                    categories.find((category) => category.id === data[key])
+                      ?.name || data[key]
                   ) : (
                     data[key]
                   )}
@@ -120,7 +130,6 @@ const TableComponent = <T extends Record<string, any>>({
       );
     });
   };
-
   return (
     <div className="text-center w-full">
       {data.length > 0 ? (

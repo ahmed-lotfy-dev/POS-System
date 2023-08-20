@@ -21,5 +21,7 @@ export declare class CategoryController {
         name: string;
         image: string;
     }): Promise<any>;
-    deleteCategory(id: string): Promise<any>;
+    deleteCategory(id: {
+        id: string;
+    }): Promise<any>;
 }

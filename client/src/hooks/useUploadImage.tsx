@@ -22,7 +22,7 @@ const useUploadImage = () => {
       );
       setImageLink(data.image);
       setIsPending(false);
-      return imageLink;
+      return data.image;
     } catch (error) {
       setError("Failed to upload the image");
     }

@@ -4,6 +4,10 @@ import axios from "axios";
 import { useRevalidator } from "react-router-dom";
 import { ChangeEvent, useState } from "react";
 import { AllDataResponse } from "../../../types/globals";
+import { AlertDialog, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { AddUnit } from "../units/AddUnit";
+import { AddProduct } from "./AddProduct";
 
 type Product = {
   id: string;
@@ -59,9 +63,12 @@ const AdminProducts = () => {
 
   return (
     <div className="flex flex-col justify-center items-center w-full">
-      <Link className="btn" to={"/dashboard/product/add"}>
-        Add Product
-      </Link>
+      <AlertDialog>
+        <Button asChild className="mt-10">
+          <AlertDialogTrigger>Add Product</AlertDialogTrigger>
+        </Button>
+        <AddProduct />
+      </AlertDialog>
       <TableComponent<Product>
         tableData={products}
         handleSave={handleSave}

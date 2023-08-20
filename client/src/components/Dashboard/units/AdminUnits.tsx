@@ -2,6 +2,9 @@ import { TableComponent } from "../Table/Table";
 import axios from "axios";
 import { Link, useRevalidator, useRouteLoaderData } from "react-router-dom";
 import { AllDataResponse } from "../../../types/globals";
+import { AlertDialog, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { AddUnit } from "./AddUnit";
 
 type Unit = {
   id: string;
@@ -30,9 +33,12 @@ const AdminUnits = () => {
 
   return (
     <div className="flex flex-col justify-center items-center w-full">
-      <Link className="btn" to={"/dashboard/unit/add"}>
-        Add Unit
-      </Link>{" "}
+      <AlertDialog>
+        <Button asChild className="mt-10">
+          <AlertDialogTrigger>Add Unit</AlertDialogTrigger>
+        </Button>
+        <AddUnit />
+      </AlertDialog>
       <TableComponent<Unit>
         tableData={units}
         handleSave={handleSave}

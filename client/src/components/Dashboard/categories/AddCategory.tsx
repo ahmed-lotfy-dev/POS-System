@@ -20,30 +20,31 @@ import { AlertDialogTitle } from "@radix-ui/react-alert-dialog";
 
 const AddCategory = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const formRef = useRef<HTMLFormElement>(null);
-  const [itemName, setItemName] = useState<string>();
+  const [itemName, setItemName] = useState<string>("");
+  const [image, setImage] = useState<string | null | undefined>("");
   const revalidator = useRevalidator();
 
   const {
     uploadImage,
-    imageLink,
+    // imageLink,
     isPending,
     //error
   } = useUploadImage();
 
   const onAddHandler = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    console.log({ itemName, image });
     const { data } = await axios.post(
       `${import.meta.env.VITE_BACKEND_URL}/category/add`,
-      { name: itemName, image: imageLink }
+      { name: itemName, image }
     );
-    console.log(data);
     if (data.status === 409) notify(data.response.message, false);
     revalidator.revalidate();
-    formRef.current?.reset();
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
+    setItemName("");
+    setImage("");
   };
 
   const nameChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -54,12 +55,11 @@ const AddCategory = () => {
   const uploadHandler = async (event: ChangeEvent<HTMLInputElement>) => {
     console.log(event.target.files);
     if (event.target.files && event.target.files.length > 0) {
-      await uploadImage(event.target.files[0]);
+      const imageLink = await uploadImage(event.target.files[0]);
+      setImage(imageLink);
+      console.log({ imageLink });
     }
   };
-
-  console.log({ itemName });
-  console.log(imageLink);
 
   return (
     <AlertDialogContent className="flex flex-col justify-center items-center w-full">
@@ -69,18 +69,15 @@ const AddCategory = () => {
         </AlertDialogTitle>
       </AlertDialogHeader>
       <form
-        ref={formRef}
         action=""
         method="dialog"
         className="modal-box flex flex-col"
         onSubmit={onAddHandler}
       >
-        <Label className="m-auto my-4 font-semibold" htmlFor="name">
-          Category Name
-        </Label>
         <Input
           className="input input-bordered border-b-gray-100 input-xs w-full max-w-xs my-6 mt-10 m-auto focus:bg-gray-200 bg-gray-100"
           type="text"
+          placeholder="Category Name"
           name="name"
           id="name"
           value={itemName || ""}
@@ -104,12 +101,12 @@ const AddCategory = () => {
           />
         </>
         {isPending ? <Loader className="m-auto my-7" /> : null}
-        {imageLink && (
+        {image && (
           <div>
             <img
-              src={imageLink}
+              src={image}
               alt={`${itemName} image`}
-              className={`${imageLink ? "block" : "hidden"} w-80 m-auto my-10`}
+              className={`${image ? "block" : "hidden"} w-80 m-auto my-10`}
             />
           </div>
         )}

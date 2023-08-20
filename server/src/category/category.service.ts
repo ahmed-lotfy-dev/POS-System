@@ -71,11 +71,11 @@ export class CategoryService {
     }
   }
 
-  async deleteCategory(@Param('id') id: string) {
+  async deleteCategory(@Param('id') id: { id: string }) {
     console.log(id);
     try {
       const deletedCategory = await this.prisma.category.delete({
-        where: { id },
+        where: { id: id.id },
       });
       if (!deletedCategory) return { msg: 'category not found' };
       console.log(id);
