@@ -11,7 +11,7 @@ async function bootstrap() {
         origin: '*',
         allowedHeaders: '*',
     });
-    await app.listen(3001);
+    await app.listen(3002);
 }
 bootstrap();
 //# sourceMappingURL=main.js.map
