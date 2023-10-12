@@ -18,7 +18,7 @@ const decorator_1 = require("../auth/decorator");
 const guard_1 = require("../auth/guard");
 const dto_1 = require("./dto");
 const user_service_1 = require("./user.service");
-let UserController = exports.UserController = class UserController {
+let UserController = class UserController {
     constructor(userService) {
         this.userService = userService;
     }
@@ -32,6 +32,7 @@ let UserController = exports.UserController = class UserController {
         return this.userService.editUser(userId, dto);
     }
 };
+exports.UserController = UserController;
 __decorate([
     (0, common_1.Get)(''),
     __param(0, (0, decorator_1.GetUser)()),

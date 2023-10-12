@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CategoryService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma/prisma.service");
-let CategoryService = exports.CategoryService = class CategoryService {
+let CategoryService = class CategoryService {
     constructor(prisma) {
         this.prisma = prisma;
     }
@@ -95,6 +95,7 @@ let CategoryService = exports.CategoryService = class CategoryService {
         }
     }
 };
+exports.CategoryService = CategoryService;
 __decorate([
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),

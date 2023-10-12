@@ -18,7 +18,7 @@ const upload_service_1 = require("./upload.service");
 const platform_express_1 = require("@nestjs/platform-express");
 const aws_sdk_v3_nest_1 = require("aws-sdk-v3-nest");
 const client_s3_1 = require("@aws-sdk/client-s3");
-let UploadController = exports.UploadController = class UploadController {
+let UploadController = class UploadController {
     constructor(uploadService) {
         this.uploadService = uploadService;
     }
@@ -29,6 +29,7 @@ let UploadController = exports.UploadController = class UploadController {
         return this.uploadService.deleteImage(this.s3, dto);
     }
 };
+exports.UploadController = UploadController;
 __decorate([
     (0, aws_sdk_v3_nest_1.InjectAws)(client_s3_1.S3Client),
     __metadata("design:type", client_s3_1.S3Client)

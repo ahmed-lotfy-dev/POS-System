@@ -14,7 +14,7 @@ const client_s3_1 = require("@aws-sdk/client-s3");
 const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
 const uuid_1 = require("uuid");
-let UploadService = exports.UploadService = class UploadService {
+let UploadService = class UploadService {
     constructor(config) { }
     async uploadImage(s3, image) {
         const id = (0, uuid_1.v4)();
@@ -59,6 +59,7 @@ let UploadService = exports.UploadService = class UploadService {
         }
     }
 };
+exports.UploadService = UploadService;
 exports.UploadService = UploadService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [config_1.ConfigService])

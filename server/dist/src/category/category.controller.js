@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CategoryController = void 0;
 const common_1 = require("@nestjs/common");
 const category_service_1 = require("./category.service");
-let CategoryController = exports.CategoryController = class CategoryController {
+let CategoryController = class CategoryController {
     constructor(categoryService) {
         this.categoryService = categoryService;
     }
@@ -35,6 +35,7 @@ let CategoryController = exports.CategoryController = class CategoryController {
         return this.categoryService.deleteCategory(id);
     }
 };
+exports.CategoryController = CategoryController;
 __decorate([
     (0, common_1.Post)('add'),
     __param(0, (0, common_1.Body)()),

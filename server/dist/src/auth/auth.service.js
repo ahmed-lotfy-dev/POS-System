@@ -15,7 +15,7 @@ const prisma_service_1 = require("../prisma/prisma.service");
 const argon = require("argon2");
 const jwt_1 = require("@nestjs/jwt");
 const config_1 = require("@nestjs/config");
-let AuthService = exports.AuthService = class AuthService {
+let AuthService = class AuthService {
     constructor(prisma, jwt, config) {
         this.prisma = prisma;
         this.jwt = jwt;
@@ -70,6 +70,7 @@ let AuthService = exports.AuthService = class AuthService {
         };
     }
 };
+exports.AuthService = AuthService;
 exports.AuthService = AuthService = __decorate([
     (0, common_1.Injectable)(),
     __metadata("design:paramtypes", [prisma_service_1.PrismaService,

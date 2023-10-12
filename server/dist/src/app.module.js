@@ -16,8 +16,9 @@ const unit_module_1 = require("./unit/unit.module");
 const users_module_1 = require("./user/users.module");
 const prisma_module_1 = require("./prisma/prisma.module");
 const upload_module_1 = require("./upload/upload.module");
-let AppModule = exports.AppModule = class AppModule {
+let AppModule = class AppModule {
 };
+exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [

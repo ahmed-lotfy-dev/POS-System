@@ -15,7 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UnitController = void 0;
 const common_1 = require("@nestjs/common");
 const unit_service_1 = require("./unit.service");
-let UnitController = exports.UnitController = class UnitController {
+let UnitController = class UnitController {
     constructor(unitService) {
         this.unitService = unitService;
     }
@@ -35,6 +35,7 @@ let UnitController = exports.UnitController = class UnitController {
         return this.unitService.deleteUnit(id);
     }
 };
+exports.UnitController = UnitController;
 __decorate([
     (0, common_1.Post)('add'),
     __param(0, (0, common_1.Body)()),

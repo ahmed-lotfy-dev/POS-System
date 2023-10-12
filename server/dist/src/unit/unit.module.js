@@ -10,8 +10,9 @@ exports.UnitModule = void 0;
 const common_1 = require("@nestjs/common");
 const unit_controller_1 = require("./unit.controller");
 const unit_service_1 = require("./unit.service");
-let UnitModule = exports.UnitModule = class UnitModule {
+let UnitModule = class UnitModule {
 };
+exports.UnitModule = UnitModule;
 exports.UnitModule = UnitModule = __decorate([
     (0, common_1.Module)({
         controllers: [unit_controller_1.UnitController],

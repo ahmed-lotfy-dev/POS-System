@@ -12,8 +12,9 @@ const upload_service_1 = require("./upload.service");
 const upload_controller_1 = require("./upload.controller");
 const aws_sdk_v3_nest_1 = require("aws-sdk-v3-nest");
 const client_s3_1 = require("@aws-sdk/client-s3");
-let UploadModule = exports.UploadModule = class UploadModule {
+let UploadModule = class UploadModule {
 };
+exports.UploadModule = UploadModule;
 exports.UploadModule = UploadModule = __decorate([
     (0, common_1.Module)({
         imports: [
