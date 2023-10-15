@@ -6,7 +6,7 @@ import { notify } from "../../../lib/toast";
 import { ChangeEvent, FormEvent, useRef, useState } from "react";
 import { useRevalidator } from "react-router-dom";
 import { useUploadImage } from "../../../hooks/useUploadImage";
-import { Loader } from "@mantine/core";
+import { Loader } from "@/components/ui/loader";
 import {
   AlertDialogAction,
   AlertDialogCancel,

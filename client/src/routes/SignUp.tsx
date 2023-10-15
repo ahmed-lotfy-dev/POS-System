@@ -18,7 +18,7 @@ const SignUp = () => {
     try {
       if (password !== confirmPassword) return;
       const res = await fetch(
-        `${import.meta.env.VITE_BACKEND_URL}auth/signup`,
+        `${import.meta.env.VITE_BACKEND_URL}/auth/signup`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

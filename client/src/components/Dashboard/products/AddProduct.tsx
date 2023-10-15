@@ -6,7 +6,9 @@ import { notify } from "../../../lib/toast";
 import { ChangeEvent, FormEvent, useRef, useState } from "react";
 import { useRevalidator, useRouteLoaderData } from "react-router-dom";
 import { useUploadImage } from "../../../hooks/useUploadImage";
-import { Loader } from "@mantine/core";
+// import { Loader } from "@mantine/core";
+import { Loader } from "@/components/ui/loader";
+
 import {
   AlertDialogAction,
   AlertDialogCancel,
@@ -190,7 +192,7 @@ const AddProduct = () => {
             onChange={uploadHandler}
           />
         </>
-        {isPending ? <Loader className="m-auto my-7" /> : null}
+        {isPending ? <Loader /> : null}
         {item && (
           <div>
             <img

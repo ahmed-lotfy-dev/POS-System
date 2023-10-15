@@ -6,7 +6,8 @@ import { notify } from "../../../lib/toast";
 import { ChangeEvent, FormEvent, useRef, useState } from "react";
 import { useRevalidator } from "react-router-dom";
 import { useUploadImage } from "../../../hooks/useUploadImage";
-import { Loader } from "@mantine/core";
+// import { Loader } from "@mantine/core";
+import { Loader } from "@/components/ui/loader";
 import {
   AlertDialogAction,
   AlertDialogCancel,
@@ -14,6 +15,7 @@ import {
   AlertDialogHeader,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { AlertDialogTitle } from "@radix-ui/react-alert-dialog";
 
@@ -99,7 +101,7 @@ const AddCategory = () => {
             onChange={uploadHandler}
           />
         </>
-        {isPending ? <Loader className="m-auto my-7" /> : null}
+        {isPending ? <Loader /> : null}
         {image && (
           <div>
             <img

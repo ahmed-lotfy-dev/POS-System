@@ -2,7 +2,9 @@ import { RootState } from "../../../store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { ChangeEvent, useRef } from "react";
 import { useUploadImage } from "../../../hooks/useUploadImage";
-import { Loader } from "@mantine/core";
+// import { Loader } from "@mantine/core";
+import { Loader } from "@/components/ui/loader";
+
 import { setItem } from "../../../store/features/Item/itemSlice";
 import { Button } from "@/components/ui/button";
 import {
@@ -103,7 +105,7 @@ function EditProduct({}: Props) {
             onChange={uploadHandler}
           />
         </>
-        {isPending ? <Loader className="m-auto my-7" /> : null}
+        {isPending ? <Loader  /> : null}
         {imageLink ? (
           <img
             src={imageLink}
