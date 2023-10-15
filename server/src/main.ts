@@ -7,7 +7,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   app.enableCors({
     credentials: true,
-    origin: '*',
+    origin: 'https://pos-system-f.ahmedlotfy.dev',
     allowedHeaders: '*',
   });
   await app.listen(3001);
