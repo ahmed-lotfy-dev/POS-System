@@ -77,7 +77,7 @@ const SignUp = () => {
           <div>
             <div className="w-full">
               <button className="btn btn-neutral w-1/3 mt-2 mb-3 m-auto block">
-                Sign In
+                Sign Up
               </button>
             </div>
             <div className="mt-6 text-center">
