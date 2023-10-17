@@ -64,7 +64,7 @@ const AdminProducts = () => {
   return (
     <div className="flex flex-col justify-center items-center w-full">
       <AlertDialog>
-        <Button asChild className="mt-10">
+        <Button asChild className="mt-10 mb-6">
           <AlertDialogTrigger>Add Product</AlertDialogTrigger>
         </Button>
         <AddProduct />

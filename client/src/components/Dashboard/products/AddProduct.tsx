@@ -148,7 +148,9 @@ const AddProduct = () => {
           </SelectTrigger>
           <SelectContent>
             {categories.map((category) => (
-              <SelectItem value={category.id}>{category.name}</SelectItem>
+              <SelectItem key={category.id} value={category.id}>
+                {category.name}
+              </SelectItem>
             ))}
           </SelectContent>
         </Select>

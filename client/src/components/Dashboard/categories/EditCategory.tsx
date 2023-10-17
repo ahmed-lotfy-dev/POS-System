@@ -61,8 +61,6 @@ function EditCategory({}: Props) {
     }
   };
 
-  console.log(editItem);
-  console.log(imageLink);
   return (
     <AlertDialogContent className="flex flex-col justify-center items-center w-full">
       <AlertDialogHeader>

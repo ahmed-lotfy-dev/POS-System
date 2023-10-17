@@ -1,17 +1,19 @@
+import { AllDataResponse } from "@/types/globals";
+import React from "react";
 import { useRouteLoaderData } from "react-router-dom";
-import { AllDataResponse } from "../../../types/globals";
 
 type Props = {};
 
-function Categories({}: Props) {
+function Products({}: Props) {
   const { categories, products } = useRouteLoaderData(
     "root"
   ) as AllDataResponse;
-  console.log(categories);
+
+  console.log(products);
 
   return (
-    <div className="w-full justify-start items-center h-8 mb-10 flex flex-1">
-      {categories.map((category) => (
+    <div className="w-full justify-start items-start h-8 mb-10 flex flex-1">
+      {products.map((category) => (
         <>
           <div className="dark:bg-gray-500 bg-gray-300 rounded-2xl flex flex-col justify-center items-center p-8 m-6">
             <h2 className="mb-10 font-bold text-xl text-left">
@@ -25,4 +27,4 @@ function Categories({}: Props) {
   );
 }
 
-export { Categories };
+export { Products };

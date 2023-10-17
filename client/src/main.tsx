@@ -6,6 +6,8 @@ import { Provider } from "react-redux";
 import { store } from "./store/store.js";
 import { AllDataResponse } from "./types/globals.js";
 
+import { ThemeProvider } from "@/components/ThemeToggle/theme-provider.js";
+
 import {
   createRoutesFromElements,
   createBrowserRouter,
@@ -74,8 +76,10 @@ const router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <Provider store={store}>
-      <RouterProvider router={router} />
-    </Provider>
+    <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
+    </ThemeProvider>
   </React.StrictMode>
 );

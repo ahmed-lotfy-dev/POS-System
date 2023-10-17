@@ -112,7 +112,6 @@ const TableComponent = <T extends Record<string, any>>({
               <AlertDialog>
                 <AlertDialogTrigger
                   className="m-auto"
-                  asChild
                   onClick={() => onEditHandler(data)}
                 >
                   <TbEdit size={25} />
@@ -131,7 +130,7 @@ const TableComponent = <T extends Record<string, any>>({
     });
   };
   return (
-    <div className="text-center w-full">
+    <div className="text-center w-full h-full overflow-auto">
       {data.length > 0 ? (
         <Table className="w-3/5 table bg-stone-300 text-center m-auto mt-10">
           {tHead()}

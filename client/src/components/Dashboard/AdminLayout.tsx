@@ -7,11 +7,7 @@ const DashboardLayout = () => {
   const theme = useSelector((state: RootState) => state.theme.theme);
 
   return (
-    <div
-      className={`w-full h-full border-[3px] border-primary rounded-xl ${
-        theme ? "dark" : ""
-      }`}
-    >
+    <div className={`w-full h-full ${theme ? "dark" : ""}`}>
       <div className="flex w-full h-full">
         <AsideNav />
         <Outlet />

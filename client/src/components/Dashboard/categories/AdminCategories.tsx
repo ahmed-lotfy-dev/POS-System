@@ -67,7 +67,7 @@ function AdminCategories() {
   return (
     <div className="flex flex-col justify-center items-center w-full">
       <AlertDialog>
-        <Button asChild className="mt-10">
+        <Button asChild className="mt-10 mb-6">
           <AlertDialogTrigger>Add Category</AlertDialogTrigger>
         </Button>
         <AddCategory />
