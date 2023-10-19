@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Table, TableHead } from "@/components/ui/table";
 import React from "react";
 
@@ -25,11 +26,19 @@ function Cart({}: Props) {
         </div>
         <div className="flex justify-between my-3">
           <span>Tax</span>
-          <span>$858</span>
+          <Input
+            type="number"
+            placeholder="%14"
+            className="w-1/3 placeholder:text-gray-400"
+          />
         </div>
         <div className="flex justify-between my-3">
           <span>Discount</span>
-          <span>$858</span>
+          <Input
+            type="number"
+            placeholder="%10"
+            className="w-1/3 placeholder:text-gray-400"
+          />
         </div>
         <Button className="flex justify-between my-3 w-full m-auto">
           <span className="block">Total</span>

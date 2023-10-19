@@ -22,7 +22,7 @@ function Categories({}: Props) {
         >
           All
         </Button>
-        {categories.map((category) => (
+        {categories?.map((category) => (
           <Button
             key={category.id}
             variant={"outline"}
