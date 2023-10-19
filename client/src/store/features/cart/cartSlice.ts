@@ -48,6 +48,18 @@ export const cartSlice = createSlice({
         }
       }
     },
+    deleteCartItem: (state, action) => {
+      console.log("delete Item");
+      // state.carts.forEach((cart) => {
+      //   cart.items = cart.items.filter((item) => item.id !== action.payload);
+      // });
+    },
+    clearCartItems: (state) => {
+      console.log("clear items");
+      // state.carts.forEach((cart) => {
+      //   if (cart.name === state.activeCart) cart.items = [];
+      // });
+    },
   },
 });
 

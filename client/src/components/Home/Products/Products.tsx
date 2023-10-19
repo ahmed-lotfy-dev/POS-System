@@ -20,7 +20,7 @@ function Products({}: Props) {
   console.log(cartItems);
   const dispatch = useDispatch();
 
-  const addProductHandler = (product: any) => {
+  const addProductToCartHandler = (product: any) => {
     console.log("Product Added");
     const existingItem = cartItems.find((item) => item.id === product.id);
     if (existingItem) {
@@ -57,7 +57,7 @@ function Products({}: Props) {
             <span className="block text-center mt-6">${product.price}</span>
             <Button
               className="w-full mt-5"
-              onClick={() => addProductHandler(product)}
+              onClick={() => addProductToCartHandler(product)}
             >
               Add To Cart
             </Button>
