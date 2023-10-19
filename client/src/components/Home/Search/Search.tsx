@@ -23,7 +23,7 @@ function Search() {
         </h2>
       </div> */}
       <Input
-        className="font-extrabold w-1/5 relative bg-gray-200 rounded-md px-5 py-2 placeholder:text-black text-orange-500 m-10"
+        className="font-extrabold w-1/5 relative bg-gray-200 rounded-md px-5 py-2 placeholder:text-black text-orange-500 m-10 border-[0.5px] border-black"
         name="search"
         value={searchValue}
         type="search"
