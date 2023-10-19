@@ -8,9 +8,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+
+import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
+
 import { RootState } from "@/store/store";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { changeQuantity } from "@/store/features/cart/cartSlice";
 
 type Props = {};
 
@@ -19,7 +23,7 @@ function Cart({}: Props) {
   const [tax, setTax] = useState<number>(0);
   const [discount, setDiscount] = useState<number>(0);
   const [total, setTotal] = useState<number>(0);
-
+  const dispatch = useDispatch();
   const calcSubtotal = cartItems.reduce((acc, item) => {
     return acc + item.quantity * item.price;
   }, 0);
@@ -29,6 +33,16 @@ function Cart({}: Props) {
     const discountAmount = calcSubtotal * (discount / 100);
     const totalAmount = calcSubtotal + taxAmount - discountAmount;
     setTotal(totalAmount);
+  };
+
+  const handleIncreaseQuantity = (item: any) => {
+    // Use the changeQuantity action to increase the quantity
+    dispatch(changeQuantity({ id: item.id, status: "increase" }));
+  };
+
+  const handleDecreaseQuantity = (item: any) => {
+    // Use the changeQuantity action to decrease the quantity
+    dispatch(changeQuantity({ id: item.id, status: "decrease" }));
   };
 
   useEffect(() => {
@@ -53,12 +67,22 @@ function Cart({}: Props) {
                 <TableCell key={item.id}>
                   {item.name} {/* Display the name */}
                 </TableCell>
-                <TableCell>
-                  <Input
-                    className="w-16"
-                    type="number"
-                    value={item.quantity}
-                  ></Input>
+                <TableCell className="flex justify-center items-center">
+                  <div>
+                    <LuChevronLeft
+                      onClick={() => {
+                        handleDecreaseQuantity(item);
+                      }}
+                    />
+                  </div>
+                  <span className="w-16 text-center">{item.quantity}</span>
+                  <div>
+                    <LuChevronRight
+                      onClick={() => {
+                        handleIncreaseQuantity(item);
+                      }}
+                    />
+                  </div>
                 </TableCell>
                 <TableCell>{item.quantity * item.price} </TableCell>
               </TableRow>
@@ -92,7 +116,7 @@ function Cart({}: Props) {
           <Input
             type="number"
             placeholder="%10"
-            className="w-1/3 placeholder:text-gray-400"
+            className="w-1/3 placeholder:text-gray-400 bg-gray-400"
             value={discount}
             onChange={(e) => setDiscount(+e.target.value)}
             onFocus={(e) => {
@@ -100,10 +124,11 @@ function Cart({}: Props) {
             }}
           />
         </div>
-        <Button className="flex justify-between my-3 w-full m-auto">
+        <div className="flex justify-between my-3 w-full m-auto">
           <span className="block">Total</span>
           <span className="">${total}</span>
-        </Button>
+        </div>
+        <Button className="w-full">Pay Now</Button>
       </div>
     </div>
   );
