@@ -12,7 +12,7 @@ type Item = {
 };
 
 export interface CartState {
-  items: Item[] | null;
+  items: Item[];
 }
 
 const initialState: CartState = {
@@ -23,19 +23,14 @@ export const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    addItemToCart: (state, action: PayloadAction<Item | null>) => {
-      if (state.items === null) {
-        state.items = [];
-      }
+    addItemToCart: (state, action: PayloadAction<Item>) => {
       const newItem = action.payload;
-
-      if (newItem) {
-        const existingItem = state.items.find((item) => item.id === newItem.id);
-        if (existingItem) {
-          existingItem.quantity += newItem.quantity;
-        } else {
-          state.items.push(newItem);
-        }
+      const existingItem = state.items.find((item) => item.id === newItem.id);
+      if (existingItem) {
+        existingItem.quantity += 1;
+      } else {
+        newItem.quantity = 1;
+        state.items.push(newItem);
       }
     },
   },

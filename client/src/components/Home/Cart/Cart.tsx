@@ -1,19 +1,47 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Table, TableHead } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { RootState } from "@/store/store";
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 type Props = {};
 
 function Cart({}: Props) {
+  const cartItems = useSelector((state: RootState) => state.cart.items);
+  // console.log(cartItems);
+  // const dispatch = useDispatch()
+
   return (
     <div className=" h-full w-[400px] bg-gray-200 rounded-none border-l-2 border-gray-300 flex flex-col justify-between">
       <h1 className="p-4 font-bold">Cart Component</h1>
       <div className="flex-1">
-        <Table className="flex justify-between">
-          <TableHead className="flex-auto w-2/3">Items</TableHead>
-          <TableHead className="w-1/3">Qty</TableHead>
-          <TableHead className="w-1/3">Amount</TableHead>
+        <Table className="w-full">
+          <TableHeader className="">
+            <TableRow>
+              <TableCell className="font-semibold">Items</TableCell>
+              <TableCell className="w-1/3 font-semibold">Qty</TableCell>
+              <TableCell className="w-1/3 font-semibold">Amount</TableCell>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {cartItems?.map((item) => (
+              <TableRow>
+                <TableCell key={item.id}>
+                  {item.name} {/* Display the name */}
+                </TableCell>
+                <TableCell>{item.quantity} </TableCell>
+                <TableCell>{item.quantity * item.price} </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
         </Table>
       </div>
       <div className="p-4">
