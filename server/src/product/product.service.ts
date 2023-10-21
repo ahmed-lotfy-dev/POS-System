@@ -21,30 +21,42 @@ export class ProductService {
     return products;
   }
 
-  async getSingleProduct(@Param('id', ParseIntPipe) id: string) {
+  async getSingleProduct(@Param('id') id: string) {
+    console.log(id);
     const singleProduct = await this.prisma.product.findFirst({
       where: { id },
     });
+    console.log(singleProduct);
     if (!singleProduct) return { msg: 'product not found' };
     return singleProduct;
   }
 
-  async editProduct(
-    @Body() dto: Product,
-    @Param('id', ParseIntPipe) id: string,
-  ) {
-    const updatedProduct = await this.prisma.product.update({
-      where: { id },
-      data: { ...dto },
-    });
+  async editProduct(@Body() dto: Product, @Param('id') id: string) {
+    try {
+      console.log(id);
+      const updatedProduct = await this.prisma.product.update({
+        where: { id }, // Specify the id in the where clause
+        data: {
+          // Exclude 'id' from the data object
+          name: dto.name,
+          code: dto.code,
+          price: dto.price,
+          image: dto.image,
+          categoryId: dto.categoryId,
+          unitId: dto.unitId,
+        },
+      });
+      console.log({ updatedProduct });
+      if (!updatedProduct) return { msg: 'Product not found' };
 
-    if (!updatedProduct) return { msg: 'product not found' };
-    console.log(id);
-
-    return updatedProduct;
+      return updatedProduct;
+    } catch (error) {
+      console.error(error);
+      throw error; // Rethrow the error to handle it globally or log it
+    }
   }
 
-  async deleteProduct(@Param('id', ParseIntPipe) id: string) {
+  async deleteProduct(@Param('id') id: string) {
     const deletedProduct = await this.prisma.product.delete({
       where: { id },
     });

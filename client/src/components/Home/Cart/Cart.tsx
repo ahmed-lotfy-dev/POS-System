@@ -68,20 +68,20 @@ function Cart({}: Props) {
                   {item.name} {/* Display the name */}
                 </TableCell>
                 <TableCell className="flex justify-center items-center">
-                  <div>
-                    <LuChevronLeft
-                      onClick={() => {
-                        handleDecreaseQuantity(item);
-                      }}
-                    />
+                  <div
+                    onClick={() => {
+                      handleDecreaseQuantity(item);
+                    }}
+                  >
+                    <LuChevronLeft />
                   </div>
                   <span className="w-16 text-center">{item.quantity}</span>
-                  <div>
-                    <LuChevronRight
-                      onClick={() => {
-                        handleIncreaseQuantity(item);
-                      }}
-                    />
+                  <div
+                    onClick={() => {
+                      handleIncreaseQuantity(item);
+                    }}
+                  >
+                    <LuChevronRight />
                   </div>
                 </TableCell>
                 <TableCell>{item.quantity * item.price} </TableCell>

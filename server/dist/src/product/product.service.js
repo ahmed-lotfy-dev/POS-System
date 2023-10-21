@@ -32,22 +32,38 @@ let ProductService = class ProductService {
         return products;
     }
     async getSingleProduct(id) {
+        console.log(id);
         const singleProduct = await this.prisma.product.findFirst({
             where: { id },
         });
+        console.log(singleProduct);
         if (!singleProduct)
             return { msg: 'product not found' };
         return singleProduct;
     }
     async editProduct(dto, id) {
-        const updatedProduct = await this.prisma.product.update({
-            where: { id },
-            data: { ...dto },
-        });
-        if (!updatedProduct)
-            return { msg: 'product not found' };
-        console.log(id);
-        return updatedProduct;
+        try {
+            console.log(id);
+            const updatedProduct = await this.prisma.product.update({
+                where: { id },
+                data: {
+                    name: dto.name,
+                    code: dto.code,
+                    price: dto.price,
+                    image: dto.image,
+                    categoryId: dto.categoryId,
+                    unitId: dto.unitId,
+                },
+            });
+            console.log({ updatedProduct });
+            if (!updatedProduct)
+                return { msg: 'Product not found' };
+            return updatedProduct;
+        }
+        catch (error) {
+            console.error(error);
+            throw error;
+        }
     }
     async deleteProduct(id) {
         const deletedProduct = await this.prisma.product.delete({
@@ -66,20 +82,20 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ProductService.prototype, "addProduct", null);
 __decorate([
-    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
+    __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], ProductService.prototype, "getSingleProduct", null);
 __decorate([
     __param(0, (0, common_1.Body)()),
-    __param(1, (0, common_1.Param)('id', common_1.ParseIntPipe)),
+    __param(1, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, String]),
     __metadata("design:returntype", Promise)
 ], ProductService.prototype, "editProduct", null);
 __decorate([
-    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
+    __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)

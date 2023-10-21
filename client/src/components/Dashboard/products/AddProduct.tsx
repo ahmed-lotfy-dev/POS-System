@@ -170,7 +170,9 @@ const AddProduct = () => {
           </SelectTrigger>
           <SelectContent>
             {units.map((unit) => (
-              <SelectItem value={unit.id}>{unit.name}</SelectItem>
+              <SelectItem key={unit.id} value={unit.id}>
+                {unit.name}
+              </SelectItem>
             ))}
           </SelectContent>
         </Select>

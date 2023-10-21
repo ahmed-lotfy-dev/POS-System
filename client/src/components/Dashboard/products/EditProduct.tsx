@@ -17,8 +17,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ToastContainer } from "react-toastify";
-import { useRevalidator } from "react-router-dom";
+import { useRevalidator, useRouteLoaderData } from "react-router-dom";
 import axios from "axios";
+import { Select, SelectContent } from "@/components/ui/select";
+import { SelectItem, SelectTrigger, SelectValue } from "@radix-ui/react-select";
+import { AllDataResponse } from "@/types/globals";
 type Props = {};
 
 function EditProduct({}: Props) {
@@ -28,15 +31,21 @@ function EditProduct({}: Props) {
   const dispatch = useDispatch();
   const revalidator = useRevalidator();
 
+  const { categories } = useRouteLoaderData("root") as AllDataResponse;
+  const { units } = useRouteLoaderData("root") as AllDataResponse;
+
   const objectKeys = editItem ? Object.keys(editItem).slice(1, -2) : [];
 
   const onSaveHandler = async () => {
-    console.log({ onsave: editItem });
-    console.log("saving item");
-    const { data } = await axios.patch(
-      `${import.meta.env.VITE_BACKEND_URL}/category/edit/${editItem.id}`,
-      editItem
+    console.log(editItem)
+    const { data } = await axios.put(
+      `${import.meta.env.VITE_BACKEND_URL}/product/edit/${editItem.id}`,
+      {
+        ...editItem,
+      }
     );
+    console.log(data);
+    console.log(editItem.id);
     revalidator.revalidate();
     dispatch(setItem({}));
   };
@@ -55,14 +64,11 @@ function EditProduct({}: Props) {
   };
 
   const uploadHandler = async (event: ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target.files);
     if (event.target.files && event.target.files.length > 0) {
       await uploadImage(event.target.files[0]);
     }
   };
 
-  console.log(editItem);
-  console.log(imageLink);
   return (
     <AlertDialogContent className="flex flex-col justify-center items-center w-full">
       <AlertDialogHeader>
@@ -85,9 +91,71 @@ function EditProduct({}: Props) {
           type="text"
           name="name"
           id="name"
-          value={editItem ? editItem.name : ""}
+          value={editItem?.name || ""}
           onChange={onChangeHandler}
         />
+        <Input
+          className="input input-bordered border-b-gray-100 input-xs w-full max-w-xs my-6 mt-10 m-auto focus:bg-gray-200 bg-gray-100"
+          type="number"
+          name="price"
+          placeholder="Price"
+          id="price"
+          value={editItem?.price || ""}
+          onChange={onChangeHandler}
+        />
+        <Input
+          className="input input-bordered border-b-gray-100 input-xs w-full max-w-xs my-6 mt-10 m-auto focus:bg-gray-200 bg-gray-100"
+          type="number"
+          name="code"
+          placeholder="Code"
+          id="code"
+          value={editItem?.code || ""}
+          onChange={onChangeHandler}
+        />
+        {/* Category */}
+        <Select
+          onValueChange={(value: string) =>
+            onChangeHandler({
+              target: { name: "categoryId", value },
+            } as ChangeEvent<HTMLInputElement>)
+          }
+        >
+          <SelectTrigger className="">
+            <SelectValue placeholder="Category" />
+          </SelectTrigger>
+          <SelectContent>
+            {categories.map((category) => (
+              <SelectItem key={category.id} value={category.id}>
+                {category.name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <Select>
+          <SelectContent></SelectContent>
+        </Select>
+        {/* Unit */}
+        <Select
+          onValueChange={(value: string) =>
+            onChangeHandler({
+              target: { name: "unitId", value },
+            } as ChangeEvent<HTMLInputElement>)
+          }
+        >
+          <SelectTrigger className="">
+            <SelectValue placeholder="Unis" />
+          </SelectTrigger>
+          <SelectContent>
+            {units.map((unit) => (
+              <SelectItem key={unit.id} value={unit.id}>
+                {unit.name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        <Select>
+          <SelectContent></SelectContent>
+        </Select>
         <>
           <Button
             className="my-5"
@@ -105,7 +173,7 @@ function EditProduct({}: Props) {
             onChange={uploadHandler}
           />
         </>
-        {isPending ? <Loader  /> : null}
+        {isPending ? <Loader /> : null}
         {imageLink ? (
           <img
             src={imageLink}

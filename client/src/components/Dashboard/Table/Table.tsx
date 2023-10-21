@@ -19,6 +19,8 @@ import { useLocation, useNavigate, useRouteLoaderData } from "react-router-dom";
 import { AlertDialog, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { EditCategory } from "../categories/EditCategory";
 import { AllDataResponse } from "@/types/globals";
+import { EditProduct } from "../products/EditProduct";
+import { EditUnit } from "../units/EditUnit";
 
 type TableProps<T> = {
   tableData: T[];
@@ -116,7 +118,9 @@ const TableComponent = <T extends Record<string, any>>({
                 >
                   <TbEdit size={25} />
                 </AlertDialogTrigger>
-                <EditCategory />
+                {location === "categories" ? <EditCategory /> : null}
+                {location === "products" ? <EditProduct /> : null}
+                {location === "units" ? <EditUnit /> : null}
               </AlertDialog>
             </TableCell>
             <TableCell>

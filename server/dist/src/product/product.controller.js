@@ -53,22 +53,22 @@ __decorate([
 ], ProductController.prototype, "getAllProducts", null);
 __decorate([
     (0, common_1.Get)('get/:id'),
-    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
+    __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], ProductController.prototype, "getSingleProduct", null);
 __decorate([
-    (0, common_1.Patch)('edit/:id'),
+    (0, common_1.Put)('edit/:id'),
     __param(0, (0, common_1.Body)()),
-    __param(1, (0, common_1.Param)('id', common_1.ParseIntPipe)),
+    __param(1, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, String]),
     __metadata("design:returntype", void 0)
 ], ProductController.prototype, "editProduct", null);
 __decorate([
     (0, common_1.Delete)('delete/:id'),
-    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
+    __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)

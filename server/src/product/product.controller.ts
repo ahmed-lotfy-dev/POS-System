@@ -7,6 +7,7 @@ import {
   Param,
   Body,
   ParseIntPipe,
+  Put,
 } from '@nestjs/common';
 
 import { ProductService } from './product.service';
@@ -31,17 +32,17 @@ export class ProductController {
   }
 
   @Get('get/:id')
-  getSingleProduct(@Param('id', ParseIntPipe) id: string) {
+  getSingleProduct(@Param('id') id: string) {
     return this.productService.getSingleProduct(id);
   }
 
-  @Patch('edit/:id')
-  editProduct(@Body() dto: Product, @Param('id', ParseIntPipe) id: string) {
+  @Put('edit/:id')
+  editProduct(@Body() dto: Product, @Param('id') id: string) {
     return this.productService.editProduct(dto, id);
   }
 
   @Delete('delete/:id')
-  deleteProduct(@Param('id', ParseIntPipe) id: string) {
+  deleteProduct(@Param('id') id: string) {
     return this.productService.deleteProduct(id);
   }
 }
