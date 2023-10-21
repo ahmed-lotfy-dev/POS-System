@@ -41,28 +41,14 @@ function EditUnit({}: Props) {
     dispatch(setItem({}));
   };
 
-  const {
-    uploadImage,
-    imageLink,
-    isPending,
-    //error
-  } = useUploadImage();
-
   const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     const updatedItem = { ...editItem, [name]: value }; // Update the corresponding property
     dispatch(setItem(updatedItem));
   };
 
-  const uploadHandler = async (event: ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target.files);
-    if (event.target.files && event.target.files.length > 0) {
-      await uploadImage(event.target.files[0]);
-    }
-  };
-
   console.log(editItem);
-  console.log(imageLink);
+
   return (
     <AlertDialogContent className="flex flex-col justify-center items-center w-full">
       <AlertDialogHeader>
@@ -88,39 +74,8 @@ function EditUnit({}: Props) {
           value={editItem ? editItem.name : ""}
           onChange={onChangeHandler}
         />
-        <>
-          <Button
-            className="my-5"
-            type="button"
-            onClick={() => fileInputRef.current?.click()}
-          >
-            Upload Image
-          </Button>
-          <input
-            className="hidden"
-            type="file"
-            name="image"
-            id="hiddenFileInput"
-            ref={fileInputRef}
-            onChange={uploadHandler}
-          />
-        </>
-        {isPending ? <Loader /> : null}
-        {imageLink ? (
-          <img
-            src={imageLink}
-            alt={`${editItem.name} image`}
-            className={`${imageLink ? "block" : "hidden"} w-80 m-auto my-10`}
-          />
-        ) : (
-          <img
-            src={editItem ? editItem.image : ""}
-            alt={` image`}
-            // className={`${imageLink ? "block" : "hidden"} w-80 m-auto my-10`}
-          />
-        )}
-        <div className="flex gap-5 m-auto">
-          <AlertDialogAction type="submit">Add</AlertDialogAction>
+        <div className="flex gap-5 m-auto mt-6">
+          <AlertDialogAction type="submit">Save</AlertDialogAction>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
         </div>
       </form>

@@ -117,8 +117,8 @@ function EditCategory({}: Props) {
             // className={`${imageLink ? "block" : "hidden"} w-80 m-auto my-10`}
           />
         )}
-        <div className="flex gap-5 m-auto">
-          <AlertDialogAction type="submit">Add</AlertDialogAction>
+        <div className="flex gap-5 m-auto mt-6">
+          <AlertDialogAction type="submit">Save</AlertDialogAction>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
         </div>
       </form>

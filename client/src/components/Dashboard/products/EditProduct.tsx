@@ -37,12 +37,10 @@ function EditProduct({}: Props) {
   const objectKeys = editItem ? Object.keys(editItem).slice(1, -2) : [];
 
   const onSaveHandler = async () => {
-    console.log(editItem)
-    const { data } = await axios.put(
+    console.log(editItem);
+    const { data } = await axios.patch(
       `${import.meta.env.VITE_BACKEND_URL}/product/edit/${editItem.id}`,
-      {
-        ...editItem,
-      }
+      editItem
     );
     console.log(data);
     console.log(editItem.id);
@@ -187,8 +185,8 @@ function EditProduct({}: Props) {
             // className={`${imageLink ? "block" : "hidden"} w-80 m-auto my-10`}
           />
         )}
-        <div className="flex gap-5 m-auto">
-          <AlertDialogAction type="submit">Add</AlertDialogAction>
+        <div className="flex gap-5 m-auto mt-6">
+          <AlertDialogAction type="submit">Save</AlertDialogAction>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
         </div>
       </form>

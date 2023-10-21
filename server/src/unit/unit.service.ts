@@ -23,7 +23,7 @@ export class UnitService {
       }
 
       const newUnit = await this.prisma.unit.create({
-        data: { ...dto },
+        data: { name: dto.name },
       });
 
       return newUnit;
@@ -39,7 +39,7 @@ export class UnitService {
     return units;
   }
 
-  async getSingleUnit(@Param('id', ParseIntPipe) id: string) {
+  async getSingleUnit(@Param('id') id: string) {
     const singleUnit = await this.prisma.unit.findFirst({
       where: { id },
     });
@@ -48,10 +48,10 @@ export class UnitService {
     return singleUnit;
   }
 
-  async editUnit(@Body() dto: IUnit, @Param('id', ParseIntPipe) id: string) {
+  async editUnit(@Body() dto: IUnit, @Param('id') id: string) {
     const updatedUnit = await this.prisma.unit.update({
       where: { id },
-      data: { ...dto },
+      data: { name: dto.name },
     });
 
     if (!updatedUnit) return { msg: 'unit not found' };
@@ -60,7 +60,7 @@ export class UnitService {
     return updatedUnit;
   }
 
-  async deleteUnit(@Param('id', ParseIntPipe) id: string) {
+  async deleteUnit(@Param('id') id: string) {
     const deletedUnit = await this.prisma.unit.delete({
       where: { id },
     });

@@ -30,17 +30,17 @@ export class UnitController {
   }
 
   @Get('get/:id')
-  getSingleUnit(@Param('id', ParseIntPipe) id: string) {
+  getSingleUnit(@Param('id') id: string) {
     return this.unitService.getSingleUnit(id);
   }
 
   @Patch('edit/:id')
-  editUnit(@Body() dto: IUnit, @Param('id', ParseIntPipe) id: string) {
+  editUnit(@Body() dto: IUnit, @Param('id') id: string) {
     return this.unitService.editUnit(dto, id);
   }
 
   @Delete('delete/:id')
-  deleteUnit(@Param('id', ParseIntPipe) id: string) {
+  deleteUnit(@Param('id') id: string) {
     return this.unitService.deleteUnit(id);
   }
 }

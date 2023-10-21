@@ -29,7 +29,7 @@ let UnitService = class UnitService {
                 throw new common_1.ConflictException('Unit already exist');
             }
             const newUnit = await this.prisma.unit.create({
-                data: { ...dto },
+                data: { name: dto.name },
             });
             return newUnit;
         }
@@ -53,7 +53,7 @@ let UnitService = class UnitService {
     async editUnit(dto, id) {
         const updatedUnit = await this.prisma.unit.update({
             where: { id },
-            data: { ...dto },
+            data: { name: dto.name },
         });
         if (!updatedUnit)
             return { msg: 'unit not found' };
@@ -77,20 +77,20 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UnitService.prototype, "addUnit", null);
 __decorate([
-    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
+    __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], UnitService.prototype, "getSingleUnit", null);
 __decorate([
     __param(0, (0, common_1.Body)()),
-    __param(1, (0, common_1.Param)('id', common_1.ParseIntPipe)),
+    __param(1, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, String]),
     __metadata("design:returntype", Promise)
 ], UnitService.prototype, "editUnit", null);
 __decorate([
-    __param(0, (0, common_1.Param)('id', common_1.ParseIntPipe)),
+    __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
