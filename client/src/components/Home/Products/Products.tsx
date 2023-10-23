@@ -1,27 +1,42 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { setItem } from "@/store/features/Item/itemSlice";
-import { addItemToCart } from "@/store/features/cart/cartSlice";
-import { RootState } from "@/store/store";
-import { AllDataResponse } from "@/types/globals";
 import { useDispatch, useSelector } from "react-redux";
-import { useRouteLoaderData } from "react-router-dom";
+import { RootState } from "@/store/store";
+import { addItemToCart } from "@/store/features/cart/cartSlice";
+import { Product } from "@/types/globals";
 
-type Props = {};
-
-function Products({}: Props) {
-  const { categories, products } = useRouteLoaderData(
-    "root"
-  ) as AllDataResponse;
-
-  console.log(products);
-
-  const cartItems = useSelector((state: RootState) => state.cart.items) || [];
-  console.log(cartItems);
+function Products() {
   const dispatch = useDispatch();
+  const cartItems = useSelector((state: RootState) => state.cart.items) || [];
+
+  const activeCategory = useSelector(
+    (state: RootState) => state.category.categoryId
+  );
+
+  const activeProducts =
+    useSelector((state: RootState) => state.products.activeProducts) ||
+    ([] as Product[]);
+
+  const searchToken = useSelector((state: RootState) => state.search.value);
+
+  const filterByCategory = (products: any, category: any) => {
+    if (category === "all") {
+      return products;
+    }
+    return products.filter((product: any) => product.categoryId === category);
+  };
+
+  const filterBySearch = (products: any, searchToken: any) => {
+    if (!searchToken) {
+      return products;
+    }
+    const searchTokenLower = searchToken.toLowerCase();
+    return products.filter((product: any) =>
+      product.name.toLowerCase().includes(searchTokenLower)
+    );
+  };
 
   const addProductToCartHandler = (product: any) => {
-    console.log("Product Added");
     const existingItem = cartItems.find((item) => item.id === product.id);
     if (existingItem) {
       dispatch(
@@ -39,6 +54,8 @@ function Products({}: Props) {
       );
     }
   };
+  const filteredByCategory = filterByCategory(activeProducts, activeCategory);
+  const filteredProducts = filterBySearch(filteredByCategory, searchToken);
 
   return (
     <div className="w-full justify-start items-start h-8 mb-10 flex flex-col">
@@ -46,7 +63,7 @@ function Products({}: Props) {
         <h1>Products</h1>
       </div>
       <div className="flex justify-start items-start">
-        {products?.map((product) => (
+        {filteredProducts.map((product: Product) => (
           <Card key={product.id} className="w-full  rounded-2xl p-8 m-6">
             <h2 className="mb-6 font-bold text-lg text-center underline">
               {`${product.name.slice(0, 1).toUpperCase()}${product.name.slice(

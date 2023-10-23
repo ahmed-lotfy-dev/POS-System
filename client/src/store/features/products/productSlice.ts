@@ -4,18 +4,18 @@ export interface Product {
   id: number;
   name: string;
   code: number;
-  category: string;
+  categoryId: string;
   price: number;
-  unit: string;
+  unitId: string;
   image: string;
 }
 
 export interface ProductsState {
-  products: Product[] | null;
+  activeProducts: Product[] | null;
 }
 
 const initialState: ProductsState = {
-  products: null,
+  activeProducts: null,
 };
 
 export const productsSlice = createSlice({
@@ -23,7 +23,7 @@ export const productsSlice = createSlice({
   initialState,
   reducers: {
     setProducts: (state, action: PayloadAction<Product[] | null>) => {
-      state.products = action.payload;
+      state.activeProducts = action.payload;
     },
   },
 });
