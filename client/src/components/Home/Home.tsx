@@ -15,10 +15,6 @@ const Home = () => {
   const dispatch = useDispatch();
   console.log(products);
 
-  useEffect(() => {
-    dispatch(setProducts(products));
-  }, [products]);
-
   return (
     <>
       <div className="w-full flex flex-col">

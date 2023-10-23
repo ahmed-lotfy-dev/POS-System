@@ -3,35 +3,35 @@ import { Card } from "@/components/ui/card";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { addItemToCart } from "@/store/features/cart/cartSlice";
-import { Product } from "@/types/globals";
+import { AllDataResponse, Product } from "@/types/globals";
+import { useRouteLoaderData } from "react-router-dom";
 
 function Products() {
+  const { products } = useRouteLoaderData("root") as AllDataResponse;
+
   const dispatch = useDispatch();
+
   const cartItems = useSelector((state: RootState) => state.cart.items) || [];
 
   const activeCategory = useSelector(
     (state: RootState) => state.category.categoryId
   );
 
-  const activeProducts =
-    useSelector((state: RootState) => state.products.activeProducts) ||
-    ([] as Product[]);
-
   const searchToken = useSelector((state: RootState) => state.search.value);
 
-  const filterByCategory = (products: any, category: any) => {
-    if (category === "all") {
-      return products;
+  const filterByCategory = (items: any, category: any) => {
+    if (category === "" || category === "all") {
+      return items;
     }
-    return products.filter((product: any) => product.categoryId === category);
+    return items.filter((product: any) => product.categoryId === category);
   };
 
-  const filterBySearch = (products: any, searchToken: any) => {
+  const filterBySearch = (items: any, searchToken: any) => {
     if (!searchToken) {
-      return products;
+      return items;
     }
     const searchTokenLower = searchToken.toLowerCase();
-    return products.filter((product: any) =>
+    return items.filter((product: any) =>
       product.name.toLowerCase().includes(searchTokenLower)
     );
   };
@@ -54,7 +54,7 @@ function Products() {
       );
     }
   };
-  const filteredByCategory = filterByCategory(activeProducts, activeCategory);
+  const filteredByCategory = filterByCategory(products, activeCategory);
   const filteredProducts = filterBySearch(filteredByCategory, searchToken);
 
   return (
