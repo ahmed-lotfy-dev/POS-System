@@ -53,6 +53,8 @@ function Cart({}: Props) {
   const newOrderHandler = () => {
     console.log("OrderItems:", cartItems);
     dispatch(clearCartItems());
+    setTax(0);
+    setDiscount(0);
   };
 
   const deleteItemHandler = (id: any) => {
@@ -62,6 +64,8 @@ function Cart({}: Props) {
   const clearCartHandler = () => {
     console.log("inside clear items function");
     dispatch(clearCartItems());
+    setTax(0);
+    setDiscount(0);
   };
 
   useEffect(() => {
