@@ -12,6 +12,7 @@ model User {
   username   String?  @unique
   email      String   @unique
   password   String
+  orders     Order[]
   isAdmin    Boolean  @default(false)
   isConfirm  Boolean? @default(false)
   forgetCode Int?
@@ -22,17 +23,18 @@ model User {
 }
 
 model Product {
-  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  id         String      @id @default(auto()) @map("_id") @db.ObjectId
   name       String
   code       Int
   price      Int
   image      String
-  unitId     String?   @db.ObjectId
-  unit       Unit?     @relation(fields: [unitId], references: [id])
-  categoryId String?   @db.ObjectId
-  category   Category? @relation(fields: [categoryId], references: [id])
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
+  unitId     String?     @db.ObjectId
+  unit       Unit?       @relation(fields: [unitId], references: [id])
+  categoryId String?     @db.ObjectId
+  orderItems OrderItem[]
+  category   Category?   @relation(fields: [categoryId], references: [id])
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
 
   @@map("products")
 }
@@ -56,4 +58,33 @@ model Unit {
   products  Product[]
 
   @@map("units")
+}
+
+model Order {
+  id           String     @id @default(auto()) @map("_id") @db.ObjectId
+  orderNumber  String     @unique
+  userId       String     @db.ObjectId
+  user         User       @relation(fields: [userId], references: [id])
+  items        OrderItem[]
+  totalAmount  Int
+  orderDate    DateTime
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  orderId   String   @db.ObjectId
+  order     Order    @relation(fields: [orderId], references: [id])
+  productId String   @db.ObjectId
+  product   Product  @relation(fields: [productId], references: [id])
+  quantity  Int
+  price     Int
+  subtotal  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("order_items")
 }

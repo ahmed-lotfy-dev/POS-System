@@ -50,12 +50,16 @@ export const cartSlice = createSlice({
     },
     deleteCartItem: (state, action) => {
       console.log("delete Item");
+      console.log(action.payload);
+      state.items = state.items.filter((item) => item.id !== action.payload);
+
       // state.carts.forEach((cart) => {
       //   cart.items = cart.items.filter((item) => item.id !== action.payload);
       // });
     },
     clearCartItems: (state) => {
       console.log("clear items");
+      state.items = [];
       // state.carts.forEach((cart) => {
       //   if (cart.name === state.activeCart) cart.items = [];
       // });
@@ -63,6 +67,7 @@ export const cartSlice = createSlice({
   },
 });
 
-export const { addItemToCart, changeQuantity } = cartSlice.actions;
+export const { addItemToCart, changeQuantity, deleteCartItem, clearCartItems } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;

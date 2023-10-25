@@ -1,4 +1,4 @@
-import { Body, Injectable, Param, ParseIntPipe } from '@nestjs/common';
+import { Body, Injectable, Param } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Product } from '@prisma/client';
 
@@ -22,7 +22,6 @@ export class ProductService {
   }
 
   async getSingleProduct(@Param('id') id: string) {
-    console.log(id);
     const singleProduct = await this.prisma.product.findFirst({
       where: { id },
     });
@@ -33,7 +32,6 @@ export class ProductService {
 
   async editProduct(@Body() dto: Product, @Param('id') id: string) {
     try {
-      console.log(id);
       const updatedProduct = await this.prisma.product.update({
         where: { id }, // Specify the id in the where clause
         data: {

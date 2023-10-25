@@ -8,6 +8,9 @@ import { UnitModule } from './unit/unit.module';
 import { UserModule } from './user/users.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { UploadModule } from './upload/upload.module';
+import { OrderService } from './order/order.service';
+import { OrderController } from './order/order.controller';
+import { OrderModule } from './order/order.module';
 
 @Module({
   imports: [
@@ -19,6 +22,9 @@ import { UploadModule } from './upload/upload.module';
     UserModule,
     PrismaModule,
     UploadModule,
+    OrderModule,
   ],
+  providers: [OrderService],
+  controllers: [OrderController],
 })
 export class AppModule {}

@@ -60,17 +60,36 @@ function Products() {
   return (
     <div className="w-full justify-start items-start h-8 mb-10 flex flex-col">
       <div className="pl-6">
-        <h1>Products</h1>
+        <h1 className="font-bold">Products</h1>
       </div>
-      <div className="flex justify-start items-start">
+      <div className="flex justify-start items-start mt-10 w-full">
+        {
+          filteredProducts.length === 0 ? (
+            <Card className="w-full ">
+              <h2 className="font-bold text-xl text-center m-10">
+                No products here choose another category
+              </h2>
+            </Card>
+          ) : (
+            ""
+          )
+          // <h1>No Products Found</h1>
+        }
         {filteredProducts.map((product: Product) => (
-          <Card key={product.id} className="w-full  rounded-2xl p-8 m-6">
+          <Card
+            key={product.id}
+            className="w-full  rounded-2xl p-8 m-6  max-w-[350px]"
+          >
             <h2 className="mb-6 font-bold text-lg text-center underline">
               {`${product.name.slice(0, 1).toUpperCase()}${product.name.slice(
                 1
               )}`}
             </h2>
-            <img src={product.image} alt="Image 1" className="h-36" />
+            <img
+              src={product.image}
+              alt="Image 1"
+              className="h-36 m-auto aspect-auto"
+            />
             <span className="block text-center mt-6">${product.price}</span>
             <Button
               className="w-full mt-5"

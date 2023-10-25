@@ -10,11 +10,16 @@ import {
 } from "@/components/ui/table";
 
 import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
+import { BsFillTrashFill } from "react-icons/bs";
 
 import { RootState } from "@/store/store";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { changeQuantity } from "@/store/features/cart/cartSlice";
+import {
+  changeQuantity,
+  deleteCartItem,
+  clearCartItems,
+} from "@/store/features/cart/cartSlice";
 
 type Props = {};
 
@@ -45,13 +50,32 @@ function Cart({}: Props) {
     dispatch(changeQuantity({ id: item.id, status: "decrease" }));
   };
 
+  const newOrderHandler = () => {
+    console.log("OrderItems:", cartItems);
+    dispatch(clearCartItems());
+  };
+
+  const deleteItemHandler = (id: any) => {
+    dispatch(deleteCartItem(id));
+  };
+
+  const clearCartHandler = () => {
+    console.log("inside clear items function");
+    dispatch(clearCartItems());
+  };
+
   useEffect(() => {
     calcTotal();
   }, [tax, discount, calcSubtotal]);
 
   return (
     <div className=" h-full w-[400px] bg-gray-200 rounded-none border-l-2 border-gray-300 flex flex-col justify-between">
-      <h1 className="p-4 font-bold">Cart Component</h1>
+      <div className="flex w-full justify-between items-center">
+        <h1 className="p-4 font-bold">Cart Component</h1>
+        <Button className="m-3" onClick={clearCartHandler}>
+          Clear Cart
+        </Button>
+      </div>
       <div className="flex-1">
         <Table className="w-full bg-gray-300">
           <TableHeader className="">
@@ -64,10 +88,10 @@ function Cart({}: Props) {
           <TableBody>
             {cartItems?.map((item) => (
               <TableRow key={item.id}>
-                <TableCell key={item.id}>
+                <TableCell className="w-2/4">
                   {item.name} {/* Display the name */}
                 </TableCell>
-                <TableCell className="flex justify-center items-center">
+                <TableCell className="flex justify-center items-center w-1/4 ml-3">
                   <div
                     onClick={() => {
                       handleDecreaseQuantity(item);
@@ -84,7 +108,16 @@ function Cart({}: Props) {
                     <LuChevronRight />
                   </div>
                 </TableCell>
-                <TableCell>{item.quantity * item.price} </TableCell>
+                <TableCell className="w-1/4">
+                  {item.quantity * item.price}{" "}
+                </TableCell>
+                <TableCell
+                  onClick={() => {
+                    deleteItemHandler(item.id);
+                  }}
+                >
+                  <BsFillTrashFill />
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -128,7 +161,9 @@ function Cart({}: Props) {
           <span className="block">Total</span>
           <span className="">${total}</span>
         </div>
-        <Button className="w-full">Pay Now</Button>
+        <Button className="w-full" onClick={newOrderHandler}>
+          Pay Now
+        </Button>
       </div>
     </div>
   );

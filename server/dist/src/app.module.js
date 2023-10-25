@@ -16,6 +16,9 @@ const unit_module_1 = require("./unit/unit.module");
 const users_module_1 = require("./user/users.module");
 const prisma_module_1 = require("./prisma/prisma.module");
 const upload_module_1 = require("./upload/upload.module");
+const order_service_1 = require("./order/order.service");
+const order_controller_1 = require("./order/order.controller");
+const order_module_1 = require("./order/order.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -30,7 +33,10 @@ exports.AppModule = AppModule = __decorate([
             users_module_1.UserModule,
             prisma_module_1.PrismaModule,
             upload_module_1.UploadModule,
+            order_module_1.OrderModule,
         ],
+        providers: [order_service_1.OrderService],
+        controllers: [order_controller_1.OrderController],
     })
 ], AppModule);
 //# sourceMappingURL=app.module.js.map
