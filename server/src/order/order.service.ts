@@ -5,18 +5,18 @@ import { Order, OrderItem } from '@prisma/client';
 @Injectable()
 export class OrderService {
   constructor(private prisma: PrismaService) {}
-
-  async createOrder(orderData: Order, orderItems: OrderItem[]): Promise<Order> {
-    // Create a new order
+  async createOrder(dto: { orderData: Order; orderItems: OrderItem[] }) {
+    // Create the order
     const createdOrder = await this.prisma.order.create({
       data: {
-        ...orderData,
-        orderItems: {
-          create: orderItems, // Create associated order items
+        ...dto.orderData,
+        items: {
+          create: dto.orderItems.map((item) => ({
+            ...item,
+            orderId: item.orderId,
+            productId: item.productId,
+          })),
         },
-      },
-      include: {
-        orderItems: true, // Include order items in the response
       },
     });
 

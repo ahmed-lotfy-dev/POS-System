@@ -20,6 +20,7 @@ import {
   deleteCartItem,
   clearCartItems,
 } from "@/store/features/cart/cartSlice";
+import axios from "axios";
 
 type Props = {};
 
@@ -32,6 +33,7 @@ function Cart({}: Props) {
   const calcSubtotal = cartItems.reduce((acc, item) => {
     return acc + item.quantity * item.price;
   }, 0);
+  const user = useSelector((state: RootState) => state.user.user);
 
   const calcTotal = () => {
     const taxAmount = calcSubtotal * (tax / 100);
@@ -50,13 +52,32 @@ function Cart({}: Props) {
     dispatch(changeQuantity({ id: item.id, status: "decrease" }));
   };
 
-  const newOrderHandler = () => {
-    console.log("OrderItems:", cartItems);
+  const newOrderHandler = async () => {
+    if (cartItems.length < 1) alert("Cart Is Empty");
+
+    const { data } = await axios.post(
+      `${import.meta.env.VITE_BACKEND_URL}/order/add/`,
+      {
+        orderData: {
+          userId: user?.sub,
+          orderNumber: Date.now().toString(36),
+          totalAmount: total,
+        },
+        orderItems: cartItems.map((item) => ({
+          id: item.id,
+          productId: item.id,
+          quantity: item.quantity,
+          price: item.price,
+          subtotal: item.quantity * item.price,
+        })),
+      }
+    );
+    console.log(data);
     dispatch(clearCartItems());
     setTax(0);
     setDiscount(0);
   };
-
+  console.log(cartItems);
   const deleteItemHandler = (id: any) => {
     dispatch(deleteCartItem(id));
   };

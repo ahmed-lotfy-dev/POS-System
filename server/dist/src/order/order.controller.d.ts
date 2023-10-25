@@ -1,9 +1,12 @@
 import { OrderService } from './order.service';
-import { Order } from '@prisma/client';
+import { Order, OrderItem } from '@prisma/client';
 export declare class OrderController {
     private orderService;
     constructor(orderService: OrderService);
-    createOrder(dto: Order): Promise<{
+    createOrder(dto: {
+        orderData: Order;
+        orderItems: OrderItem[];
+    }): Promise<{
         id: string;
         orderNumber: string;
         userId: string;

@@ -19,16 +19,17 @@ let OrderService = class OrderService {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    async createOrder(orderData, orderItems) {
+    async createOrder(dto) {
         const createdOrder = await this.prisma.order.create({
             data: {
-                ...orderData,
-                orderItems: {
-                    create: orderItems,
+                ...dto.orderData,
+                items: {
+                    create: dto.orderItems.map((item) => ({
+                        ...item,
+                        orderId: item.orderId,
+                        productId: item.productId,
+                    })),
                 },
-            },
-            include: {
-                orderItems: true,
             },
         });
         return createdOrder;

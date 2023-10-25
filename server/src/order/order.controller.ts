@@ -16,7 +16,7 @@ export class OrderController {
   constructor(private orderService: OrderService) {}
 
   @Post('add')
-  createOrder(@Body() dto: Order) {
+  createOrder(@Body() dto: { orderData: Order; orderItems: OrderItem[] }) {
     return this.orderService.createOrder(dto);
   }
 
