@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install app dependencies
-RUN npm install
+RUN pnpm install
 
 # Bundle app source
 COPY . .
@@ -18,10 +18,10 @@ RUN npx prisma generate
 ARG 
 ENV
 # Creates a "dist" folder with the production build
-RUN npm run build
+RUN pnpm run build
 
 # Expose the port on which the app will run
 EXPOSE 3001
 
 # Start the server using the production build
-CMD ["npm", "run", "start:prod"]
+CMD ["pnpm", "run", "start:prod"]
