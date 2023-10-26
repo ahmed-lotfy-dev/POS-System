@@ -7,6 +7,7 @@ import { store } from "./store/store.js";
 import { AllDataResponse } from "./types/globals.js";
 
 import { ThemeProvider } from "@/components/ThemeToggle/theme-provider.js";
+import { Toaster } from "react-hot-toast";
 
 import {
   createRoutesFromElements,
@@ -79,6 +80,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
       <Provider store={store}>
         <RouterProvider router={router} />
+        <Toaster />
       </Provider>
     </ThemeProvider>
   </React.StrictMode>

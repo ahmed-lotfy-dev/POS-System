@@ -20,10 +20,11 @@ let OrderService = class OrderService {
         this.prisma = prisma;
     }
     async createOrder(dto) {
+        console.log(dto.orderData);
         const createdOrder = await this.prisma.order.create({
             data: {
                 ...dto.orderData,
-                items: {
+                orderItems: {
                     create: dto.orderItems.map((item) => ({
                         ...item,
                         orderId: item.orderId,
@@ -35,8 +36,11 @@ let OrderService = class OrderService {
         return createdOrder;
     }
     async getAllOrders() {
-        const orders = await this.prisma.order.findMany();
-        console.log(orders);
+        const orders = await this.prisma.order.findMany({
+            include: {
+                orderItems: true,
+            },
+        });
         return orders;
     }
     async getSingleOrder(id) {

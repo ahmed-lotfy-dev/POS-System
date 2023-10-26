@@ -7,10 +7,11 @@ export class OrderService {
   constructor(private prisma: PrismaService) {}
   async createOrder(dto: { orderData: Order; orderItems: OrderItem[] }) {
     // Create the order
+    console.log(dto.orderData);
     const createdOrder = await this.prisma.order.create({
       data: {
         ...dto.orderData,
-        items: {
+        orderItems: {
           create: dto.orderItems.map((item) => ({
             ...item,
             orderId: item.orderId,
@@ -24,8 +25,11 @@ export class OrderService {
   }
 
   async getAllOrders() {
-    const orders = await this.prisma.order.findMany();
-    console.log(orders);
+    const orders = await this.prisma.order.findMany({
+      include: {
+        orderItems: true, // Include the related orderItems
+      },
+    });
     return orders;
   }
 
