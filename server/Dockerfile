@@ -15,8 +15,6 @@ COPY . .
 
 RUN npx prisma generate
 
-ARG 
-ENV
 # Creates a "dist" folder with the production build
 RUN pnpm run build
 
