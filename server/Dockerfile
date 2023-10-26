@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install app dependencies
-RUN pnpm install
+RUN npm install
 
 # Bundle app source
 COPY . .
@@ -16,10 +16,10 @@ COPY . .
 RUN npx prisma generate
 
 # Creates a "dist" folder with the production build
-RUN pnpm run build
+RUN npm run build
 
 # Expose the port on which the app will run
 EXPOSE 3001
 
 # Start the server using the production build
-CMD ["pnpm", "run", "start:prod"]
+CMD ["npm", "run", "start:prod"]
