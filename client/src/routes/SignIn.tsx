@@ -26,6 +26,7 @@ const SignIn = () => {
       );
       const resData = await res.json();
       console.log(resData);
+      console.log(res);
       const token = resData.access_token;
       console.log(token);
       if (resData.statusCode === 403) {

@@ -25,7 +25,7 @@ import axios from "axios";
 type Props = {};
 
 function Cart({}: Props) {
-  const cartItems = useSelector((state: RootState) => state.cart.items);
+  const cartItems = useSelector((state: RootState) => state.cart.items) || [];
   const [tax, setTax] = useState<number>(0);
   const [discount, setDiscount] = useState<number>(0);
   const [total, setTotal] = useState<number>(0);

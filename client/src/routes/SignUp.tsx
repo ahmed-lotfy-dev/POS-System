@@ -26,6 +26,8 @@ const SignUp = () => {
         }
       );
       const resData = await res.json();
+      console.log(resData);
+      console.log(res);
       const token = resData.access_token;
       localStorage.setItem("user", JSON.stringify(token));
       navigate("/");
@@ -33,7 +35,7 @@ const SignUp = () => {
       console.log(error);
     }
   };
-  console.log(import.meta.env.VITE_BACKEND_URL);
+
   return (
     <div className="w-full flex flex-col justify-center items-center mt-10">
       <div className="w-full">
