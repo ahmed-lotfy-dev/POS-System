@@ -65,7 +65,9 @@ const AddProduct = () => {
       `${import.meta.env.VITE_BACKEND_URL}/product/add`,
       item
     );
-    if (data.status === 409) notify(data.response.message, false);
+    if (data.status === 409) notify(data.response.message, "fail");
+    notify("Product addedd successfully", "success");
+
     revalidator.revalidate();
     if (fileInputRef.current) {
       fileInputRef.current.value = "";

@@ -11,7 +11,7 @@ async function bootstrap() {
 
   app.enableCors({
     credentials: true,
-    origin: ['https://pos-system-f.ahmedlotfy.dev'],
+    origin: ['https://pos-system-f.ahmedlotfy.dev', 'http://localhost:3000'],
     allowedHeaders: '*',
   });
 

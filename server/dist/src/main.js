@@ -10,7 +10,7 @@ async function bootstrap() {
     app.useGlobalPipes(new common_1.ValidationPipe({ whitelist: true }));
     app.enableCors({
         credentials: true,
-        origin: ['https://pos-system-f.ahmedlotfy.dev'],
+        origin: ['https://pos-system-f.ahmedlotfy.dev', 'http://localhost:3000'],
         allowedHeaders: '*',
     });
     await app.listen(3001);

@@ -16,7 +16,7 @@ export class AuthService {
   async signup(dto: SignUpAuth) {
     try {
       const hash = await argon.hash(dto.password);
-      const isExisted = await this.prisma.user.findFirst({
+      const isExisted = await this.prisma.user.findUnique({
         where: { email: dto.email },
       });
       if (isExisted) return { msg: 'User already exist' };

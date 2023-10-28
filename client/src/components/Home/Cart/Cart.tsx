@@ -21,6 +21,7 @@ import {
   clearCartItems,
 } from "@/store/features/cart/cartSlice";
 import axios from "axios";
+import { notify } from "@/lib/toast";
 
 type Props = {};
 
@@ -76,6 +77,7 @@ function Cart({}: Props) {
     dispatch(clearCartItems());
     setTax(0);
     setDiscount(0);
+    notify(`Order : ${data.orderNumber} has been paid`, "success");
   };
   console.log(cartItems);
   const deleteItemHandler = (id: any) => {

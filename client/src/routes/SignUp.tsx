@@ -1,10 +1,14 @@
-import * as React from "react";
+import { Button } from "@/components/ui/button";
+import { notify } from "@/lib/toast";
+import { useRef } from "react";
 import { Link } from "react-router-dom";
 
 import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   const navigate = useNavigate();
+
+  const formRef = useRef<HTMLFormElement | null>(null);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -27,10 +31,17 @@ const SignUp = () => {
       );
       const resData = await res.json();
       console.log(resData);
-      console.log(res);
-      const token = resData.access_token;
-      localStorage.setItem("user", JSON.stringify(token));
-      navigate("/");
+      if (resData.msg) {
+        notify(` User allready exist`, "error");
+        navigate("/signup");
+        formRef.current?.reset();
+      }
+      if (resData.access_token) {
+        const token = resData.access_token;
+        localStorage.setItem("user", JSON.stringify(token));
+        notify(`Signed up successfull`, "success");
+        navigate("/");
+      }
     } catch (error) {
       console.log(error);
     }
@@ -44,6 +55,7 @@ const SignUp = () => {
       <div className="flex flex-col w-1/2"></div>
       <div className="w-1/2">
         <form
+          ref={formRef}
           className="flex flex-col m-auto"
           action=""
           onSubmit={handleSubmit}
@@ -78,9 +90,9 @@ const SignUp = () => {
 
           <div>
             <div className="w-full">
-              <button className="btn btn-neutral w-1/3 mt-2 mb-3 m-auto block">
+              <Button className="btn btn-neutral w-1/3 mt-2 mb-3 m-auto block">
                 Sign Up
-              </button>
+              </Button>
             </div>
             <div className="mt-6 text-center">
               <Link to="/signin">Don't have an account? Sign In</Link>

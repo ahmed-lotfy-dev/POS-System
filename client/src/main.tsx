@@ -7,7 +7,7 @@ import { store } from "./store/store.js";
 import { AllDataResponse } from "./types/globals.js";
 
 import { ThemeProvider } from "@/components/ThemeToggle/theme-provider.js";
-import { Toaster } from "react-hot-toast";
+import { ToastContainer } from "react-toastify";
 
 import {
   createRoutesFromElements,
@@ -27,26 +27,23 @@ import { Dashboard } from "./components/Dashboard/AdminHome.js";
 import { AdminProducts } from "./components/Dashboard/products/AdminProducts.js";
 import { AdminCategories } from "./components/Dashboard/categories/AdminCategories.js";
 import { AdminUnits } from "./components/Dashboard/units/AdminUnits.js";
-import { AddCategory } from "./components/Dashboard/categories/AddCategory.js";
-import { AddUnit } from "./components/Dashboard/units/AddUnit.js";
-import { AddProduct } from "./components/Dashboard/products/AddProduct.js";
-import { EditCategory } from "./components/Dashboard/categories/EditCategory.js";
-import { EditProduct } from "./components/Dashboard/products/EditProduct.js";
-import { EditUnit } from "./components/Dashboard/units/EditUnit.js";
+import { Orders } from "./components/Dashboard/orders/orders.js";
 
 const allData = async (): Promise<AllDataResponse> => {
   const response = await Promise.all([
     axios.get(`${import.meta.env.VITE_BACKEND_URL}/category/getAll`),
     axios.get(`${import.meta.env.VITE_BACKEND_URL}/product/getAll`),
     axios.get(`${import.meta.env.VITE_BACKEND_URL}/unit/getAll`),
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/order/getAll`),
   ]);
 
-  const [category, product, unit] = response;
+  const [category, product, unit, order] = response;
 
   return {
     categories: category.data,
     products: product.data,
     units: unit.data,
+    orders: order.data,
   };
 };
 
@@ -62,14 +59,9 @@ const router = createBrowserRouter(
       <Route path="/dashboard" element={<DashboardLayout />}>
         <Route index element={<Dashboard />} />
         <Route path="/dashboard/categories" element={<AdminCategories />} />
-        <Route path="/dashboard/category/add" element={<AddCategory />} />
-        <Route path="/dashboard/category/edit" element={<EditCategory />} />
         <Route path="/dashboard/products" element={<AdminProducts />} />
-        <Route path="/dashboard/product/add" element={<AddProduct />} />
-        <Route path="/dashboard/product/add" element={<EditProduct />} />
         <Route path="/dashboard/units" element={<AdminUnits />} />
-        <Route path="/dashboard/unit/add" element={<AddUnit />} />
-        <Route path="/dashboard/unit/edit" element={<EditUnit />} />
+        <Route path="/dashboard/orders" element={<Orders />} />
       </Route>
     </Route>
   )
@@ -80,7 +72,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
       <Provider store={store}>
         <RouterProvider router={router} />
-        <Toaster />
+        <ToastContainer />
       </Provider>
     </ThemeProvider>
   </React.StrictMode>

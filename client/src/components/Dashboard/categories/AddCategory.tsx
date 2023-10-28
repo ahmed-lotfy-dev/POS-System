@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import { ToastContainer } from "react-toastify";
-import { notify } from "../../../lib/toast";
+import { notify } from "@/lib/toast";
 
 import { ChangeEvent, FormEvent, useRef, useState } from "react";
 import { useRevalidator } from "react-router-dom";
@@ -15,7 +15,6 @@ import {
   AlertDialogHeader,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { AlertDialogTitle } from "@radix-ui/react-alert-dialog";
 
@@ -39,7 +38,8 @@ const AddCategory = () => {
       `${import.meta.env.VITE_BACKEND_URL}/category/add`,
       { name: itemName, image }
     );
-    if (data.status === 409) notify(data.response.message, false);
+    if (data.status === 409) notify(data.response.message, "fail");
+    notify("Category addedd successfully", "success");
     revalidator.revalidate();
     if (fileInputRef.current) {
       fileInputRef.current.value = "";

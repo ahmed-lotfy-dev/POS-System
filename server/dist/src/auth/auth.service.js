@@ -24,7 +24,7 @@ let AuthService = class AuthService {
     async signup(dto) {
         try {
             const hash = await argon.hash(dto.password);
-            const isExisted = await this.prisma.user.findFirst({
+            const isExisted = await this.prisma.user.findUnique({
                 where: { email: dto.email },
             });
             if (isExisted)

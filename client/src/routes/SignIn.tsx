@@ -1,8 +1,10 @@
-import * as React from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import { notify } from "../lib/toast";
+import { RootState } from "@/store/store";
+import { useRef } from "react";
+import { Button } from "@/components/ui/button";
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -30,12 +32,11 @@ const SignIn = () => {
       const token = resData.access_token;
       console.log(token);
       if (resData.statusCode === 403) {
-        notify(resData.message, false);
+        notify(resData.message, "fail");
       } else {
-        console.log(resData);
-        console.log(token);
         const userToken = localStorage.setItem("user", JSON.stringify(token));
         console.log(userToken);
+        notify(`Signed in successfull`, "success");
         navigate("/");
       }
     } catch (error) {
@@ -70,9 +71,9 @@ const SignIn = () => {
 
           <div>
             <div className="w-full">
-              <button className="btn btn-neutral w-1/3 mt-2 mb-3 m-auto block">
+              <Button className="btn btn-neutral w-1/3 mt-2 mb-3 m-auto block">
                 Sign In
-              </button>
+              </Button>
             </div>
             <div className="mt-6 text-center">
               <Link to="/signup">Don't have an account? Sign Up</Link>

@@ -6,6 +6,7 @@ import { setUser } from "../../../store/features/user/userSlice";
 import { TbBrandGoogleHome, TbLayoutDashboard, TbLogout } from "react-icons/tb";
 import { BsBoxSeam } from "react-icons/bs";
 import { GiWeight } from "react-icons/gi";
+import { FiShoppingBag } from "react-icons/fi";
 import { useLocation } from "react-router-dom";
 import { ThemeToggle } from "@/components/ThemeToggle/theme-toggle";
 
@@ -126,6 +127,25 @@ function AsideNav() {
                 to="/dashboard/units"
               >
                 Units
+              </NavLink>
+            </div>
+            <div className="flex space-x-2 cursor-pointer">
+              <FiShoppingBag
+                size={25}
+                color={`${theme ? "white" : "black"}`}
+                className="m-auto"
+              />
+              <NavLink
+                className={({ isActive, isPending }) =>
+                  isPending
+                    ? "pending cursor-pointer font-bold"
+                    : isActive
+                    ? "text-orange-700 cursor-pointer font-bold"
+                    : ""
+                }
+                to="/dashboard/orders"
+              >
+                Orders
               </NavLink>
             </div>
           </>

@@ -31,8 +31,10 @@ const AddUnit = () => {
       { name: itemName }
     );
     console.log(data);
-    if (data.status === 409) notify(data.response.message, false);
+    if (data.status === 409) notify(data.response.message, "fail");
     revalidator.revalidate();
+    notify("Unit addedd successfully", "success");
+
     formRef.current?.reset();
     if (fileInputRef.current) {
       fileInputRef.current.value = "";

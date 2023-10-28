@@ -20,18 +20,21 @@ let OrderService = class OrderService {
         this.prisma = prisma;
     }
     async createOrder(dto) {
-        console.log(dto.orderData);
+        const { orderData, orderItems } = dto;
         const createdOrder = await this.prisma.order.create({
             data: {
-                ...dto.orderData,
-                orderItems: {
-                    create: dto.orderItems.map((item) => ({
-                        ...item,
-                        orderId: item.orderId,
-                        productId: item.productId,
-                    })),
-                },
+                orderNumber: orderData.orderNumber,
+                userId: orderData.userId,
+                totalAmount: orderData.totalAmount,
             },
+        });
+        const orderItemsList = orderItems.map((item) => ({
+            ...item,
+            orderId: createdOrder.id,
+            productId: item.productId,
+        }));
+        const createdOrderItems = this.prisma.orderItem.createMany({
+            data: orderItemsList,
         });
         return createdOrder;
     }
