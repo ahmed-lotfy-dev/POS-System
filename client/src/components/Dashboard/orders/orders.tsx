@@ -8,8 +8,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { SelectMonth } from "@/components/ui/select-month/select-month";
 import { AllDataResponse } from "@/types/globals";
+import addDays from "date-fns/addDays";
 import { useState } from "react";
+import { DateRange } from "react-day-picker";
 import { useRouteLoaderData } from "react-router-dom";
 
 type Props = {};
@@ -18,64 +21,27 @@ const Orders = ({}: Props) => {
   const { orders } = useRouteLoaderData("root") as AllDataResponse;
   console.log(orders);
 
-  // Get the current date and format it as "MM/DD/YYYY"
-  const todayDate = new Date()
-    .toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-    })
-    .split("/")[0];
-
-  console.log("todayDate:", todayDate);
-
-  // Filter orders with orderDate equal to the current date
-  const filteredOrders = orders.filter((order) => {
-    const orderDate = new Date(order.orderDate)
-      .toLocaleDateString("en-US", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-      })
-      .split("/")[0];
-    console.log("Order Date:", orderDate);
-    return orderDate === todayDate;
+  const [date, setDate] = useState<DateRange | undefined>({
+    from: new Date(),
+    to: addDays(new Date(), 20),
   });
 
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
+  const filteredOrders = orders.filter((order) => {
+    const { orderDate } = order;
+    if (date?.from && date?.to) {
+      return (
+        new Date(orderDate) >= new Date(date.from) &&
+        new Date(orderDate) <= new Date(date.to)
+      );
+    }
+    return true; 
+  });
+
+  console.log(date);
 
   return (
     <div className="flex flex-col justify-center items-center w-full">
-      <div>
-        <Select >
-          <SelectTrigger className="w-[180px]">
-            <SelectValue placeholder="Select a month" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectGroup>
-              <SelectLabel>Months</SelectLabel>
-              {months.map((month, index) => (
-                <SelectItem key={index} value={month}>
-                  {month}
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-      </div>
+      <SelectMonth date={date} setDate={setDate} />
       <h2>normal all orders</h2>
       <div className="flex flex-wrap">
         {orders.map((order) => (
