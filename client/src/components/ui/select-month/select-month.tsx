@@ -1,7 +1,6 @@
 import * as React from "react";
 import { BsCalendar2Day } from "react-icons/bs";
-import { addDays, format } from "date-fns";
-import { DateRange } from "react-day-picker";
+import { format } from "date-fns";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -11,48 +10,35 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { DateRange } from "react-day-picker";
 
 type SelectMonthProps = {
-  className?: React.HTMLAttributes<HTMLDivElement>;
-  date: any;
-  setDate: React.Dispatch<React.SetStateAction<DateRange | undefined>>;
+  className: string;
+  date: Date | undefined;
+  setDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
 };
 const SelectMonth = ({ className, date, setDate }: SelectMonthProps) => {
   return (
-    <div className={cn("grid gap-2", className)}>
+    <div className="mt-10 mb-6">
       <Popover>
         <PopoverTrigger asChild>
           <Button
-            id="date"
             variant={"outline"}
             className={cn(
-              "w-[300px] justify-start text-left font-normal",
+              "w-[240px] justify-start text-left font-normal",
               !date && "text-muted-foreground"
             )}
           >
             <BsCalendar2Day className="mr-2 h-4 w-4" />
-            {date?.from ? (
-              date.to ? (
-                <>
-                  {format(date.from, "LLL dd, y")} -{" "}
-                  {format(date.to, "LLL dd, y")}
-                </>
-              ) : (
-                format(date.from, "LLL dd, y")
-              )
-            ) : (
-              <span>Pick a date</span>
-            )}
+            {date ? format(date, "PPP") : <span>Pick a date</span>}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="w-auto p-0" align="start">
           <Calendar
-            initialFocus
-            mode="range"
-            defaultMonth={date?.from}
+            mode="single"
             selected={date}
             onSelect={setDate}
-            numberOfMonths={2}
+            initialFocus
           />
         </PopoverContent>
       </Popover>

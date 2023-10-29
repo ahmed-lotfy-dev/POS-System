@@ -21,38 +21,22 @@ const Orders = ({}: Props) => {
   const { orders } = useRouteLoaderData("root") as AllDataResponse;
   console.log(orders);
 
-  const [date, setDate] = useState<DateRange | undefined>({
-    from: new Date(),
-    to: addDays(new Date(), 20),
-  });
+  const [date, setDate] = useState<Date>();
 
   const filteredOrders = orders.filter((order) => {
     const { orderDate } = order;
-    if (date?.from && date?.to) {
-      return (
-        new Date(orderDate) >= new Date(date.from) &&
-        new Date(orderDate) <= new Date(date.to)
-      );
+    if (date) {
+      return new Date(orderDate) > new Date(date);
     }
-    return true; 
+    return true;
   });
 
   console.log(date);
 
   return (
-    <div className="flex flex-col justify-center items-center w-full">
-      <SelectMonth date={date} setDate={setDate} />
-      <h2>normal all orders</h2>
-      <div className="flex flex-wrap">
-        {orders.map((order) => (
-          <Card className="m-5" key={order.orderNumber}>
-            <h2>{order.userId}</h2>
-            <h2>{order.orderNumber}</h2>
-            <h3>{new Date(order.orderDate).toLocaleDateString("en-UK")}</h3>
-          </Card>
-        ))}
-      </div>
-      <h2>filteredOrders</h2>
+    <div className="flex flex-col justify-start items-center w-full">
+      <SelectMonth className={"mt-16 mb-8"} date={date} setDate={setDate} />
+      <h2 className="font-bold text-xl">Orders</h2>
       <div className="flex flex-wrap">
         {filteredOrders.map((order) => (
           <Card className="m-5" key={order.orderNumber}>
