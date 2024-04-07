@@ -13,7 +13,7 @@ import { AllDataResponse } from "@/types/globals";
 import addDays from "date-fns/addDays";
 import { useState } from "react";
 import { DateRange } from "react-day-picker";
-import { useRouteLoaderData } from "react-router-dom";
+import { Link, useRouteLoaderData } from "react-router-dom";
 
 type Props = {};
 
@@ -33,19 +33,30 @@ const Orders = ({}: Props) => {
 
   console.log(date);
 
+  function formatTimeWithLeadingZero(value: number) {
+    return value < 10 ? `0${value}` : `${value}`;
+  }
+
   return (
-    <div className="flex flex-col justify-start items-center w-full">
+    <div className="flex flex-col justify-start items-center w-full p-10">
       <SelectMonth className={"mt-16 mb-8"} date={date} setDate={setDate} />
-      <h2 className="font-bold text-xl">Orders</h2>
-      <div className="flex flex-wrap">
+      <h2 className="font-bold text-xl mb-10">Orders</h2>
+      <Card className="flex flex-wrap justify-start items-start p-10">
         {filteredOrders.map((order) => (
-          <Card className="m-5" key={order.orderNumber}>
-            <h2>{order.userId}</h2>
-            <h2>{order.orderNumber}</h2>
-            <h3>{new Date(order.orderDate).toLocaleDateString("en-UK")}</h3>
-          </Card>
+          <Link to={`/dashboard/orders/${order.orderNumber}`}>
+            <Card className="m-5 px-10 py-6 h-36" key={order.orderNumber}>
+              <h2>{order.orderNumber}</h2>
+              <h3>{`${formatTimeWithLeadingZero(
+                new Date(order.orderDate).getHours()
+              )}:${formatTimeWithLeadingZero(
+                new Date(order.orderDate).getMinutes()
+              )}`}</h3>
+
+              <h3>{new Date(order.orderDate).toLocaleDateString("en-UK")}</h3>
+            </Card>
+          </Link>
         ))}
-      </div>
+      </Card>
     </div>
   );
 };

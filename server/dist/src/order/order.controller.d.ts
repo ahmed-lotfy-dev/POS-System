@@ -35,7 +35,18 @@ export declare class OrderController {
         createdAt: Date;
         updatedAt: Date;
     })[]>;
-    getSingleProduct(id: string): Promise<{
+    getSingleProduct(id: string): Promise<({
+        orderItems: {
+            id: string;
+            orderId: string;
+            productId: string;
+            quantity: number;
+            price: number;
+            subtotal: number;
+            createdAt: Date;
+            updatedAt: Date;
+        }[];
+    } & {
         id: string;
         orderNumber: string;
         userId: string;
@@ -43,7 +54,7 @@ export declare class OrderController {
         orderDate: Date;
         createdAt: Date;
         updatedAt: Date;
-    } | {
+    }) | {
         msg: string;
     }>;
     editOrder(dto: Order, id: string): Promise<{
@@ -58,14 +69,6 @@ export declare class OrderController {
         msg: string;
     }>;
     deleteOrder(id: string): Promise<{
-        id: string;
-        orderNumber: string;
-        userId: string;
-        totalAmount: number;
-        orderDate: Date;
-        createdAt: Date;
-        updatedAt: Date;
-    } | {
-        msg: string;
+        msg: any;
     }>;
 }

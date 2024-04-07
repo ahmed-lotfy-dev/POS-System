@@ -22,6 +22,7 @@ import {
 } from "@/store/features/cart/cartSlice";
 import axios from "axios";
 import { notify } from "@/lib/toast";
+import { useRevalidator } from "react-router-dom";
 
 type Props = {};
 
@@ -30,7 +31,11 @@ function Cart({}: Props) {
   const [tax, setTax] = useState<number>(0);
   const [discount, setDiscount] = useState<number>(0);
   const [total, setTotal] = useState<number>(0);
+
   const dispatch = useDispatch();
+
+  const { revalidate } = useRevalidator();
+
   const calcSubtotal = cartItems.reduce((acc, item) => {
     return acc + item.quantity * item.price;
   }, 0);
@@ -75,6 +80,7 @@ function Cart({}: Props) {
     );
     console.log(data);
     dispatch(clearCartItems());
+    revalidate();
     setTax(0);
     setDiscount(0);
     notify(`Order : ${data.orderNumber} has been paid`, "success");

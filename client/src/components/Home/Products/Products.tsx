@@ -4,14 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { addItemToCart } from "@/store/features/cart/cartSlice";
 import { AllDataResponse, Product } from "@/types/globals";
-import { useRouteLoaderData } from "react-router-dom";
+import {  useRouteLoaderData } from "react-router-dom";
 import { notify } from "@/lib/toast";
 
 function Products() {
   const { products } = useRouteLoaderData("root") as AllDataResponse;
 
   const dispatch = useDispatch();
-
   const cartItems = useSelector((state: RootState) => state.cart.items) || [];
 
   const activeCategory = useSelector(

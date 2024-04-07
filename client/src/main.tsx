@@ -28,6 +28,7 @@ import { AdminProducts } from "./components/Dashboard/products/AdminProducts.js"
 import { AdminCategories } from "./components/Dashboard/categories/AdminCategories.js";
 import { AdminUnits } from "./components/Dashboard/units/AdminUnits.js";
 import { Orders } from "./components/Dashboard/orders/orders.js";
+import { OrderItems } from "./components/Dashboard/orderItems/OrderItems.tsx";
 
 const allData = async (): Promise<AllDataResponse> => {
   const response = await Promise.all([
@@ -47,6 +48,10 @@ const allData = async (): Promise<AllDataResponse> => {
   };
 };
 
+const orderData = async ({ params }) => {
+  console.log("order OrderItems");
+};
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route id="root" loader={allData} element={<ProtectedRoute />}>
@@ -62,6 +67,18 @@ const router = createBrowserRouter(
         <Route path="/dashboard/products" element={<AdminProducts />} />
         <Route path="/dashboard/units" element={<AdminUnits />} />
         <Route path="/dashboard/orders" element={<Orders />} />
+        <Route
+          path="/dashboard/orders/:id"
+          element={<OrderItems />}
+          loader={async ({ params }) => {
+            console.log(params.id);
+            const { data } = await axios.get(
+              `${import.meta.env.VITE_BACKEND_URL}/order/get/${params.id}`
+            );
+            console.log(data);
+            return { orderItems: data.orderItems };
+          }}
+        />
       </Route>
     </Route>
   )

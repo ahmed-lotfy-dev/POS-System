@@ -8,22 +8,30 @@ export class OrderService {
 
   async createOrder(dto: { orderData: Order; orderItems: OrderItem[] }) {
     const { orderData, orderItems } = dto;
+
     const createdOrder = await this.prisma.order.create({
       data: {
         orderNumber: orderData.orderNumber,
         userId: orderData.userId,
         totalAmount: orderData.totalAmount,
+        // ... other fields for the order
       },
     });
-    const orderItemsList = orderItems.map((item) => ({
-      ...item,
-      orderId: createdOrder.id,
-      productId: item.productId,
-    }));
 
-    const createdOrderItems = this.prisma.orderItem.createMany({
+    const orderItemsList = orderItems.map((item) => {
+      return {
+        productId: item.id,
+        quantity: item.quantity,
+        price: item.price,
+        subtotal: item.subtotal,
+        orderId: createdOrder.id,
+      };
+    });
+
+    const createdOrderItems = await this.prisma.orderItem.createMany({
       data: orderItemsList,
     });
+
     return createdOrder;
   }
 
@@ -38,7 +46,8 @@ export class OrderService {
 
   async getSingleOrder(@Param('id') id: string) {
     const singleOrder = await this.prisma.order.findFirst({
-      where: { id },
+      where: { orderNumber: id },
+      include: { orderItems: true },
     });
     if (!singleOrder) return { msg: 'order not found' };
     return singleOrder;
@@ -60,7 +69,7 @@ export class OrderService {
         // },
       });
       console.log({ updatedOrder });
-      if (!updatedOrder) return { msg: 'Product not found' };
+      if (!updatedOrder) return { msg: 'Order not found' };
 
       return updatedOrder;
     } catch (error) {
@@ -70,12 +79,19 @@ export class OrderService {
   }
 
   async deleteOrder(@Param('id') id: string) {
-    const deletedOrder = await this.prisma.order.delete({
-      where: { id },
-    });
+    try {
+      const order = await this.prisma.order.findFirst({
+        where: { orderNumber: id },
+      });
+      if (!order) return { msg: 'Order Not Exist' };
 
-    if (!deletedOrder) return { msg: 'product not found' };
+      const deletedOrder = await this.prisma.order.delete({
+        where: { orderNumber: id },
+      });
 
-    return deletedOrder;
+      return { msg: 'Order deleted successfully' };
+    } catch (error) {
+      return { msg: error };
+    }
   }
 }
