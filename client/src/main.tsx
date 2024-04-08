@@ -48,9 +48,9 @@ const allData = async (): Promise<AllDataResponse> => {
   };
 };
 
-const orderData = async ({ params }) => {
-  console.log("order OrderItems");
-};
+// const orderData = async ({ }) => {
+//   console.log("order OrderItems");
+// };
 
 const router = createBrowserRouter(
   createRoutesFromElements(
