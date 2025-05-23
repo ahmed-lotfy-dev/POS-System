@@ -1,4 +1,4 @@
-import { Card } from "@/components/ui/card";
+import { Card } from "@/components/ui/card"
 import {
   Select,
   SelectContent,
@@ -7,34 +7,34 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { SelectMonth } from "@/components/ui/select-month/select-month";
-import { AllDataResponse } from "@/types/globals";
-import addDays from "date-fns/addDays";
-import { useState } from "react";
-import { DateRange } from "react-day-picker";
-import { Link, useRouteLoaderData } from "react-router-dom";
+} from "@/components/ui/select"
+import { SelectMonth } from "@/components/ui/select-month/select-month"
+import { AllDataResponse } from "@/types/globals"
+import { addDays } from "date-fns/addDays"
+import { useState } from "react"
+import { DateRange } from "react-day-picker"
+import { Link, useRouteLoaderData } from "react-router-dom"
 
-type Props = {};
+type Props = {}
 
 const Orders = ({}: Props) => {
-  const { orders } = useRouteLoaderData("root") as AllDataResponse;
-  console.log(orders);
+  const { orders } = useRouteLoaderData("root") as AllDataResponse
+  console.log(orders)
 
-  const [date, setDate] = useState<Date>();
+  const [date, setDate] = useState<Date>()
 
   const filteredOrders = orders.filter((order) => {
-    const { orderDate } = order;
+    const { orderDate } = order
     if (date) {
-      return new Date(orderDate) > new Date(date);
+      return new Date(orderDate) > new Date(date)
     }
-    return true;
-  });
+    return true
+  })
 
-  console.log(date);
+  console.log(date)
 
   function formatTimeWithLeadingZero(value: number) {
-    return value < 10 ? `0${value}` : `${value}`;
+    return value < 10 ? `0${value}` : `${value}`
   }
 
   return (
@@ -58,7 +58,7 @@ const Orders = ({}: Props) => {
         ))}
       </Card>
     </div>
-  );
-};
+  )
+}
 
-export { Orders };
+export { Orders }
