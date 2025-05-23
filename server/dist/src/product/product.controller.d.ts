@@ -5,62 +5,62 @@ export declare class ProductController {
     constructor(productService: ProductService);
     addProduct(dto: Product, code: number, price: number): Promise<{
         id: string;
-        name: string;
-        code: number;
-        price: number;
-        image: string;
-        unitId: string;
-        categoryId: string;
         createdAt: Date;
         updatedAt: Date;
+        name: string;
+        image: string;
+        code: number;
+        price: number;
+        unitId: string | null;
+        categoryId: string | null;
     }>;
     getAllProducts(): Promise<{
         id: string;
-        name: string;
-        code: number;
-        price: number;
-        image: string;
-        unitId: string;
-        categoryId: string;
         createdAt: Date;
         updatedAt: Date;
+        name: string;
+        image: string;
+        code: number;
+        price: number;
+        unitId: string | null;
+        categoryId: string | null;
     }[]>;
     getSingleProduct(id: string): Promise<{
         id: string;
-        name: string;
-        code: number;
-        price: number;
-        image: string;
-        unitId: string;
-        categoryId: string;
         createdAt: Date;
         updatedAt: Date;
+        name: string;
+        image: string;
+        code: number;
+        price: number;
+        unitId: string | null;
+        categoryId: string | null;
     } | {
         msg: string;
     }>;
     editProduct(dto: Product, id: string): Promise<{
         id: string;
-        name: string;
-        code: number;
-        price: number;
-        image: string;
-        unitId: string;
-        categoryId: string;
         createdAt: Date;
         updatedAt: Date;
+        name: string;
+        image: string;
+        code: number;
+        price: number;
+        unitId: string | null;
+        categoryId: string | null;
     } | {
         msg: string;
     }>;
     deleteProduct(id: string): Promise<{
         id: string;
-        name: string;
-        code: number;
-        price: number;
-        image: string;
-        unitId: string;
-        categoryId: string;
         createdAt: Date;
         updatedAt: Date;
+        name: string;
+        image: string;
+        code: number;
+        price: number;
+        unitId: string | null;
+        categoryId: string | null;
     } | {
         msg: string;
     }>;

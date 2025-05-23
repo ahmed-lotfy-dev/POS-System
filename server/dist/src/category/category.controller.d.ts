@@ -8,10 +8,10 @@ export declare class CategoryController {
     }): Promise<any>;
     getAllCategories(): Promise<{
         id: string;
-        name: string;
-        image: string;
         createdAt: Date;
         updatedAt: Date;
+        name: string;
+        image: string;
     }[] | {
         msg: string;
     }>;
