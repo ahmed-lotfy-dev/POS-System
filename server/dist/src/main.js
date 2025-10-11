@@ -18,7 +18,7 @@ async function bootstrap() {
     swagger_1.SwaggerModule.setup('api', app, document);
     app.enableCors({
         credentials: true,
-        origin: ['https://pos-system-f.ahmedlotfy.dev', 'http://localhost:3000'],
+        origin: ['https://pos-system-api.ahmedlotfy.dev', 'http://localhost:3000'],
         allowedHeaders: '*',
     });
     await app.listen(3001);
