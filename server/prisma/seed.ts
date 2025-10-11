@@ -1,52 +1,68 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from '@prisma/client';
+
+// ✅ Import your data directly
+import users from './data/users.js';
+import categories from './data/categories.js';
+import units from './data/units.js';
+import products from './data/products.js';
+import orders from './data/orders.js';
+import order_items from './data/order_items.js';
+
 const prisma = new PrismaClient();
 
+const dataMap = {
+  user: users,
+  category: categories,
+  unit: units,
+  product: products,
+  order: orders,
+  orderItem: order_items,
+};
+
+// Define the seeding order for relational integrity
+const seedOrder = ['user', 'category', 'unit', 'product', 'order', 'orderItem'];
+
 async function main() {
-  const user = await prisma.user.create({
-    data: {
-      email: "elshenawy19@gmail.com",
-      username: "Ahmed Lotfy",
-      isAdmin: true,
-      isConfirm: true,
-      password: "$argon2id$v=19$m=65536,t=3,p=4$YmKW1FCs7JNA4EPrs9E+dA$kt3MebnV3SWXhcmZPGt9a2Yu3mx87aVdcfz5cjw6tGo",
-    },
-  });
+  console.log('🚀 Starting Prisma seeding...');
 
-  const unit = await prisma.unit.create({
-    data: {
-      name: "kg",
-    },
-  });
+  for (const modelName of seedOrder) {
+    const model = (prisma as any)[modelName];
+    const records = dataMap[modelName];
 
-  const category = await prisma.category.create({
-    data: {
-      image: "",
-      name: "fruits",
-    },
-  });
+    if (!records?.length) {
+      console.warn(`⚠️ No data found for model: ${modelName}`);
+      continue;
+    }
 
-  const product = await prisma.product.create({
-    data: {
-      name: "banana",
-      code: 122,
-      price: 399,
-      unit: {
-        connect: { id: unit.id },
-      },
-      category: {
-        connect: { id: category.id },
-      },
-      image: "https://pos-images.ahmedlotfy.me/linux_software.jpg",
-    },
-  });
+    console.log(`🌱 Seeding ${modelName} (${records.length} records)...`);
+
+    try {
+      await model.createMany({
+        data: records,
+        skipDuplicates: true,
+      });
+    } catch (err: any) {
+      console.error(`❌ Error seeding ${modelName}: ${err.message}`);
+      console.log('Trying one-by-one insertion...');
+      for (const record of records) {
+        try {
+          await model.create({ data: record });
+        } catch (e: any) {
+          console.warn(`⚠️ Skipped record due to error: ${e.message}`);
+        }
+      }
+    }
+  }
+
+  console.log('✅ All data seeded successfully!');
 }
 
 main()
   .then(async () => {
     await prisma.$disconnect();
   })
-  .catch(async (e) => {
-    console.error(e);
+  .catch(async (err) => {
+    console.error('❌ Seeding failed:', err);
     await prisma.$disconnect();
     process.exit(1);
   });
