@@ -60,7 +60,7 @@ function Products() {
   return (
     <div className="w-full justify-start items-start h-8 mb-10 flex flex-col">
       <div className="pl-6">
-        <h1 className="font-bold">Products</h1>
+        <h1 className="font-bold text-foreground">Products</h1>
       </div>
       <div className="flex justify-start items-start mt-10 w-full">
         {

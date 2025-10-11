@@ -75,8 +75,8 @@ export class AuthService {
       username,
       isAdmin,
       isConfirm,
-      createdAt,
-      updatedAt,
+      createdAt: createdAt.toISOString(),
+      updatedAt: updatedAt.toISOString(),
     };
     const secret = this.config.get('JWT_SECRET');
 

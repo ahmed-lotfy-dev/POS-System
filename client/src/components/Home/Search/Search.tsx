@@ -16,14 +16,14 @@ function Search() {
   const user = useSelector((state: RootState) => state.user);
 
   return (
-    <div className="bg-gray-200 flex justify-between ">
+    <div className="bg-background flex justify-between ">
       {/* <div className="">
         <h2 className="text-2xl font-semibold mt-10">
           welcome {user.user?.username}
         </h2>
       </div> */}
       <Input
-        className="font-extrabold w-1/5 relative bg-gray-200 rounded-md px-5 py-2 placeholder:text-black text-orange-500 m-10 border-[0.5px] border-black"
+        className="font-extrabold w-1/5 relative bg-background rounded-md px-5 py-2 placeholder:text-muted-foreground text-foreground m-10 border-[0.5px] border-border"
         name="search"
         value={searchValue}
         type="search"

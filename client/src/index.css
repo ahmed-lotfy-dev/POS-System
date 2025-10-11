@@ -74,7 +74,15 @@
     @apply bg-background text-foreground;
   }
 }
+.text-theme {
+  color: hsl(var(--foreground));
+}
+
+.dark .text-theme {
+  color: hsl(var(--background));
+}
 
 html {
   height: 100svh;
 }
+

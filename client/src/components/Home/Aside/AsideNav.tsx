@@ -23,7 +23,7 @@ function AsideNav() {
   };
 
   return (
-    <nav className="w-[300px] h-full gap-6 bg-gray-200 dark:bg-gray-800 flex flex-col justify-between border-r-2 border-gray-300 dark:border-gray-700">
+    <nav className="w-[300px] h-full gap-6 bg-card flex flex-col justify-between border-r-2 border-border">
       <div className="p-5 text-5xl font-extrabold">
         <h1>P</h1>
       </div>

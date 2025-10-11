@@ -102,7 +102,7 @@ function Cart({}: Props) {
   }, [tax, discount, calcSubtotal]);
 
   return (
-    <div className=" h-full w-[400px] bg-gray-200 rounded-none border-l-2 border-gray-300 flex flex-col justify-between">
+    <div className="h-full w-[400px] bg-card rounded-none border-l-2 border-border flex flex-col justify-between">
       <div className="flex w-full justify-between items-center">
         <h1 className="p-4 font-bold">Cart Component</h1>
         <Button className="m-3" onClick={clearCartHandler}>
@@ -110,7 +110,7 @@ function Cart({}: Props) {
         </Button>
       </div>
       <div className="flex-1">
-        <Table className="w-full bg-gray-300">
+        <Table className="w-full bg-background">
           <TableHeader className="">
             <TableRow>
               <TableCell className="font-semibold">Items</TableCell>
@@ -169,7 +169,7 @@ function Cart({}: Props) {
           <Input
             type="number"
             placeholder="%14"
-            className="w-1/3 placeholder:text-gray-400"
+            className="w-1/3 text-foreground"
             value={tax}
             onChange={(e) => setTax(+e.target.value)}
             onFocus={(e) => {
@@ -182,7 +182,7 @@ function Cart({}: Props) {
           <Input
             type="number"
             placeholder="%10"
-            className="w-1/3 placeholder:text-gray-400 bg-gray-400"
+            className="w-1/3 text-foreground bg-secondary"
             value={discount}
             onChange={(e) => setDiscount(+e.target.value)}
             onFocus={(e) => {

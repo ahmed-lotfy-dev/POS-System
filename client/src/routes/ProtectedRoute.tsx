@@ -13,9 +13,18 @@ const ProtectedRoute = () => {
 
   useEffect(() => {
     if (token) {
-      const parsedToken = JSON.parse(token!)
-      const user = jwtDecode(parsedToken)
-      dispatch(setUser(user as User))
+      if (typeof token === 'string') {
+        try {
+          const parsedToken = JSON.parse(token)
+          const user = jwtDecode(parsedToken)
+          dispatch(setUser(user as User))
+        } catch (error) {
+          console.error("Error parsing token:", error);
+          navigate("/signin");
+        }
+      } else {
+        navigate("/signin");
+      }
     } else {
       navigate("/signin")
     }

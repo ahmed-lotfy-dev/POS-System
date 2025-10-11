@@ -17,7 +17,7 @@ const Home = () => {
 
   return (
     <>
-      <div className="w-full flex flex-col">
+      <div className="bg-card text-foreground w-full flex flex-col">
         <Search />
         <Categories />
         <Products />
@@ -26,7 +26,7 @@ const Home = () => {
         <Cart />
       </div>
     </>
-  );
+  )
 };
 
 export { Home };
