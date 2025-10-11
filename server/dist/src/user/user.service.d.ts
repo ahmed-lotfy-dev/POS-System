@@ -4,10 +4,10 @@ export declare class UserService {
     private prisma;
     constructor(prisma: PrismaService);
     getAllUsers(): Promise<{
-        id: string;
         username: string | null;
         email: string;
         password: string;
+        id: string;
         isAdmin: boolean;
         isConfirm: boolean | null;
         forgetCode: number | null;
@@ -16,10 +16,10 @@ export declare class UserService {
     }[]>;
     getuser(id: string): Promise<void>;
     editUser(userId: string, dto: EditUserDto): Promise<{
-        id: string;
         username: string | null;
         email: string;
         password: string;
+        id: string;
         isAdmin: boolean;
         isConfirm: boolean | null;
         forgetCode: number | null;

@@ -9,10 +9,10 @@ export declare class JwtStrategy extends JwtStrategy_base {
         sub: string;
         email: string;
     }): Promise<{
-        id: string;
         username: string | null;
         email: string;
         password: string;
+        id: string;
         isAdmin: boolean;
         isConfirm: boolean | null;
         forgetCode: number | null;

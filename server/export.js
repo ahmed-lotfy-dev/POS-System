@@ -3,6 +3,7 @@ import fs from 'fs';
 import path from 'path';
 
 const uri =
+// allready migratedand removing database and project from mongodb
   'mongodb+srv://elshenawy19:sevmH99lt27huXTN@cluster0.j5s5gux.mongodb.net/pos-system?retryWrites=true&w=majority';
 const client = new MongoClient(uri);
 

@@ -45,45 +45,48 @@ const SignIn = () => {
   };
 
   return (
-    <div className="w-full flex flex-col justify-center items-center mt-10">
-      <div className="w-full">
-        <h2 className="text-center text-3xl">Sign In </h2>
-      </div>
-      <div className="w-1/2">
+    <div className="flex items-center justify-center h-screen bg-background text-foreground w-full">
+      <div className="bg-card rounded-lg shadow-xl p-8  w-full max-w-md">
+        <h2 className="text-2xl font-semibold text-center mb-4">Sign In</h2>
         <form
-          className="flex flex-col m-auto"
+          className="flex flex-col space-y-4"
           action=""
           onSubmit={handleSubmit}
         >
           <input
-            className="input input-bordered border-b-gray-100 input-xs w-full max-w-xs my-6 m-auto"
+            className="input input-bordered border-border input-sm w-full bg-background text-foreground"
             type="email"
             name="email"
-            placeholder="Email..."
+            placeholder="Email"
           />
 
           <input
-            className="input input-bordered border-b-gray-100 input-xs w-full max-w-xs my-6 m-auto"
+            className="input input-bordered border-border input-sm w-full bg-background text-foreground"
             type="password"
             name="password"
             placeholder="Password"
           />
 
-          <div>
-            <div className="w-full">
-              <Button className="btn btn-neutral w-1/3 mt-2 mb-3 m-auto block">
-                Sign In
-              </Button>
-            </div>
-            <div className="mt-6 text-center">
-              <Link to="/signup">Don't have an account? Sign Up</Link>
-            </div>
-          </div>
+          <Button
+            variant="default"
+            className="w-full"
+          >
+            Sign In
+          </Button>
         </form>
+        <div className="pt-4 text-center">
+          <p className="text-sm text-muted-foreground">
+            email: test@gmail.com
+          </p>
+          <p className="text-sm">password: 0000</p>
+          <Link to="/signup" className="text-sm text-muted-foreground hover:text-foreground">
+            Don't have an account? Sign Up
+          </Link>
+        </div>
         <ToastContainer />
       </div>
     </div>
-  );
+  )
 };
 
 export { SignIn };

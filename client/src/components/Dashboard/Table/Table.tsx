@@ -86,7 +86,10 @@ const TableComponent = <T extends Record<string, any>>({
   const tdData = () => {
     return data.map((data, index) => {
       return (
-        <TableBody className="text-gray-600 text-lg font-semibold" key={index}>
+        <TableBody
+          className="text-gray-600 dark:text-gray-200 text-lg font-semibold"
+          key={index}
+        >
           <TableRow>
             <TableCell>{index + 1}</TableCell>
             {keys.map((key) => {
@@ -136,7 +139,7 @@ const TableComponent = <T extends Record<string, any>>({
   return (
     <div className="text-center w-full h-full overflow-auto">
       {data.length > 0 ? (
-        <Table className="w-3/5 table bg-stone-300 text-center m-auto mt-10">
+        <Table className="w-3/5 table bg-stone-300 dark:bg-gray-800 text-center m-auto mt-10">
           {tHead()}
           {tdData()}
         </Table>

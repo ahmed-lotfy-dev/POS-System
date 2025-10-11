@@ -63,9 +63,9 @@ const AddCategory = () => {
   };
 
   return (
-    <AlertDialogContent className="flex flex-col justify-center items-center w-full">
+    <AlertDialogContent className="flex flex-col justify-center items-center w-full bg-gray-100 dark:bg-gray-900">
       <AlertDialogHeader>
-        <AlertDialogTitle className="font-semibold">
+        <AlertDialogTitle className="font-semibold text-gray-900 dark:text-gray-100">
           Add New Category
         </AlertDialogTitle>
       </AlertDialogHeader>
@@ -76,7 +76,7 @@ const AddCategory = () => {
         onSubmit={onAddHandler}
       >
         <Input
-          className="input input-bordered border-b-gray-100 input-xs w-full max-w-xs my-6 mt-10 m-auto focus:bg-gray-200 bg-gray-100"
+          className="input input-bordered border-b-gray-100 input-xs w-full max-w-xs my-6 mt-10 m-auto focus:bg-gray-200 bg-gray-100 dark:bg-gray-700 dark:text-gray-100"
           type="text"
           placeholder="Category Name"
           name="name"

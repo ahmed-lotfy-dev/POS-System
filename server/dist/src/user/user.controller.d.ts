@@ -5,10 +5,10 @@ export declare class UserController {
     private userService;
     constructor(userService: UserService);
     getAllUsers(users: User[]): Promise<{
-        id: string;
         username: string | null;
         email: string;
         password: string;
+        id: string;
         isAdmin: boolean;
         isConfirm: boolean | null;
         forgetCode: number | null;
@@ -16,10 +16,10 @@ export declare class UserController {
         updatedAt: Date;
     }[]>;
     getMe(user: User): {
-        id: string;
         username: string | null;
         email: string;
         password: string;
+        id: string;
         isAdmin: boolean;
         isConfirm: boolean | null;
         forgetCode: number | null;
@@ -27,10 +27,10 @@ export declare class UserController {
         updatedAt: Date;
     };
     editUser(userId: string, dto: EditUserDto): Promise<{
-        id: string;
         username: string | null;
         email: string;
         password: string;
+        id: string;
         isAdmin: boolean;
         isConfirm: boolean | null;
         forgetCode: number | null;
