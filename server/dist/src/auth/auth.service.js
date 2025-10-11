@@ -57,8 +57,8 @@ let AuthService = class AuthService {
             username,
             isAdmin,
             isConfirm,
-            createdAt,
-            updatedAt,
+            createdAt: createdAt.toISOString(),
+            updatedAt: updatedAt.toISOString(),
         };
         const secret = this.config.get('JWT_SECRET');
         const token = await this.jwt.signAsync(payload, {
