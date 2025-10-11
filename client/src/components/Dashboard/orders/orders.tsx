@@ -42,7 +42,7 @@ const Orders = ({}: Props) => {
       <SelectMonth className={"mt-16 mb-8"} date={date} setDate={setDate} />
       <h2 className="font-bold text-xl mb-10">Orders</h2>
       <Card className="flex flex-wrap justify-start items-start p-10">
-        {filteredOrders.map((order) => (
+        {filteredOrders&& filteredOrders.map((order) => (
           <Link to={`/dashboard/orders/${order.orderNumber}`}>
             <Card className="m-5 px-10 py-6 h-36" key={order.orderNumber}>
               <h2>{order.orderNumber}</h2>

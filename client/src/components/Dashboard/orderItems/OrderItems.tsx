@@ -11,7 +11,7 @@ const OrderItems = ({}: Props) => {
   console.log(orderItems);
   return (
     <div>
-      {orderItems.map((orderItem: any) =>
+      {orderItems&& orderItems.map((orderItem: any) =>
         products
           .filter((product) => orderItem.productId === product.id)
           .map((item) => <h1 key={orderItem.id}>{item.name}</h1>)

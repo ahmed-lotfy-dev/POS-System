@@ -29,6 +29,13 @@ async function main() {
     const model = (prisma as any)[modelName];
     const records = dataMap[modelName];
 
+    // Check if the table already has data
+    const count = await model.count();
+    if (count > 0) {
+      console.log(`✅ Model ${modelName} is already seeded. Skipping.`);
+      continue;
+    }
+
     if (!records?.length) {
       console.warn(`⚠️ No data found for model: ${modelName}`);
       continue;

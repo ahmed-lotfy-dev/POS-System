@@ -1,71 +1,71 @@
-import { RootState } from "../../../store/store";
-import { useDispatch, useSelector } from "react-redux";
-import { ChangeEvent, useRef } from "react";
-import { useUploadImage } from "../../../hooks/useUploadImage";
+import { RootState } from "../../../store/store"
+import { useDispatch, useSelector } from "react-redux"
+import { ChangeEvent, useRef } from "react"
+import { useUploadImage } from "../../../hooks/useUploadImage"
 // import { Loader } from "@mantine/core";
-import { Loader } from "@/components/ui/loader";
+import { Loader } from "@/components/ui/loader"
 
-import { setItem } from "../../../store/features/Item/itemSlice";
-import { Button } from "@/components/ui/button";
+import { setItem } from "../../../store/features/Item/itemSlice"
+import { Button } from "@/components/ui/button"
 import {
   AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { ToastContainer } from "react-toastify";
-import { useRevalidator, useRouteLoaderData } from "react-router-dom";
-import axios from "axios";
-import { Select, SelectContent } from "@/components/ui/select";
-import { SelectItem, SelectTrigger, SelectValue } from "@radix-ui/react-select";
-import { AllDataResponse } from "@/types/globals";
-type Props = {};
+} from "@/components/ui/alert-dialog"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { ToastContainer } from "react-toastify"
+import { useRevalidator, useRouteLoaderData } from "react-router-dom"
+import axios from "axios"
+import { Select, SelectContent } from "@/components/ui/select"
+import { SelectItem, SelectTrigger, SelectValue } from "@radix-ui/react-select"
+import { AllDataResponse } from "@/types/globals"
+type Props = {}
 
 function EditProduct({}: Props) {
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const formRef = useRef<HTMLFormElement>(null);
-  const editItem = useSelector((state: RootState) => state.item.item);
-  const dispatch = useDispatch();
-  const revalidator = useRevalidator();
+  const fileInputRef = useRef<HTMLInputElement>(null)
+  const formRef = useRef<HTMLFormElement>(null)
+  const editItem = useSelector((state: RootState) => state.item.item)
+  const dispatch = useDispatch()
+  const revalidator = useRevalidator()
 
-  const { categories } = useRouteLoaderData("root") as AllDataResponse;
-  const { units } = useRouteLoaderData("root") as AllDataResponse;
+  const { categories } = useRouteLoaderData("root") as AllDataResponse
+  const { units } = useRouteLoaderData("root") as AllDataResponse
 
-  const objectKeys = editItem ? Object.keys(editItem).slice(1, -2) : [];
+  const objectKeys = editItem ? Object.keys(editItem).slice(1, -2) : []
 
   const onSaveHandler = async () => {
-    console.log(editItem);
+    console.log(editItem)
     const { data } = await axios.patch(
       `${import.meta.env.VITE_BACKEND_URL}/product/edit/${editItem.id}`,
       editItem
-    );
-    console.log(data);
-    console.log(editItem.id);
-    revalidator.revalidate();
-    dispatch(setItem({}));
-  };
+    )
+    console.log(data)
+    console.log(editItem.id)
+    revalidator.revalidate()
+    dispatch(setItem({}))
+  }
 
   const {
     uploadImage,
     imageLink,
     isPending,
     //error
-  } = useUploadImage();
+  } = useUploadImage()
 
   const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-    const updatedItem = { ...editItem, [name]: value }; // Update the corresponding property
-    dispatch(setItem(updatedItem));
-  };
+    const { name, value } = event.target
+    const updatedItem = { ...editItem, [name]: value } // Update the corresponding property
+    dispatch(setItem(updatedItem))
+  }
 
   const uploadHandler = async (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
-      await uploadImage(event.target.files[0]);
+      await uploadImage(event.target.files[0])
     }
-  };
+  }
 
   return (
     <AlertDialogContent className="flex flex-col justify-center items-center w-full">
@@ -122,11 +122,12 @@ function EditProduct({}: Props) {
             <SelectValue placeholder="Category" />
           </SelectTrigger>
           <SelectContent>
-            {categories.map((category) => (
-              <SelectItem key={category.id} value={category.id}>
-                {category.name}
-              </SelectItem>
-            ))}
+            {categories &&
+              categories.map((category) => (
+                <SelectItem key={category.id} value={category.id}>
+                  {category.name}
+                </SelectItem>
+              ))}
           </SelectContent>
         </Select>
         <Select>
@@ -192,7 +193,7 @@ function EditProduct({}: Props) {
       </form>
       <ToastContainer />
     </AlertDialogContent>
-  );
+  )
 }
 
-export { EditProduct };
+export { EditProduct }
