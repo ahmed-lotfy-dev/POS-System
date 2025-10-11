@@ -30,24 +30,26 @@ import { AdminUnits } from "./components/Dashboard/units/AdminUnits.js";
 import { Orders } from "./components/Dashboard/orders/orders.js";
 import { OrderItems } from "./components/Dashboard/orderItems/OrderItems.tsx";
 
+const normalizeData = (res: any) => {
+  // Handles both { data: [...] } and plain arrays
+  return Array.isArray(res.data) ? res.data : res.data?.data || []
+}
+
 const allData = async (): Promise<AllDataResponse> => {
-  const response = await Promise.all([
+  const [category, product, unit, order] = await Promise.all([
     axios.get(`${import.meta.env.VITE_BACKEND_URL}/category/getAll`),
     axios.get(`${import.meta.env.VITE_BACKEND_URL}/product/getAll`),
     axios.get(`${import.meta.env.VITE_BACKEND_URL}/unit/getAll`),
     axios.get(`${import.meta.env.VITE_BACKEND_URL}/order/getAll`),
-  ]);
-
-  const [category, product, unit, order] = response;
+  ])
 
   return {
-    categories: category.data,
-    products: product.data,
-    units: unit.data,
-    orders: order.data,
-  };
-};
-
+    categories: normalizeData(category),
+    products: normalizeData(product),
+    units: normalizeData(unit),
+    orders: normalizeData(order),
+  }
+}
 // const orderData = async ({ }) => {
 //   console.log("order OrderItems");
 // };
