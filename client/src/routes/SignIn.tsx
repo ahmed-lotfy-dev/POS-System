@@ -29,14 +29,20 @@ const SignIn = () => {
       const resData = await res.json();
       console.log(resData);
       console.log(res);
-      const token = resData.access_token;
-      console.log(token);
-      if (resData.statusCode === 403) {
-        notify(resData.message, "fail");
+      const token = resData.data.access_token;
+      console.log("Token from backend:", token);
+
+      if (
+        !token ||
+        resData.statusCode === 403 ||
+        resData.statusCode === 401 ||
+        resData.statusCode === 500
+      ) {
+        notify(resData.message || "Login failed", "fail");
       } else {
-        const userToken = localStorage.setItem("user", JSON.stringify(token));
-        console.log(userToken);
-        notify(`Signed in successfull`, "success");
+        localStorage.setItem("user", JSON.stringify(token));
+        console.log("Token saved to localStorage");
+        notify(`Signed in successfully`, "success");
         navigate("/");
       }
     } catch (error) {
@@ -67,26 +73,24 @@ const SignIn = () => {
             placeholder="Password"
           />
 
-          <Button
-            variant="default"
-            className="w-full"
-          >
+          <Button variant="default" className="w-full">
             Sign In
           </Button>
         </form>
         <div className="pt-4 text-center">
-          <p className="text-sm text-muted-foreground">
-            email: test@gmail.com
-          </p>
+          <p className="text-sm text-muted-foreground">email: test@gmail.com</p>
           <p className="text-sm">password: 0000</p>
-          <Link to="/signup" className="text-sm text-muted-foreground hover:text-foreground">
+          <Link
+            to="/signup"
+            className="text-sm text-muted-foreground hover:text-foreground"
+          >
             Don't have an account? Sign Up
           </Link>
         </div>
         <ToastContainer />
       </div>
     </div>
-  )
+  );
 };
 
 export { SignIn };

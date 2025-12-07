@@ -3,30 +3,18 @@ import { useRouteLoaderData } from "react-router-dom";
 import axios from "axios";
 import { useRevalidator } from "react-router-dom";
 import { ChangeEvent, useState } from "react";
-import { AllDataResponse } from "../../../types/globals";
-
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+import { AllDataResponse, Category } from "../../../types/globals";
+import { AlertDialog, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { AddCategory } from "./AddCategory";
 import { Button } from "@/components/ui/button";
 
-type Category = {
-  id: number;
-  image: string;
-};
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
 
 function AdminCategories() {
   const { categories } = useRouteLoaderData("root") as AllDataResponse;
   const [imageLink, setImageLink] = useState<string>("");
+  const user = useSelector((state: RootState) => state.user.user);
 
   const revalidator = useRevalidator();
 
@@ -60,18 +48,13 @@ function AdminCategories() {
           },
         }
       );
-      setImageLink(data.image);
+      setImageLink(data.data?.image || data.image);
     }
   };
 
   return (
-    <div className="flex flex-col justify-center items-center w-full bg-background text-foreground">
-      <AlertDialog>
-        <Button asChild className="mt-10 mb-6">
-          <AlertDialogTrigger>Add Category</AlertDialogTrigger>
-        </Button>
-        <AddCategory />
-      </AlertDialog>
+    <div className="w-full h-full overflow-auto p-6">
+      <AddCategory />
       <TableComponent<Category>
         tableData={categories}
         handleSave={handleSave}

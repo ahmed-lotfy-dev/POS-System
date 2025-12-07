@@ -5,7 +5,7 @@ import {
   Param,
   ParseIntPipe,
 } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 import { IUnit } from './unit.controller';
 
 @Injectable()
@@ -28,7 +28,10 @@ export class UnitService {
 
       return newUnit;
     } catch (error) {
-      return new ConflictException(error.message);
+      if (error instanceof Error) {
+        return new ConflictException(error.message);
+      }
+      return new ConflictException('An unknown error occurred');
     }
   }
 

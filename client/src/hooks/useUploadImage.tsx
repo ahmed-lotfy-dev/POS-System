@@ -20,9 +20,10 @@ const useUploadImage = () => {
           },
         }
       );
-      setImageLink(data.image);
+      const uploadedImage = data.data?.image || data.image;
+      setImageLink(uploadedImage);
       setIsPending(false);
-      return data.image;
+      return uploadedImage;
     } catch (error) {
       setError("Failed to upload the image");
     }

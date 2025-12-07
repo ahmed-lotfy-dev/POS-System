@@ -15,12 +15,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductController = void 0;
 const common_1 = require("@nestjs/common");
 const product_service_1 = require("./product.service");
+const product_dto_1 = require("./dto/product.dto");
+const roles_decorator_1 = require("../auth/decorator/roles.decorator");
+const roles_guard_1 = require("../auth/guard/roles.guard");
+const client_1 = require("../generated/prisma/client");
+const swagger_1 = require("@nestjs/swagger");
 let ProductController = class ProductController {
+    productService;
     constructor(productService) {
         this.productService = productService;
-    }
-    addProduct(dto, code, price) {
-        return this.productService.addProduct(dto, code, price);
     }
     getAllProducts() {
         return this.productService.getAllProducts();
@@ -28,52 +31,71 @@ let ProductController = class ProductController {
     getSingleProduct(id) {
         return this.productService.getSingleProduct(id);
     }
-    editProduct(dto, id) {
-        return this.productService.editProduct(dto, id);
+    add(dto) {
+        return this.productService.addProduct(dto);
     }
-    deleteProduct(id) {
+    edit(id, dto) {
+        return this.productService.editProduct(id, dto);
+    }
+    delete(id) {
         return this.productService.deleteProduct(id);
     }
 };
 exports.ProductController = ProductController;
 __decorate([
-    (0, common_1.Post)('add'),
-    __param(0, (0, common_1.Body)()),
-    __param(1, (0, common_1.Body)('code', common_1.ParseIntPipe)),
-    __param(2, (0, common_1.Body)('price', common_1.ParseIntPipe)),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Number, Number]),
-    __metadata("design:returntype", void 0)
-], ProductController.prototype, "addProduct", null);
-__decorate([
     (0, common_1.Get)('getAll'),
+    (0, swagger_1.ApiOperation)({ summary: 'Get all products' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Return all products.' }),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], ProductController.prototype, "getAllProducts", null);
 __decorate([
     (0, common_1.Get)('get/:id'),
+    (0, swagger_1.ApiOperation)({ summary: 'Get a single product by ID' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Return the product.' }),
+    (0, swagger_1.ApiResponse)({ status: 404, description: 'Product not found.' }),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], ProductController.prototype, "getSingleProduct", null);
 __decorate([
-    (0, common_1.Patch)('edit/:id'),
+    (0, common_1.Post)('add'),
+    (0, common_1.UseGuards)(roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)(client_1.Role.ADMIN),
+    (0, swagger_1.ApiOperation)({ summary: 'Add a new product' }),
+    (0, swagger_1.ApiResponse)({ status: 201, description: 'Product successfully created.' }),
     __param(0, (0, common_1.Body)()),
-    __param(1, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:paramtypes", [product_dto_1.ProductDto]),
     __metadata("design:returntype", void 0)
-], ProductController.prototype, "editProduct", null);
+], ProductController.prototype, "add", null);
+__decorate([
+    (0, common_1.Patch)('edit/:id'),
+    (0, common_1.UseGuards)(roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)(client_1.Role.ADMIN),
+    (0, swagger_1.ApiOperation)({ summary: 'Edit a product' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Product successfully updated.' }),
+    __param(0, (0, common_1.Param)('id')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, product_dto_1.ProductDto]),
+    __metadata("design:returntype", void 0)
+], ProductController.prototype, "edit", null);
 __decorate([
     (0, common_1.Delete)('delete/:id'),
+    (0, common_1.UseGuards)(roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)(client_1.Role.ADMIN),
+    (0, swagger_1.ApiOperation)({ summary: 'Delete a product' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Product successfully deleted.' }),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
-], ProductController.prototype, "deleteProduct", null);
+], ProductController.prototype, "delete", null);
 exports.ProductController = ProductController = __decorate([
+    (0, swagger_1.ApiTags)('Product'),
     (0, common_1.Controller)('product'),
     __metadata("design:paramtypes", [product_service_1.ProductService])
 ], ProductController);

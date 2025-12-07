@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: pos_server
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./server/.env
+    environment:
+      - PORT=8000
+    restart: always
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: pos_client
+    ports:
+      - "3000:80"
+    env_file:
+      - ./client/.env
+    depends_on:
+      - server
+    restart: always

@@ -5,7 +5,7 @@ export declare class CategoryController {
     addCategory(dto: {
         name: string;
         image: string;
-    }): Promise<any>;
+    }): Promise<unknown>;
     getAllCategories(): Promise<{
         id: string;
         createdAt: Date;
@@ -15,13 +15,13 @@ export declare class CategoryController {
     }[] | {
         msg: string;
     }>;
-    getSingleCategory(id: string): Promise<any>;
+    getSingleCategory(id: string): Promise<unknown>;
     editCategory(dto: {
         id: string;
         name: string;
         image: string;
-    }): Promise<any>;
+    }): Promise<unknown>;
     deleteCategory(id: {
         id: string;
-    }): Promise<any>;
+    }): Promise<unknown>;
 }

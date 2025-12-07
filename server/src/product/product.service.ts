@@ -1,14 +1,21 @@
 import { Body, Injectable, Param } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { Product } from '@prisma/client';
+import { PrismaService } from '../prisma/prisma.service';
+import { ProductDto } from './dto/product.dto';
 
 @Injectable()
 export class ProductService {
   constructor(private prisma: PrismaService) {}
 
-  async addProduct(@Body() dto: Product, code: number, price: number) {
+  async addProduct(dto: ProductDto) {
     const newProduct = await this.prisma.product.create({
-      data: { ...dto, code, price },
+      data: {
+        name: dto.name,
+        code: dto.code,
+        price: dto.price,
+        image: dto.image,
+        categoryId: dto.categoryId,
+        unitId: dto.unitId,
+      },
     });
     console.log(dto);
     return newProduct;
@@ -30,12 +37,11 @@ export class ProductService {
     return singleProduct;
   }
 
-  async editProduct(@Body() dto: Product, @Param('id') id: string) {
+  async editProduct(id: string, dto: ProductDto) {
     try {
       const updatedProduct = await this.prisma.product.update({
-        where: { id }, // Specify the id in the where clause
+        where: { id },
         data: {
-          // Exclude 'id' from the data object
           name: dto.name,
           code: dto.code,
           price: dto.price,
@@ -50,7 +56,7 @@ export class ProductService {
       return updatedProduct;
     } catch (error) {
       console.error(error);
-      throw error; // Rethrow the error to handle it globally or log it
+      throw error;
     }
   }
 

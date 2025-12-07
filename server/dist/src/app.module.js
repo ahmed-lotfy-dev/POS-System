@@ -19,6 +19,7 @@ const upload_module_1 = require("./upload/upload.module");
 const order_service_1 = require("./order/order.service");
 const order_controller_1 = require("./order/order.controller");
 const order_module_1 = require("./order/order.module");
+const dashboard_module_1 = require("./dashboard/dashboard.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -34,6 +35,7 @@ exports.AppModule = AppModule = __decorate([
             prisma_module_1.PrismaModule,
             upload_module_1.UploadModule,
             order_module_1.OrderModule,
+            dashboard_module_1.DashboardModule,
         ],
         providers: [order_service_1.OrderService],
         controllers: [order_controller_1.OrderController],

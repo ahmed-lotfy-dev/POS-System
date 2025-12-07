@@ -8,24 +8,40 @@ import { useRevalidator } from "react-router-dom";
 import { useUploadImage } from "../../../hooks/useUploadImage";
 import { Loader } from "@/components/ui/loader";
 import {
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogHeader,
-} from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { AlertDialogTitle } from "@radix-ui/react-alert-dialog";
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+  Input,
+  useDisclosure,
+} from "@heroui/react";
+import { CustomModal } from "@/components/ui/CustomModal";
+
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 const AddUnit = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
-  const [itemName, setItemName] = useState<string>();
+  const [itemName, setItemName] = useState<string>("");
   const revalidator = useRevalidator();
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const user = useSelector((state: RootState) => state.user.user);
 
-  const onAddHandler = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleOpen = () => {
+    if (user?.role !== "ADMIN") {
+      notify("You don't have admin privileges (View Only)", "info");
+    }
+    onOpen();
+  };
+
+  const onAddHandler = async (onClose: () => void) => {
+    if (user?.role !== "ADMIN") {
+      notify("You don't have admin privileges (View Only)", "info");
+      return;
+    }
     const { data } = await axios.post(
       `${import.meta.env.VITE_BACKEND_URL}/unit/add`,
       { name: itemName }
@@ -39,8 +55,8 @@ const AddUnit = () => {
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
-    revalidator.revalidate();
-    formRef.current?.reset();
+    setItemName("");
+    onClose();
   };
 
   const nameChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -48,39 +64,43 @@ const AddUnit = () => {
     setItemName(value);
   };
 
-  console.log({ itemName });
-
   return (
-    <AlertDialogContent className="flex flex-col justify-center items-center w-full">
-      <AlertDialogHeader>
-        <AlertDialogTitle className="font-semibold">
-          Add New Unit
-        </AlertDialogTitle>
-      </AlertDialogHeader>
-      <form
-        ref={formRef}
-        action=""
-        method="dialog"
-        className="modal-box flex flex-col"
-        onSubmit={onAddHandler}
-      >
-        <Input
-          className="input input-bordered border-b-gray-100 input-xs w-full max-w-xs my-6 mt-10 m-auto focus:bg-gray-200 bg-gray-100"
-          type="text"
-          name="name"
-          placeholder="Unit Name"
-          id="name"
-          value={itemName || ""}
-          onChange={nameChangeHandler}
-        />
-
-        <div className="flex gap-5 m-auto">
-          <AlertDialogAction type="submit">Add</AlertDialogAction>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-        </div>
-      </form>
+    <>
+      <Button onPress={handleOpen} color="primary" className="mt-10">
+        Add Unit
+      </Button>
+      <CustomModal isOpen={isOpen} onOpenChange={onOpenChange}>
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                Add New Unit
+              </ModalHeader>
+              <ModalBody>
+                <form className="flex flex-col gap-4">
+                  <Input
+                    label="Unit Name"
+                    placeholder="Unit Name"
+                    name="name"
+                    value={itemName || ""}
+                    onChange={nameChangeHandler}
+                  />
+                </form>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="light" onPress={onClose}>
+                  Cancel
+                </Button>
+                <Button color="primary" onPress={() => onAddHandler(onClose)}>
+                  Add
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </CustomModal>
       <ToastContainer />
-    </AlertDialogContent>
+    </>
   );
 };
 

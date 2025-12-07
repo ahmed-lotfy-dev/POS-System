@@ -7,27 +7,33 @@ declare global {
 }
 
 export type Category = {
-  id: number;
+  id: string;
   name: string;
   image: string;
+  createdAt?: string;
+  updatedAt?: string;
 };
 
 export type Product = {
-  id: number;
+  id: string;
   name: string;
   code: number;
   price: number;
   image: string;
-  unitId: number;
-  categoryId: number;
+  unitId: string;
+  categoryId: string;
+  createdAt?: string;
+  updatedAt?: string;
 };
 
 export type Unit = {
-  id: number;
+  id: string;
   name: string;
+  createdAt?: string;
+  updatedAt?: string;
 };
 
-export type order = {
+export type Order = {
   id: string;
   orderNumber: string;
   userId: string;
@@ -38,8 +44,8 @@ export type order = {
 };
 
 export type AllDataResponse = {
-  categories: category[];
-  products: product[];
-  units: unit[];
-  orders: order[];
+  categories: Category[];
+  products: Product[];
+  units: Unit[];
+  orders: Order[];
 };

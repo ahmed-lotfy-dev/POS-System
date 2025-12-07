@@ -1,11 +1,11 @@
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 export declare class CategoryService {
     private prisma;
     constructor(prisma: PrismaService);
     addCategory(dto: {
         name: string;
         image: string;
-    }): Promise<any>;
+    }): Promise<unknown>;
     getCategories(): Promise<{
         id: string;
         createdAt: Date;
@@ -15,13 +15,13 @@ export declare class CategoryService {
     }[] | {
         msg: string;
     }>;
-    getSingleCategory(id: string): Promise<any>;
+    getSingleCategory(id: string): Promise<unknown>;
     editCategory(dto: {
         id: string;
         name: string;
         image: string;
-    }): Promise<any>;
+    }): Promise<unknown>;
     deleteCategory(id: {
         id: string;
-    }): Promise<any>;
+    }): Promise<unknown>;
 }

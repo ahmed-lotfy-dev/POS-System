@@ -4,6 +4,7 @@ import { SignUpAuth, SignInAuth } from './dto';
 import * as argon from 'argon2';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { Role } from '../generated/prisma/client';
 
 @Injectable()
 export class AuthService {
@@ -30,7 +31,7 @@ export class AuthService {
         user.id,
         user.email,
         user.username,
-        user.isAdmin,
+        user.role,
         user.isConfirm,
         user.createdAt,
         user.updatedAt,
@@ -53,7 +54,7 @@ export class AuthService {
       user.id,
       user.email,
       user.username,
-      user.isAdmin,
+      user.role,
       user.isConfirm,
       user.createdAt,
       user.updatedAt,
@@ -64,7 +65,7 @@ export class AuthService {
     userId: string,
     email: string,
     username: string,
-    isAdmin: boolean,
+    role: Role,
     isConfirm: boolean,
     createdAt: Date,
     updatedAt: Date,
@@ -73,7 +74,7 @@ export class AuthService {
       sub: userId,
       email,
       username,
-      isAdmin,
+      role,
       isConfirm,
       createdAt: createdAt.toISOString(),
       updatedAt: updatedAt.toISOString(),

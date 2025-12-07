@@ -1,199 +1,174 @@
-import { RootState } from "../../../store/store"
-import { useDispatch, useSelector } from "react-redux"
-import { ChangeEvent, useRef } from "react"
-import { useUploadImage } from "../../../hooks/useUploadImage"
+import { RootState } from "../../../store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { ChangeEvent, useRef } from "react";
+import { useUploadImage } from "../../../hooks/useUploadImage";
 // import { Loader } from "@mantine/core";
-import { Loader } from "@/components/ui/loader"
+import { Loader } from "@/components/ui/loader";
 
-import { setItem } from "../../../store/features/Item/itemSlice"
-import { Button } from "@/components/ui/button"
+import { setItem } from "../../../store/features/Item/itemSlice";
 import {
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { ToastContainer } from "react-toastify"
-import { useRevalidator, useRouteLoaderData } from "react-router-dom"
-import axios from "axios"
-import { Select, SelectContent } from "@/components/ui/select"
-import { SelectItem, SelectTrigger, SelectValue } from "@radix-ui/react-select"
-import { AllDataResponse } from "@/types/globals"
-type Props = {}
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+  Input,
+  Select,
+  SelectItem,
+} from "@heroui/react";
+import { ToastContainer } from "react-toastify";
+import { useRevalidator, useRouteLoaderData } from "react-router-dom";
+import axios from "axios";
+import { AllDataResponse } from "@/types/globals";
+type Props = {
+  onClose: () => void;
+};
 
-function EditProduct({}: Props) {
-  const fileInputRef = useRef<HTMLInputElement>(null)
-  const formRef = useRef<HTMLFormElement>(null)
-  const editItem = useSelector((state: RootState) => state.item.item)
-  const dispatch = useDispatch()
-  const revalidator = useRevalidator()
+function EditProduct({ onClose }: Props) {
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const formRef = useRef<HTMLFormElement>(null);
+  const editItem = useSelector((state: RootState) => state.item.item);
+  const dispatch = useDispatch();
+  const revalidator = useRevalidator();
 
-  const { categories } = useRouteLoaderData("root") as AllDataResponse
-  const { units } = useRouteLoaderData("root") as AllDataResponse
-
-  const objectKeys = editItem ? Object.keys(editItem).slice(1, -2) : []
+  const { categories } = useRouteLoaderData("root") as AllDataResponse;
+  const { units } = useRouteLoaderData("root") as AllDataResponse;
 
   const onSaveHandler = async () => {
-    console.log(editItem)
+    console.log(editItem);
     const { data } = await axios.patch(
       `${import.meta.env.VITE_BACKEND_URL}/product/edit/${editItem.id}`,
       editItem
-    )
-    console.log(data)
-    console.log(editItem.id)
-    revalidator.revalidate()
-    dispatch(setItem({}))
-  }
+    );
+    console.log(data);
+    console.log(editItem.id);
+    revalidator.revalidate();
+    dispatch(setItem({}));
+  };
 
   const {
     uploadImage,
     imageLink,
     isPending,
     //error
-  } = useUploadImage()
+  } = useUploadImage();
 
-  const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target
-    const updatedItem = { ...editItem, [name]: value } // Update the corresponding property
-    dispatch(setItem(updatedItem))
-  }
+  const onChangeHandler = (
+    event: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = event.target;
+    const updatedItem = { ...editItem, [name]: value }; // Update the corresponding property
+    dispatch(setItem(updatedItem));
+  };
 
   const uploadHandler = async (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
-      await uploadImage(event.target.files[0])
+      await uploadImage(event.target.files[0]);
     }
-  }
+  };
 
   return (
-    <AlertDialogContent className="flex flex-col justify-center items-center w-full">
-      <AlertDialogHeader>
-        <AlertDialogTitle className="font-semibold">
-          Add New Category
-        </AlertDialogTitle>
-      </AlertDialogHeader>
-      <form
-        ref={formRef}
-        action=""
-        method="dialog"
-        className="modal-box flex flex-col"
-        onSubmit={() => onSaveHandler()}
-      >
-        <Label className="m-auto my-4 font-semibold" htmlFor="name">
-          Category Name
-        </Label>
-        <Input
-          className="input input-bordered border-b-gray-100 input-xs w-full max-w-xs my-6 mt-10 m-auto focus:bg-gray-200 bg-gray-100"
-          type="text"
-          name="name"
-          id="name"
-          value={editItem?.name || ""}
-          onChange={onChangeHandler}
-        />
-        <Input
-          className="input input-bordered border-b-gray-100 input-xs w-full max-w-xs my-6 mt-10 m-auto focus:bg-gray-200 bg-gray-100"
-          type="number"
-          name="price"
-          placeholder="Price"
-          id="price"
-          value={editItem?.price || ""}
-          onChange={onChangeHandler}
-        />
-        <Input
-          className="input input-bordered border-b-gray-100 input-xs w-full max-w-xs my-6 mt-10 m-auto focus:bg-gray-200 bg-gray-100"
-          type="number"
-          name="code"
-          placeholder="Code"
-          id="code"
-          value={editItem?.code || ""}
-          onChange={onChangeHandler}
-        />
-        {/* Category */}
-        <Select
-          onValueChange={(value: string) =>
-            onChangeHandler({
-              target: { name: "categoryId", value },
-            } as ChangeEvent<HTMLInputElement>)
-          }
-        >
-          <SelectTrigger className="">
-            <SelectValue placeholder="Category" />
-          </SelectTrigger>
-          <SelectContent>
-            {categories &&
-              categories.map((category) => (
-                <SelectItem key={category.id} value={category.id}>
-                  {category.name}
-                </SelectItem>
-              ))}
-          </SelectContent>
-        </Select>
-        <Select>
-          <SelectContent></SelectContent>
-        </Select>
-        {/* Unit */}
-        <Select
-          onValueChange={(value: string) =>
-            onChangeHandler({
-              target: { name: "unitId", value },
-            } as ChangeEvent<HTMLInputElement>)
-          }
-        >
-          <SelectTrigger className="">
-            <SelectValue placeholder="Unis" />
-          </SelectTrigger>
-          <SelectContent>
-            {units.map((unit) => (
-              <SelectItem key={unit.id} value={unit.id}>
-                {unit.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-        <Select>
-          <SelectContent></SelectContent>
-        </Select>
-        <>
-          <Button
-            className="my-5"
-            type="button"
-            onClick={() => fileInputRef.current?.click()}
+    <>
+      <ModalHeader className="flex flex-col gap-1">Edit Product</ModalHeader>
+      <ModalBody>
+        <form ref={formRef} className="flex flex-col gap-4">
+          <Input
+            label="Name"
+            placeholder="Name"
+            name="name"
+            value={editItem?.name || ""}
+            onChange={onChangeHandler}
+          />
+          <Input
+            label="Price"
+            placeholder="Price"
+            type="number"
+            name="price"
+            value={editItem?.price || ""}
+            onChange={onChangeHandler}
+          />
+          <Input
+            label="Code"
+            placeholder="Code"
+            type="number"
+            name="code"
+            value={editItem?.code || ""}
+            onChange={onChangeHandler}
+          />
+          {/* Category */}
+          <Select
+            label="Category"
+            placeholder="Select a category"
+            selectedKeys={editItem?.categoryId ? [editItem.categoryId] : []}
+            onChange={onChangeHandler}
+            name="categoryId"
           >
-            Upload Image
-          </Button>
-          <input
-            className="hidden"
-            type="file"
-            name="image"
-            id="hiddenFileInput"
-            ref={fileInputRef}
-            onChange={uploadHandler}
-          />
-        </>
-        {isPending ? <Loader /> : null}
-        {imageLink ? (
-          <img
-            src={imageLink}
-            alt={`${editItem.name} image`}
-            className={`${imageLink ? "block" : "hidden"} w-80 m-auto my-10`}
-          />
-        ) : (
-          <img
-            src={editItem ? editItem.image : ""}
-            alt={` image`}
-            // className={`${imageLink ? "block" : "hidden"} w-80 m-auto my-10`}
-          />
-        )}
-        <div className="flex gap-5 m-auto mt-6">
-          <AlertDialogAction type="submit">Save</AlertDialogAction>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-        </div>
-      </form>
-      <ToastContainer />
-    </AlertDialogContent>
-  )
+            {categories.map((category) => (
+              <SelectItem key={category.id}>{category.name}</SelectItem>
+            ))}
+          </Select>
+
+          {/* Unit */}
+          <Select
+            label="Unit"
+            placeholder="Select a unit"
+            selectedKeys={editItem?.unitId ? [editItem.unitId] : []}
+            onChange={onChangeHandler}
+            name="unitId"
+          >
+            {units.map((unit) => (
+              <SelectItem key={unit.id}>{unit.name}</SelectItem>
+            ))}
+          </Select>
+
+          <div className="flex flex-col gap-2">
+            <Button
+              color="primary"
+              variant="flat"
+              onPress={() => fileInputRef.current?.click()}
+            >
+              Upload Image
+            </Button>
+            <input
+              className="hidden"
+              type="file"
+              name="image"
+              ref={fileInputRef}
+              onChange={uploadHandler}
+            />
+            {isPending ? <Loader /> : null}
+            {imageLink ? (
+              <img
+                src={imageLink}
+                alt={`${editItem.name} image`}
+                className="w-20 h-20 object-cover m-auto rounded-md"
+              />
+            ) : (
+              <img
+                src={editItem ? editItem.image : ""}
+                alt="Product"
+                className="w-20 h-20 object-cover m-auto rounded-md"
+              />
+            )}
+          </div>
+        </form>
+      </ModalBody>
+      <ModalFooter>
+        <Button color="danger" variant="light" onPress={onClose}>
+          Cancel
+        </Button>
+        <Button
+          color="primary"
+          onPress={() => {
+            onSaveHandler();
+            onClose();
+          }}
+        >
+          Save
+        </Button>
+      </ModalFooter>
+    </>
+  );
 }
 
-export { EditProduct }
+export { EditProduct };

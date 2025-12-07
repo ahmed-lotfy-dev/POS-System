@@ -9,20 +9,27 @@ import { useUploadImage } from "../../../hooks/useUploadImage";
 // import { Loader } from "@mantine/core";
 import { Loader } from "@/components/ui/loader";
 import {
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogHeader,
-} from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { AlertDialogTitle } from "@radix-ui/react-alert-dialog";
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+  Input,
+  useDisclosure,
+} from "@heroui/react";
+import { CustomModal } from "@/components/ui/CustomModal";
+
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 const AddCategory = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [itemName, setItemName] = useState<string>("");
   const [image, setImage] = useState<string | null | undefined>("");
   const revalidator = useRevalidator();
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const user = useSelector((state: RootState) => state.user.user);
 
   const {
     uploadImage,
@@ -31,8 +38,18 @@ const AddCategory = () => {
     //error
   } = useUploadImage();
 
-  const onAddHandler = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleOpen = () => {
+    if (user?.role !== "ADMIN") {
+      notify("You don't have admin privileges (View Only)", "info");
+    }
+    onOpen();
+  };
+
+  const onAddHandler = async (onClose: () => void) => {
+    if (user?.role !== "ADMIN") {
+      notify("You don't have admin privileges (View Only)", "info");
+      return;
+    }
     console.log({ itemName, image });
     const { data } = await axios.post(
       `${import.meta.env.VITE_BACKEND_URL}/category/add`,
@@ -46,6 +63,7 @@ const AddCategory = () => {
     }
     setItemName("");
     setImage("");
+    onClose();
   };
 
   const nameChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -58,66 +76,77 @@ const AddCategory = () => {
     if (event.target.files && event.target.files.length > 0) {
       const imageLink = await uploadImage(event.target.files[0]);
       setImage(imageLink);
-      console.log({ imageLink });
     }
   };
 
+  const handleUploadClick = () => {
+    if (user?.role !== "ADMIN") {
+      notify("You don't have admin privileges (View Only)", "info");
+    }
+    fileInputRef.current?.click();
+  };
+
   return (
-    <AlertDialogContent className="flex flex-col justify-center items-center w-full bg-gray-100 dark:bg-gray-900">
-      <AlertDialogHeader>
-        <AlertDialogTitle className="font-semibold text-gray-900 dark:text-gray-100">
-          Add New Category
-        </AlertDialogTitle>
-      </AlertDialogHeader>
-      <form
-        action=""
-        method="dialog"
-        className="modal-box flex flex-col"
-        onSubmit={onAddHandler}
-      >
-        <Input
-          className="input input-bordered border-b-gray-100 input-xs w-full max-w-xs my-6 mt-10 m-auto focus:bg-gray-200 bg-gray-100 dark:bg-gray-700 dark:text-gray-100"
-          type="text"
-          placeholder="Category Name"
-          name="name"
-          id="name"
-          value={itemName || ""}
-          onChange={nameChangeHandler}
-        />
-        <>
-          <Button
-            className="my-5"
-            type="button"
-            onClick={() => fileInputRef.current?.click()}
-          >
-            Upload Image
-          </Button>
-          <input
-            className="hidden"
-            type="file"
-            name="image"
-            id="hiddenFileInput"
-            ref={fileInputRef}
-            onChange={uploadHandler}
-          />
-        </>
-        {isPending ? <Loader /> : null}
-        {image && (
-          <div>
-            <img
-              src={image}
-              alt={`${itemName} image`}
-              className={`${image ? "block" : "hidden"} w-80 m-auto my-10`}
-            />
-          </div>
-        )}
-        <div className="flex gap-5 m-auto">
-          <AlertDialogAction type="submit">Add</AlertDialogAction>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-        </div>
-      </form>
+    <>
+      <Button onPress={handleOpen} color="primary" className="mt-10">
+        Add Category
+      </Button>
+      <CustomModal isOpen={isOpen} onOpenChange={onOpenChange}>
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                Add New Category
+              </ModalHeader>
+              <ModalBody>
+                <form className="flex flex-col gap-4">
+                  <Input
+                    label="Category Name"
+                    placeholder="Category Name"
+                    name="name"
+                    value={itemName || ""}
+                    onChange={nameChangeHandler}
+                  />
+                  <div className="flex flex-col gap-2">
+                    <Button
+                      color="primary"
+                      variant="flat"
+                      onPress={handleUploadClick}
+                    >
+                      Upload Image
+                    </Button>
+                    <input
+                      className="hidden"
+                      type="file"
+                      name="image"
+                      ref={fileInputRef}
+                      onChange={uploadHandler}
+                    />
+                    {isPending ? <Loader /> : null}
+                    {image && (
+                      <img
+                        src={image}
+                        alt={`${itemName} image`}
+                        className="w-20 h-20 object-cover m-auto rounded-md"
+                      />
+                    )}
+                  </div>
+                </form>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="light" onPress={onClose}>
+                  Cancel
+                </Button>
+                <Button color="primary" onPress={() => onAddHandler(onClose)}>
+                  Add
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </CustomModal>
       <ToastContainer />
-    </AlertDialogContent>
+    </>
   );
 };
 

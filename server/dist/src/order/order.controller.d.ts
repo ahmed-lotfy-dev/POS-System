@@ -69,6 +69,6 @@ export declare class OrderController {
         msg: string;
     }>;
     deleteOrder(id: string): Promise<{
-        msg: any;
+        msg: unknown;
     }>;
 }

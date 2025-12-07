@@ -18,10 +18,15 @@ const upload_service_1 = require("./upload.service");
 const platform_express_1 = require("@nestjs/platform-express");
 const aws_sdk_v3_nest_1 = require("aws-sdk-v3-nest");
 const client_s3_1 = require("@aws-sdk/client-s3");
+const roles_decorator_1 = require("../auth/decorator/roles.decorator");
+const roles_guard_1 = require("../auth/guard/roles.guard");
+const client_1 = require("../generated/prisma/client");
 let UploadController = class UploadController {
+    uploadService;
     constructor(uploadService) {
         this.uploadService = uploadService;
     }
+    s3;
     uploadImage(image) {
         return this.uploadService.uploadImage(this.s3, image);
     }
@@ -36,6 +41,8 @@ __decorate([
 ], UploadController.prototype, "s3", void 0);
 __decorate([
     (0, common_1.Post)(''),
+    (0, common_1.UseGuards)(roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)(client_1.Role.ADMIN),
     (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('image')),
     __param(0, (0, common_1.UploadedFile)()),
     __metadata("design:type", Function),
@@ -44,6 +51,8 @@ __decorate([
 ], UploadController.prototype, "uploadImage", null);
 __decorate([
     (0, common_1.Delete)(''),
+    (0, common_1.UseGuards)(roles_guard_1.RolesGuard),
+    (0, roles_decorator_1.Roles)(client_1.Role.ADMIN),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),

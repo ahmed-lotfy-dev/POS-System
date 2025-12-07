@@ -16,6 +16,7 @@ exports.UnitService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma/prisma.service");
 let UnitService = class UnitService {
+    prisma;
     constructor(prisma) {
         this.prisma = prisma;
     }
@@ -34,7 +35,10 @@ let UnitService = class UnitService {
             return newUnit;
         }
         catch (error) {
-            return new common_1.ConflictException(error.message);
+            if (error instanceof Error) {
+                return new common_1.ConflictException(error.message);
+            }
+            return new common_1.ConflictException('An unknown error occurred');
         }
     }
     async getUnits() {

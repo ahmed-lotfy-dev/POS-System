@@ -1,20 +1,19 @@
 import { TableComponent } from "../Table/Table";
 import axios from "axios";
-import { Link, useRevalidator, useRouteLoaderData } from "react-router-dom";
-import { AllDataResponse } from "../../../types/globals";
+import { useRevalidator, useRouteLoaderData } from "react-router-dom";
+import { AllDataResponse, Unit } from "../../../types/globals";
 import { AlertDialog, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { AddUnit } from "./AddUnit";
 
-type Unit = {
-  id: string;
-  name: string;
-};
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
 
 const AdminUnits = () => {
   const { units } = useRouteLoaderData("root") as AllDataResponse;
   console.log(units);
   const revalidator = useRevalidator();
+  const user = useSelector((state: RootState) => state.user.user);
 
   const handleSave = async (item: Unit) => {
     await axios.patch(
@@ -32,13 +31,8 @@ const AdminUnits = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center w-full">
-      <AlertDialog>
-        <Button asChild className="mt-10">
-          <AlertDialogTrigger>Add Unit</AlertDialogTrigger>
-        </Button>
-        <AddUnit />
-      </AlertDialog>
+    <div className="w-full h-full overflow-auto p-6">
+      <AddUnit />
       <TableComponent<Unit>
         tableData={units}
         handleSave={handleSave}

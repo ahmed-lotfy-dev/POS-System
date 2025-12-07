@@ -12,6 +12,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SignInAuth = exports.SignUpAuth = void 0;
 const class_validator_1 = require("class-validator");
 class SignUpAuth {
+    username;
+    email;
+    password;
 }
 exports.SignUpAuth = SignUpAuth;
 __decorate([
@@ -30,6 +33,8 @@ __decorate([
     __metadata("design:type", String)
 ], SignUpAuth.prototype, "password", void 0);
 class SignInAuth {
+    email;
+    password;
 }
 exports.SignInAuth = SignInAuth;
 __decorate([

@@ -1,14 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-export interface Product {
-  id: number;
-  name: string;
-  code: number;
-  categoryId: string;
-  price: number;
-  unitId: string;
-  image: string;
-}
+import { Product } from "../../../types/globals";
 
 export interface ProductsState {
   activeProducts: Product[] | null;

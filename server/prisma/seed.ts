@@ -1,4 +1,6 @@
 import { PrismaClient } from '@prisma/client';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 // ✅ Import your data directly
 import users from './data/users.js';
@@ -8,7 +10,13 @@ import products from './data/products.js';
 import orders from './data/orders.js';
 import order_items from './data/order_items.js';
 
-const prisma = new PrismaClient();
+import { Pool } from 'pg';
+import { PrismaPg } from '@prisma/adapter-pg';
+
+const connectionString = process.env.DATABASE_URL;
+const pool = new Pool({ connectionString });
+const adapter = new PrismaPg(pool);
+const prisma = new PrismaClient({ adapter });
 
 const dataMap = {
   user: users,

@@ -43,7 +43,7 @@ function AsideNav() {
             Home
           </NavLink>
         </div>
-        {user.user?.isAdmin ? (
+        {user.user ? (
           <div className="flex space-x-2 cursor-pointer">
             <TbLayoutDashboard size={25} className="m-auto" />
             <NavLink

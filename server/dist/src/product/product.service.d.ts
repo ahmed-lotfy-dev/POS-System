@@ -1,16 +1,16 @@
-import { PrismaService } from 'src/prisma/prisma.service';
-import { Product } from '@prisma/client';
+import { PrismaService } from '../prisma/prisma.service';
+import { ProductDto } from './dto/product.dto';
 export declare class ProductService {
     private prisma;
     constructor(prisma: PrismaService);
-    addProduct(dto: Product, code: number, price: number): Promise<{
+    addProduct(dto: ProductDto): Promise<{
         id: string;
         createdAt: Date;
         updatedAt: Date;
         name: string;
-        image: string;
         code: number;
         price: number;
+        image: string;
         unitId: string | null;
         categoryId: string | null;
     }>;
@@ -19,9 +19,9 @@ export declare class ProductService {
         createdAt: Date;
         updatedAt: Date;
         name: string;
-        image: string;
         code: number;
         price: number;
+        image: string;
         unitId: string | null;
         categoryId: string | null;
     }[]>;
@@ -30,22 +30,22 @@ export declare class ProductService {
         createdAt: Date;
         updatedAt: Date;
         name: string;
-        image: string;
         code: number;
         price: number;
+        image: string;
         unitId: string | null;
         categoryId: string | null;
     } | {
         msg: string;
     }>;
-    editProduct(dto: Product, id: string): Promise<{
+    editProduct(id: string, dto: ProductDto): Promise<{
         id: string;
         createdAt: Date;
         updatedAt: Date;
         name: string;
-        image: string;
         code: number;
         price: number;
+        image: string;
         unitId: string | null;
         categoryId: string | null;
     } | {
@@ -56,9 +56,9 @@ export declare class ProductService {
         createdAt: Date;
         updatedAt: Date;
         name: string;
-        image: string;
         code: number;
         price: number;
+        image: string;
         unitId: string | null;
         categoryId: string | null;
     } | {

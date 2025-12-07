@@ -1,7 +1,9 @@
 import { NestFactory } from '@nestjs/core';
+// Trigger restart
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { ResponseInterceptor } from './common/interceptors/response.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
@@ -9,6 +11,7 @@ async function bootstrap() {
   });
 
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
+  app.useGlobalInterceptors(new ResponseInterceptor());
 
   const config = new DocumentBuilder()
     .setTitle('Pos-System Backend Server ')
@@ -19,7 +22,7 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('api/docs', app, document);
 
   app.enableCors({
     credentials: true,
@@ -27,7 +30,7 @@ async function bootstrap() {
     allowedHeaders: '*',
   });
 
-  await app.listen(3001);
+  await app.listen(process.env.PORT || 8000);
 }
 
 bootstrap();

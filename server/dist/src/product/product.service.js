@@ -16,12 +16,20 @@ exports.ProductService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma/prisma.service");
 let ProductService = class ProductService {
+    prisma;
     constructor(prisma) {
         this.prisma = prisma;
     }
-    async addProduct(dto, code, price) {
+    async addProduct(dto) {
         const newProduct = await this.prisma.product.create({
-            data: { ...dto, code, price },
+            data: {
+                name: dto.name,
+                code: dto.code,
+                price: dto.price,
+                image: dto.image,
+                categoryId: dto.categoryId,
+                unitId: dto.unitId,
+            },
         });
         console.log(dto);
         return newProduct;
@@ -40,7 +48,7 @@ let ProductService = class ProductService {
             return { msg: 'product not found' };
         return singleProduct;
     }
-    async editProduct(dto, id) {
+    async editProduct(id, dto) {
         try {
             const updatedProduct = await this.prisma.product.update({
                 where: { id },
@@ -74,24 +82,11 @@ let ProductService = class ProductService {
 };
 exports.ProductService = ProductService;
 __decorate([
-    __param(0, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Number, Number]),
-    __metadata("design:returntype", Promise)
-], ProductService.prototype, "addProduct", null);
-__decorate([
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], ProductService.prototype, "getSingleProduct", null);
-__decorate([
-    __param(0, (0, common_1.Body)()),
-    __param(1, (0, common_1.Param)('id')),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, String]),
-    __metadata("design:returntype", Promise)
-], ProductService.prototype, "editProduct", null);
 __decorate([
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),

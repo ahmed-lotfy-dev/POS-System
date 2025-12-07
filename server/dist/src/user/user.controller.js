@@ -18,7 +18,9 @@ const decorator_1 = require("../auth/decorator");
 const guard_1 = require("../auth/guard");
 const dto_1 = require("./dto");
 const user_service_1 = require("./user.service");
+const swagger_1 = require("@nestjs/swagger");
 let UserController = class UserController {
+    userService;
     constructor(userService) {
         this.userService = userService;
     }
@@ -35,6 +37,8 @@ let UserController = class UserController {
 exports.UserController = UserController;
 __decorate([
     (0, common_1.Get)(''),
+    (0, swagger_1.ApiOperation)({ summary: 'Get all users' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Return all users.' }),
     __param(0, (0, decorator_1.GetUser)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Array]),
@@ -43,6 +47,9 @@ __decorate([
 __decorate([
     (0, common_1.UseGuards)(guard_1.JwtGuard),
     (0, common_1.Get)('me'),
+    (0, swagger_1.ApiOperation)({ summary: 'Get current user profile' }),
+    (0, swagger_1.ApiResponse)({ status: 200, description: 'Return current user profile.' }),
+    (0, swagger_1.ApiResponse)({ status: 401, description: 'Unauthorized.' }),
     __param(0, (0, decorator_1.GetUser)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -51,6 +58,12 @@ __decorate([
 __decorate([
     (0, common_1.UseGuards)(guard_1.JwtGuard),
     (0, common_1.Patch)(),
+    (0, swagger_1.ApiOperation)({ summary: 'Edit current user profile' }),
+    (0, swagger_1.ApiResponse)({
+        status: 200,
+        description: 'User profile successfully updated.',
+    }),
+    (0, swagger_1.ApiResponse)({ status: 401, description: 'Unauthorized.' }),
     __param(0, (0, decorator_1.GetUser)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -58,6 +71,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UserController.prototype, "editUser", null);
 exports.UserController = UserController = __decorate([
+    (0, swagger_1.ApiTags)('Users'),
     (0, common_1.Controller)('users'),
     __metadata("design:paramtypes", [user_service_1.UserService])
 ], UserController);

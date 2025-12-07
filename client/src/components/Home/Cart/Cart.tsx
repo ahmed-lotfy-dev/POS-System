@@ -83,7 +83,7 @@ function Cart({}: Props) {
     revalidate();
     setTax(0);
     setDiscount(0);
-    notify(`Order : ${data.orderNumber} has been paid`, "success");
+    notify(`Order : ${data.data.orderNumber} has been paid`, "success");
   };
   console.log(cartItems);
   const deleteItemHandler = (id: any) => {

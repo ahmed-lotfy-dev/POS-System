@@ -12,6 +12,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.EditUserDto = void 0;
 const class_validator_1 = require("class-validator");
 class EditUserDto {
+    email;
+    firstName;
+    lastName;
 }
 exports.EditUserDto = EditUserDto;
 __decorate([

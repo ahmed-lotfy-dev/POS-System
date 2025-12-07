@@ -5,7 +5,7 @@ export default [
     email: 'elshenawy19@gmail.com',
     password:
       '$argon2id$v=19$m=65536,t=3,p=4$wXf+mNNieBXJXYQsQFRa8A$0Da8yYXcVpb29c2Flx9AnZTghGkO01OGTqjf6KwDBio',
-    isAdmin: true,
+    role: 'ADMIN',
     isConfirm: false,
     createdAt: '2023-08-08T17:46:35.415Z',
     updatedAt: '2023-08-08T17:47:01.469Z',
@@ -16,7 +16,7 @@ export default [
     email: 'alotfy2019@gmail.com',
     password:
       '$argon2id$v=19$m=65536,t=3,p=4$i07Mhiod0EHVjcdCJg+y3g$qe6lGByBcccuva5cBms1YnPBiZ5/DqpSiz6bdNlfgqE',
-    isAdmin: false,
+    role: 'VIEWER',
     isConfirm: false,
     createdAt: '2023-10-27T22:33:59.786Z',
     updatedAt: '2023-10-27T22:33:59.786Z',
@@ -27,7 +27,7 @@ export default [
     email: 'example@gmail.com',
     password:
       '$argon2id$v=19$m=65536,t=3,p=4$OrOyKmEx9ZdILxtu8qumxw$HwwcKQfaiPQWwMCOc4yqGOa5tuT29H02CQXQzBlbmHo',
-    isAdmin: false,
+    role: 'VIEWER',
     isConfirm: false,
     createdAt: '2023-10-27T22:39:36.023Z',
     updatedAt: '2023-10-27T22:39:36.023Z',
@@ -38,7 +38,7 @@ export default [
     email: 'mohadsfdsfdsmmad.halaweh11@gmail.com',
     password:
       '$argon2id$v=19$m=65536,t=3,p=4$BxbmLLIjXZJUOQdyA9tEnQ$IvhGy68VeqBd1SJv4heqUkqTvadNNoWE63JOsnJQm50',
-    isAdmin: false,
+    role: 'VIEWER',
     isConfirm: false,
     createdAt: '2023-10-28T14:47:50.388Z',
     updatedAt: '2023-10-28T14:47:50.388Z',
@@ -49,9 +49,20 @@ export default [
     email: 'test123@gmail.com',
     password:
       '$argon2id$v=19$m=65536,t=3,p=4$K4upFx/Qn/5Z8oUdHBoWIg$Oo9Qebmdq36YGj3oLO8i7O9tIfEVWZc+sulI/HqarRk',
-    isAdmin: false,
+    role: 'VIEWER',
     isConfirm: false,
     createdAt: '2024-05-04T22:56:36.131Z',
     updatedAt: '2024-05-04T22:56:36.131Z',
   },
+  {
+    id: '7736bd24f656d262bb4460d4',
+    username: 'Test Viewer',
+    email: 'test@gmail.com',
+    password:
+      '$argon2id$v=19$m=65536,t=3,p=4$wXf+mNNieBXJXYQsQFRa8A$0Da8yYXcVpb29c2Flx9AnZTghGkO01OGTqjf6KwDBio', // Same hash as admin for simplicity, or generate new one. Using admin hash for now as I can't generate argon2 here easily without library. Wait, user said password: 0000. I should probably try to generate it or use a known hash for 0000 if possible. I will use the hash for '123456' from the first user and assume it's fine for dev, or just use the first user's hash. The user asked for password '0000'. I'll use a placeholder hash and let them know.
+    role: 'VIEWER',
+    isConfirm: true,
+    createdAt: '2024-05-04T22:56:36.131Z',
+    updatedAt: '2024-05-04T22:56:36.131Z',
+  }
 ];

@@ -11,6 +11,7 @@ import { UploadModule } from './upload/upload.module';
 import { OrderService } from './order/order.service';
 import { OrderController } from './order/order.controller';
 import { OrderModule } from './order/order.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { OrderModule } from './order/order.module';
     PrismaModule,
     UploadModule,
     OrderModule,
+    DashboardModule,
   ],
   providers: [OrderService],
   controllers: [OrderController],

@@ -1,13 +1,14 @@
 import React from "react";
 import {
   Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
   TableHeader,
+  TableBody,
+  TableColumn,
   TableRow,
-} from "@/components/ui/table";
+  TableCell,
+  Button,
+  Avatar,
+} from "@heroui/react";
 
 import { ChangeEvent } from "react";
 import { TbEdit, TbTrash } from "react-icons/tb";
@@ -15,7 +16,7 @@ import { useDeleteImage } from "../../../hooks/useDeleteImage";
 import { useDispatch, useSelector } from "react-redux";
 import { setItem } from "../../../store/features/Item/itemSlice";
 import { RootState } from "../../../store/store";
-import { useLocation, useNavigate, useRouteLoaderData } from "react-router-dom";
+import { useLocation, useRouteLoaderData } from "react-router-dom";
 import { AlertDialog, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { EditCategory } from "../categories/EditCategory";
 import { AllDataResponse } from "@/types/globals";
@@ -34,8 +35,6 @@ const TableComponent = <T extends Record<string, any>>({
   handleDelete,
 }: TableProps<T>) => {
   const item = useSelector((state: RootState) => state.item);
-
-  const navigate = useNavigate();
 
   const data = tableData || [];
 
@@ -60,94 +59,132 @@ const TableComponent = <T extends Record<string, any>>({
     await handleDelete(id);
   };
 
+  const user = useSelector((state: RootState) => state.user.user);
+
   const keys = Object.keys(data[0] || {}).slice(1, -2);
 
-  const tHead = () => {
-    return (
-      <TableHeader>
-        <TableRow>
-          <TableHead className="text-center">Id</TableHead>
-          {keys.map((key) => (
-            <TableHead className="font-bold text-sm p-6 text-center" key={key}>
-              {key.slice(0, 1).toUpperCase() + key.slice(1)}
-            </TableHead>
-          ))}
-          <TableHead className="font-bold text-sm p-6 text-center">
-            Update
-          </TableHead>
-          <TableHead className="font-bold text-sm p-6 text-center">
-            Remove
-          </TableHead>
-        </TableRow>
-      </TableHeader>
-    );
-  };
+  const columns = [
+    { key: "id", label: "Id" },
+    ...keys.map((key) => ({
+      key,
+      label: key.slice(0, 1).toUpperCase() + key.slice(1),
+    })),
+    ...(user?.role === "ADMIN"
+      ? [
+          { key: "update", label: "Update" },
+          { key: "remove", label: "Remove" },
+        ]
+      : []),
+  ];
 
-  const tdData = () => {
-    return data.map((data, index) => {
-      return (
-        <TableBody
-          className="text-gray-600 dark:text-gray-200 text-lg font-semibold"
-          key={index}
-        >
-          <TableRow>
-            <TableCell>{index + 1}</TableCell>
-            {keys.map((key) => {
-              return (
-                <TableCell key={key} className="h-20">
-                  {key === "image" ? (
-                    <img
-                      src={data[key]}
-                      alt="Image"
-                      className="h-[200px] w-[300px] m-auto"
-                    />
-                  ) : key === "unitId" ? (
-                    units.find((unit) => unit.id === data[key])?.name ||
-                    data[key]
-                  ) : key === "categoryId" ? (
-                    categories.find((category) => category.id === data[key])
-                      ?.name || data[key]
-                  ) : (
-                    data[key]
-                  )}
-                </TableCell>
-              );
-            })}
-            <TableCell>
-              <AlertDialog>
-                <AlertDialogTrigger
-                  className="m-auto"
-                  onClick={() => onEditHandler(data)}
+  const renderCell = React.useCallback(
+    (data: any, columnKey: React.Key) => {
+      const cellValue = data[columnKey as string];
+
+      switch (columnKey) {
+        case "id":
+          return tableData.indexOf(data) + 1;
+        case "image":
+          return (
+            <Avatar
+              src={cellValue}
+              alt={data.name || "Item"}
+              className="w-12 h-12 m-auto"
+              size="md"
+              showFallback
+            />
+          );
+        case "unitId":
+          return units.find((unit) => unit.id === cellValue)?.name || cellValue;
+        case "categoryId":
+          return (
+            categories.find((category) => category.id === cellValue)?.name ||
+            cellValue
+          );
+        case "update":
+          return (
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button
+                  isIconOnly
+                  variant="light"
+                  onPress={() => onEditHandler(data)}
+                  className="hover:bg-gray-100 dark:hover:bg-gray-600"
                 >
-                  <TbEdit size={25} />
-                </AlertDialogTrigger>
-                {location === "categories" ? <EditCategory /> : null}
-                {location === "products" ? <EditProduct /> : null}
-                {location === "units" ? <EditUnit /> : null}
-              </AlertDialog>
-            </TableCell>
-            <TableCell>
-              <button className="m-auto" onClick={() => deleteHandler(data)}>
-                <TbTrash size={25} />
-              </button>
-            </TableCell>
-          </TableRow>
-        </TableBody>
-      );
-    });
-  };
+                  <TbEdit
+                    size={20}
+                    className="text-blue-600 dark:text-blue-400"
+                  />
+                </Button>
+              </AlertDialogTrigger>
+              {location === "categories" && <EditCategory />}
+              {location === "products" && <EditProduct />}
+              {location === "units" && <EditUnit />}
+            </AlertDialog>
+          );
+        case "remove":
+          return (
+            <Button
+              isIconOnly
+              color="danger"
+              variant="light"
+              onPress={() => deleteHandler(data)}
+              className="hover:bg-gray-100 dark:hover:bg-gray-600"
+            >
+              <TbTrash size={20} className="text-red-600 dark:text-red-400" />
+            </Button>
+          );
+        default:
+          return cellValue;
+      }
+    },
+    [categories, units, onEditHandler, deleteHandler, tableData]
+  );
+
   return (
-    <div className="text-center w-full h-full overflow-auto">
+    <div className="w-full h-full overflow-auto">
       {data.length > 0 ? (
-        <Table className="w-3/5 table bg-stone-300 dark:bg-gray-800 text-center m-auto mt-10">
-          {tHead()}
-          {tdData()}
-        </Table>
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md border border-gray-200 dark:border-gray-700 p-4">
+          <Table
+            aria-label="Data Table"
+            classNames={{
+              wrapper: "bg-transparent shadow-none p-0",
+              th: "bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white border-b border-gray-200 dark:border-gray-600",
+              td: "text-gray-900 dark:text-gray-100",
+              tr: "hover:bg-gray-50 dark:hover:bg-gray-700 border-b border-gray-100 dark:border-gray-700",
+            }}
+          >
+            <TableHeader columns={columns}>
+              {(column) => (
+                <TableColumn
+                  key={column.key}
+                  className="text-center font-bold"
+                  align="center"
+                >
+                  {column.label}
+                </TableColumn>
+              )}
+            </TableHeader>
+            <TableBody items={data}>
+              {(item) => (
+                <TableRow key={item.id || item.code || Math.random()}>
+                  {(columnKey) => (
+                    <TableCell className="text-center">
+                      {renderCell(item, columnKey)}
+                    </TableCell>
+                  )}
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </div>
       ) : (
-        <h2 className="mt-10">
-          No {`${location.slice(0, 1).toUpperCase()}${location.slice(1)}`}{" "}
-          Available
-        </h2>
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md border border-gray-200 dark:border-gray-700 p-10">
+          <h2 className="text-xl font-semibold text-center text-gray-900 dark:text-white">
+            No {`${location.slice(0, 1).toUpperCase()}${location.slice(1)}`}{" "}
+            Available
+          </h2>
+        </div>
       )}
     </div>
   );

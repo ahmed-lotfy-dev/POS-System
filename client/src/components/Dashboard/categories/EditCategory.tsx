@@ -6,29 +6,27 @@ import { useUploadImage } from "../../../hooks/useUploadImage";
 import { Loader } from "@/components/ui/loader";
 
 import { setItem } from "../../../store/features/Item/itemSlice";
-import { Button } from "@/components/ui/button";
 import {
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+  Input,
+} from "@heroui/react";
 import { ToastContainer } from "react-toastify";
 import { useRevalidator } from "react-router-dom";
 import axios from "axios";
-type Props = {};
+type Props = {
+  onClose: () => void;
+};
 
-function EditCategory({}: Props) {
+function EditCategory({ onClose }: Props) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const editItem = useSelector((state: RootState) => state.item.item);
   const dispatch = useDispatch();
   const revalidator = useRevalidator();
-
-  const objectKeys = editItem ? Object.keys(editItem).slice(1, -2) : [];
 
   const onSaveHandler = async () => {
     console.log({ onsave: editItem });
@@ -62,68 +60,64 @@ function EditCategory({}: Props) {
   };
 
   return (
-    <AlertDialogContent className="flex flex-col justify-center items-center w-full">
-      <AlertDialogHeader>
-        <AlertDialogTitle className="font-semibold">
-          Add New Category
-        </AlertDialogTitle>
-      </AlertDialogHeader>
-      <form
-        ref={formRef}
-        action=""
-        method="dialog"
-        className="modal-box flex flex-col"
-        onSubmit={() => onSaveHandler()}
-      >
-        <Label className="m-auto my-4 font-semibold" htmlFor="name">
-          Category Name
-        </Label>
-        <Input
-          className="input input-bordered border-b-gray-100 input-xs w-full max-w-xs my-6 mt-10 m-auto focus:bg-gray-200 bg-gray-100"
-          type="text"
-          name="name"
-          id="name"
-          value={editItem ? editItem.name : ""}
-          onChange={onChangeHandler}
-        />
-        <>
-          <Button
-            className="my-5"
-            type="button"
-            onClick={() => fileInputRef.current?.click()}
-          >
-            Upload Image
-          </Button>
-          <input
-            className="hidden"
-            type="file"
-            name="image"
-            id="hiddenFileInput"
-            ref={fileInputRef}
-            onChange={uploadHandler}
+    <>
+      <ModalHeader className="flex flex-col gap-1">Edit Category</ModalHeader>
+      <ModalBody>
+        <form ref={formRef} className="flex flex-col gap-4">
+          <Input
+            label="Category Name"
+            placeholder="Category Name"
+            name="name"
+            value={editItem ? editItem.name : ""}
+            onChange={onChangeHandler}
           />
-        </>
-        {isPending ? <Loader /> : null}
-        {imageLink ? (
-          <img
-            src={imageLink}
-            alt={`${editItem.name} image`}
-            className={`${imageLink ? "block" : "hidden"} w-80 m-auto my-10`}
-          />
-        ) : (
-          <img
-            src={editItem ? editItem.image : ""}
-            alt={` image`}
-            // className={`${imageLink ? "block" : "hidden"} w-80 m-auto my-10`}
-          />
-        )}
-        <div className="flex gap-5 m-auto mt-6">
-          <AlertDialogAction type="submit">Save</AlertDialogAction>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-        </div>
-      </form>
-      <ToastContainer />
-    </AlertDialogContent>
+          <div className="flex flex-col gap-2">
+            <Button
+              color="primary"
+              variant="flat"
+              onPress={() => fileInputRef.current?.click()}
+            >
+              Upload Image
+            </Button>
+            <input
+              className="hidden"
+              type="file"
+              name="image"
+              ref={fileInputRef}
+              onChange={uploadHandler}
+            />
+            {isPending ? <Loader /> : null}
+            {imageLink ? (
+              <img
+                src={imageLink}
+                alt={`${editItem.name} image`}
+                className="w-20 h-20 object-cover m-auto rounded-md"
+              />
+            ) : (
+              <img
+                src={editItem ? editItem.image : ""}
+                alt="Category"
+                className="w-20 h-20 object-cover m-auto rounded-md"
+              />
+            )}
+          </div>
+        </form>
+      </ModalBody>
+      <ModalFooter>
+        <Button color="danger" variant="light" onPress={onClose}>
+          Cancel
+        </Button>
+        <Button
+          color="primary"
+          onPress={() => {
+            onSaveHandler();
+            onClose();
+          }}
+        >
+          Save
+        </Button>
+      </ModalFooter>
+    </>
   );
 }
 

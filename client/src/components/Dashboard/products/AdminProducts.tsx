@@ -3,26 +3,20 @@ import { Link, useRouteLoaderData } from "react-router-dom";
 import axios from "axios";
 import { useRevalidator } from "react-router-dom";
 import { ChangeEvent, useState } from "react";
-import { AllDataResponse } from "../../../types/globals";
+import { AllDataResponse, Product } from "../../../types/globals";
 import { AlertDialog, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { AddUnit } from "../units/AddUnit";
 import { AddProduct } from "./AddProduct";
 
-type Product = {
-  id: string;
-  name: string;
-  code: number;
-  category: string;
-  image: string;
-  price: number;
-  unit: string;
-};
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
 
 const AdminProducts = () => {
   const { products } = useRouteLoaderData("root") as AllDataResponse;
   console.log(products);
   const [imageLink, setImageLink] = useState<string>("");
+  const user = useSelector((state: RootState) => state.user.user);
 
   const revalidator = useRevalidator();
 
@@ -57,18 +51,13 @@ const AdminProducts = () => {
         }
       );
       console.log(data);
-      setImageLink(data.image);
+      setImageLink(data.data?.image || data.image);
     }
   };
 
   return (
-    <div className="flex flex-col justify-center items-center w-full">
-      <AlertDialog>
-        <Button asChild className="mt-10 mb-6">
-          <AlertDialogTrigger>Add Product</AlertDialogTrigger>
-        </Button>
-        <AddProduct />
-      </AlertDialog>
+    <div className="w-full h-full overflow-auto p-6">
+      <AddProduct />
       <TableComponent<Product>
         tableData={products}
         handleSave={handleSave}

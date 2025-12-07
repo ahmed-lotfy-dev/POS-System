@@ -10,23 +10,19 @@ import { useUploadImage } from "../../../hooks/useUploadImage";
 import { Loader } from "@/components/ui/loader";
 
 import {
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogHeader,
-} from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
-import { AlertDialogTitle } from "@radix-ui/react-alert-dialog";
-import { AllDataResponse } from "@/types/globals";
-import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+  Input,
   Select,
-  SelectContent,
   SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+  useDisclosure,
+} from "@heroui/react";
+import { CustomModal } from "@/components/ui/CustomModal";
+import { AllDataResponse } from "@/types/globals";
 
 type ProductType = {
   name: string;
@@ -36,6 +32,9 @@ type ProductType = {
   categoryId: string;
   unitId: string;
 };
+
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 const AddProduct = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -50,6 +49,8 @@ const AddProduct = () => {
   const revalidator = useRevalidator();
   const { categories } = useRouteLoaderData("root") as AllDataResponse;
   const { units } = useRouteLoaderData("root") as AllDataResponse;
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const user = useSelector((state: RootState) => state.user.user);
 
   const {
     uploadImage,
@@ -58,8 +59,18 @@ const AddProduct = () => {
     //error
   } = useUploadImage();
 
-  const onAddHandler = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleOpen = () => {
+    if (user?.role !== "ADMIN") {
+      notify("You don't have admin privileges (View Only)", "info");
+    }
+    onOpen();
+  };
+
+  const onAddHandler = async (onClose: () => void) => {
+    if (user?.role !== "ADMIN") {
+      notify("You don't have admin privileges (View Only)", "info");
+      return;
+    }
     console.log({ item });
     const { data } = await axios.post(
       `${import.meta.env.VITE_BACKEND_URL}/product/add`,
@@ -80,9 +91,12 @@ const AddProduct = () => {
       categoryId: "",
       unitId: "",
     });
+    onClose();
   };
 
-  const changeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+  const changeHandler = (
+    event: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = event.target;
     console.log({ name, value });
     setItem({ ...item, [name]: value });
@@ -93,128 +107,120 @@ const AddProduct = () => {
     if (event.target.files && event.target.files.length > 0) {
       const imageLink = await uploadImage(event.target.files[0]);
       setItem({ ...item, image: imageLink });
-      console.log({ imageLink });
     }
   };
 
+  const handleUploadClick = () => {
+    if (user?.role !== "ADMIN") {
+      notify("You don't have admin privileges (View Only)", "info");
+    }
+    fileInputRef.current?.click();
+  };
+
   return (
-    <AlertDialogContent className="flex flex-col justify-center items-center w-full">
-      <AlertDialogHeader>
-        <AlertDialogTitle className="font-semibold">
-          Add New Product
-        </AlertDialogTitle>
-      </AlertDialogHeader>
-      <form
-        action=""
-        method="dialog"
-        className="modal-box flex flex-col"
-        onSubmit={onAddHandler}
-      >
-        <Input
-          className="input input-bordered border-b-gray-100 input-xs w-full max-w-xs my-6 mt-10 m-auto focus:bg-gray-200 bg-gray-100"
-          type="text"
-          name="name"
-          id="name"
-          placeholder="Name"
-          value={item.name || ""}
-          onChange={changeHandler}
-        />
-        <Input
-          className="input input-bordered border-b-gray-100 input-xs w-full max-w-xs my-6 mt-10 m-auto focus:bg-gray-200 bg-gray-100"
-          type="number"
-          name="price"
-          placeholder="Price"
-          id="price"
-          value={item.price || ""}
-          onChange={changeHandler}
-        />
-        <Input
-          className="input input-bordered border-b-gray-100 input-xs w-full max-w-xs my-6 mt-10 m-auto focus:bg-gray-200 bg-gray-100"
-          type="number"
-          name="code"
-          placeholder="Code"
-          id="code"
-          value={item.code || ""}
-          onChange={changeHandler}
-        />
-        {/* Category */}
-        <Select
-          onValueChange={(value: string) =>
-            changeHandler({
-              target: { name: "categoryId", value },
-            } as ChangeEvent<HTMLInputElement>)
-          }
-        >
-          <SelectTrigger className="">
-            <SelectValue placeholder="Category" />
-          </SelectTrigger>
-          <SelectContent>
-            {categories&& categories.map((category) => (
-              <SelectItem key={category.id} value={category.id}>
-                {category.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-        <Select>
-          <SelectContent></SelectContent>
-        </Select>
-        {/* Unit */}
-        <Select
-          onValueChange={(value: string) =>
-            changeHandler({
-              target: { name: "unitId", value },
-            } as ChangeEvent<HTMLInputElement>)
-          }
-        >
-          <SelectTrigger className="">
-            <SelectValue placeholder="Unis" />
-          </SelectTrigger>
-          <SelectContent>
-            {units.map((unit) => (
-              <SelectItem key={unit.id} value={unit.id}>
-                {unit.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-        <Select>
-          <SelectContent></SelectContent>
-        </Select>
-        <>
-          <Button
-            className="my-5"
-            type="button"
-            onClick={() => fileInputRef.current?.click()}
-          >
-            Upload Image
-          </Button>
-          <input
-            className="hidden"
-            type="file"
-            name="image"
-            id="hiddenFileInput"
-            ref={fileInputRef}
-            onChange={uploadHandler}
-          />
-        </>
-        {isPending ? <Loader /> : null}
-        {item && (
-          <div>
-            <img
-              src={item.image}
-              alt={`${item.name} image`}
-              className={`${item.image ? "block" : "hidden"} w-80 m-auto my-10`}
-            />
-          </div>
-        )}
-        <div className="flex gap-5 m-auto">
-          <AlertDialogAction type="submit">Add</AlertDialogAction>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-        </div>
-      </form>
+    <>
+      <Button onPress={handleOpen} color="primary" className="mt-10">
+        Add Product
+      </Button>
+      <CustomModal isOpen={isOpen} onOpenChange={onOpenChange}>
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">
+                Add New Product
+              </ModalHeader>
+              <ModalBody>
+                <form className="flex flex-col gap-4">
+                  <Input
+                    label="Name"
+                    placeholder="Name"
+                    name="name"
+                    value={item.name || ""}
+                    onChange={changeHandler}
+                  />
+                  <Input
+                    label="Price"
+                    placeholder="Price"
+                    type="number"
+                    name="price"
+                    value={item.price.toString() || ""}
+                    onChange={changeHandler}
+                  />
+                  <Input
+                    label="Code"
+                    placeholder="Code"
+                    type="number"
+                    name="code"
+                    value={item.code.toString() || ""}
+                    onChange={changeHandler}
+                  />
+                  {/* Category */}
+                  <Select
+                    label="Category"
+                    placeholder="Select a category"
+                    onChange={changeHandler}
+                    name="categoryId"
+                  >
+                    {categories &&
+                      categories.map((category) => (
+                        <SelectItem key={category.id}>
+                          {category.name}
+                        </SelectItem>
+                      ))}
+                  </Select>
+
+                  {/* Unit */}
+                  <Select
+                    label="Unit"
+                    placeholder="Select a unit"
+                    onChange={changeHandler}
+                    name="unitId"
+                  >
+                    {units.map((unit) => (
+                      <SelectItem key={unit.id}>{unit.name}</SelectItem>
+                    ))}
+                  </Select>
+
+                  <div className="flex flex-col gap-2">
+                    <Button
+                      color="primary"
+                      variant="flat"
+                      onPress={handleUploadClick}
+                    >
+                      Upload Image
+                    </Button>
+                    <input
+                      className="hidden"
+                      type="file"
+                      name="image"
+                      ref={fileInputRef}
+                      onChange={uploadHandler}
+                    />
+                    {isPending ? <Loader /> : null}
+                    {item.image && (
+                      <img
+                        src={item.image}
+                        alt={`${item.name} image`}
+                        className="w-20 h-20 object-cover m-auto rounded-md"
+                      />
+                    )}
+                  </div>
+                </form>
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="light" onPress={onClose}>
+                  Cancel
+                </Button>
+                <Button color="primary" onPress={() => onAddHandler(onClose)}>
+                  Add
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </CustomModal>
       <ToastContainer />
-    </AlertDialogContent>
+    </>
   );
 };
 

@@ -1,26 +1,26 @@
-import { Button } from "@/components/ui/button"
-import { notify } from "@/lib/toast"
-import { useRef } from "react"
-import { Link } from "react-router-dom"
+import { Button } from "@/components/ui/button";
+import { notify } from "@/lib/toast";
+import { useRef } from "react";
+import { Link } from "react-router-dom";
 
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const formRef = useRef<HTMLFormElement | null>(null)
+  const formRef = useRef<HTMLFormElement | null>(null);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    const data = new FormData(event.currentTarget)
-    const username = data.get("username") as string
-    console.log(username)
-    const email = data.get("email") as string
-    const password = data.get("password") as string
-    const confirmPassword = data.get("confirmPassword") as string
+    event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const username = data.get("username") as string;
+    console.log(username);
+    const email = data.get("email") as string;
+    const password = data.get("password") as string;
+    const confirmPassword = data.get("confirmPassword") as string;
 
     try {
-      if (password !== confirmPassword) return
+      if (password !== confirmPassword) return;
       const res = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}/auth/signup`,
         {
@@ -28,24 +28,24 @@ const SignUp = () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ username, email, password }),
         }
-      )
-      const resData = await res.json()
-      console.log(resData)
+      );
+      const resData = await res.json();
+      console.log(resData);
       if (resData.msg) {
-        notify(` User allready exist`, "error")
-        navigate("/signup")
-        formRef.current?.reset()
+        notify(` User allready exist`, "error");
+        navigate("/signup");
+        formRef.current?.reset();
       }
-      if (resData.access_token) {
-        const token = resData.access_token
-        localStorage.setItem("user", JSON.stringify(token))
-        notify(`Signed up successfull`, "success")
-        navigate("/")
+      if (resData.data?.access_token) {
+        const token = resData.data.access_token;
+        localStorage.setItem("user", JSON.stringify(token));
+        notify(`Signed up successfull`, "success");
+        navigate("/");
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   return (
     <div className="flex items-center justify-center h-screen bg-background text-foreground w-full">
@@ -85,10 +85,7 @@ const SignUp = () => {
             placeholder="Confirm Password"
           />
 
-          <Button
-            variant="default"
-            className="w-full"
-          >
+          <Button variant="default" className="w-full">
             Sign Up
           </Button>
         </form>
@@ -102,7 +99,7 @@ const SignUp = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export { SignUp }
+export { SignUp };
