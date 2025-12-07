@@ -47,7 +47,19 @@ export class OrderService {
   async getSingleOrder(@Param('id') id: string) {
     const singleOrder = await this.prisma.order.findFirst({
       where: { orderNumber: id },
-      include: { orderItems: true },
+      include: {
+        orderItems: {
+          include: {
+            product: true,
+          },
+        },
+        user: {
+          select: {
+            username: true,
+            email: true,
+          },
+        },
+      },
     });
     if (!singleOrder) return { msg: 'order not found' };
     return singleOrder;
