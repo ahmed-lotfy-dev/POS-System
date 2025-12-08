@@ -7,9 +7,9 @@
   "license": "MIT",
   "scripts": {
     "db:dev:deploy": "pnpm prisma migrate deploy",
-    "db:seed": "ts-node prisma/seed.ts",
-    "postinstall": "prisma generate",
-    "build": "prisma generate && nest build",
+    "db:seed": "tsx prisma/seed.ts",
+    "postinstall": "rm -rf node_modules/@prisma/client && prisma generate",
+    "build": "rm -rf node_modules/@prisma/client && prisma generate && nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
@@ -73,6 +73,7 @@
     "ts-loader": "^9.5.4",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.3"
   },
   "jest": {

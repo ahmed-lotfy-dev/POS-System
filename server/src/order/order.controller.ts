@@ -10,7 +10,7 @@ import {
 } from '@nestjs/common';
 import { OrderService } from './order.service';
 
-import { Order, OrderItem } from '@prisma/client';
+import { Order, OrderItem } from '../generated/prisma/client';
 
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { Roles } from '../auth/decorator/roles.decorator';

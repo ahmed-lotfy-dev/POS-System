@@ -1,4 +1,4 @@
-export default  [
+export default [
   {
     id: '64d29752c4edb24a919c24b1',
     name: 'kg',
