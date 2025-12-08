@@ -12,10 +12,10 @@ import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 export class UserController {
   constructor(private userService: UserService) {}
 
-  @Get('')
+  @Get('all')
   @ApiOperation({ summary: 'Get all users' })
   @ApiResponse({ status: 200, description: 'Return all users.' })
-  getAllUsers(@GetUser() users: User[]) {
+  getAllUsers() {
     return this.userService.getAllUsers();
   }
 

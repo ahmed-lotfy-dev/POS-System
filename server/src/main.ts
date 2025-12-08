@@ -4,13 +4,20 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { ResponseInterceptor } from './common/interceptors/response.interceptor';
+import { HttpExceptionFilter } from './common/filters/http-exception.filter';
+import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     logger: ['error', 'warn', 'log'], // <--- add this line in options object
   });
 
+  // Global exception filter for error logging
+  app.useGlobalFilters(new HttpExceptionFilter());
+
+  // Global pipes and interceptors
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
+  app.useGlobalInterceptors(new LoggingInterceptor());
   app.useGlobalInterceptors(new ResponseInterceptor());
 
   const config = new DocumentBuilder()

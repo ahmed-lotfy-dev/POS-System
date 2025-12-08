@@ -1,50 +1,115 @@
-export default  [
+// Comprehensive category data for a realistic POS system
+export default [
   {
     id: '64e2986164006fedbdc89171',
-    name: 'Fruits',
-    image:
-      'https://pos-images.ahmedlotfy.dev/bff28817-bc34-49a1-8dcf-3f1ac25da848-2-2-2-3foodgroupsfruitsdetailfeature.jpg',
+    name: 'Fruits & Fresh Produce',
+    image: 'https://pos-images.ahmedlotfy.dev/bff28817-bc34-49a1-8dcf-3f1ac25da848-2-2-2-3foodgroupsfruitsdetailfeature.jpg',
     createdAt: '2023-08-20T22:49:05.710Z',
     updatedAt: '2023-10-20T12:18:11.919Z',
   },
   {
     id: '64e350387ad8a50f8ca3a8e4',
-    name: 'Drinks',
-    image:
-      'https://pos-images.ahmedlotfy.dev/96713035-0807-48be-af41-c75ed2427c1c-photo-1527960471264-932f39eb5846.jpeg',
+    name: 'Beverages & Drinks',
+    image: 'https://pos-images.ahmedlotfy.dev/96713035-0807-48be-af41-c75ed2427c1c-photo-1527960471264-932f39eb5846.jpeg',
     createdAt: '2023-08-21T11:53:28.991Z',
     updatedAt: '2023-10-19T12:32:15.237Z',
   },
   {
     id: '652bf797b4984118901e9f11',
     name: 'Vegetables',
-    image:
-      'https://pos-images.ahmedlotfy.dev/f20799ea-c0bc-41ea-a65a-821dddc19f74-freshvegetablesAlexRaths-4c1ea186a88e4fd7b95283eee614600c.webp',
+    image: 'https://pos-images.ahmedlotfy.dev/f20799ea-c0bc-41ea-a65a-821dddc19f74-freshvegetablesAlexRaths-4c1ea186a88e4fd7b95283eee614600c.webp',
     createdAt: '2023-10-15T14:30:47.496Z',
     updatedAt: '2023-10-19T12:32:21.040Z',
   },
   {
     id: '652e864c932a662532d16782',
-    name: 'Snacks',
-    image:
-      'https://pos-images.ahmedlotfy.dev/18fc7080-a0b4-4611-a071-2be668b07ad9-savoury-snacks.jpeg',
+    name: 'Snacks & Chips',
+    image: 'https://pos-images.ahmedlotfy.dev/18fc7080-a0b4-4611-a071-2be668b07ad9-savoury-snacks.jpeg',
     createdAt: '2023-10-17T13:04:12.496Z',
     updatedAt: '2023-10-17T13:04:12.496Z',
   },
   {
     id: '653123a7bf20ecb8cb096a9c',
     name: 'Electronics',
-    image:
-      'https://pos-images.ahmedlotfy.dev/bd229251-a63f-458c-ac32-7bce63da0636-c228544e-3681-4bf7-81d3-1937049767a9.jpg',
+    image: 'https://pos-images.ahmedlotfy.dev/bd229251-a63f-458c-ac32-7bce63da0636-c228544e-3681-4bf7-81d3-1937049767a9.jpg',
     createdAt: '2023-10-19T12:40:07.840Z',
     updatedAt: '2023-10-19T12:40:07.840Z',
   },
   {
     id: '653d8ecfc20284d5744a5f7b',
-    name: 'Bakery',
-    image:
-      'https://pos-images.ahmedlotfy.dev/f5926be2-8f41-4582-bd0e-048a5ca3b7f6-bakeryproducts.jpg',
+    name: 'Bakery & Bread',
+    image: 'https://pos-images.ahmedlotfy.dev/f5926be2-8f41-4582-bd0e-048a5ca3b7f6-bakeryproducts.jpg',
     createdAt: '2023-10-28T22:44:31.733Z',
     updatedAt: '2023-10-28T22:44:31.733Z',
+  },
+  {
+    id: '653d8ecfc20284d5744a5f7c',
+    name: 'Dairy & Eggs',
+    image: 'https://images.unsplash.com/photo-1628088062854-d1870b4553da?w=800',
+    createdAt: '2023-10-28T22:45:31.733Z',
+    updatedAt: '2023-10-28T22:45:31.733Z',
+  },
+  {
+    id: '653d8ecfc20284d5744a5f7d',
+    name: 'Meat & Poultry',
+    image: 'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=800',
+    createdAt: '2023-10-28T22:46:31.733Z',
+    updatedAt: '2023-10-28T22:46:31.733Z',
+  },
+  {
+    id: '653d8ecfc20284d5744a5f7e',
+    name: 'Frozen Foods',
+    image: 'https://images.unsplash.com/photo-1506617420156-8e4536971650?w=800',
+    createdAt: '2023-10-28T22:47:31.733Z',
+    updatedAt: '2023-10-28T22:47:31.733Z',
+  },
+  {
+    id: '653d8ecfc20284d5744a5f7f',
+    name: 'Canned Goods',
+    image: 'https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?w=800',
+    createdAt: '2023-10-28T22:48:31.733Z',
+    updatedAt: '2023-10-28T22:48:31.733Z',
+  },
+  {
+    id: '653d8ecfc20284d5744a5f80',
+    name: 'Pasta & Grains',
+    image: 'https://images.unsplash.com/photo-1551462147-37e8e0f8f6d6?w=800',
+    createdAt: '2023-10-28T22:49:31.733Z',
+    updatedAt: '2023-10-28T22:49:31.733Z',
+  },
+  {
+    id: '653d8ecfc20284d5744a5f81',
+    name: 'Condiments & Sauces',
+    image: 'https://images.unsplash.com/photo-1472476443507-c7a5948772fc?w=800',
+    createdAt: '2023-10-28T22:50:31.733Z',
+    updatedAt: '2023-10-28T22:50:31.733Z',
+  },
+  {
+    id: '653d8ecfc20284d5744a5f82',
+    name: 'Breakfast & Cereal',
+    image: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?w=800',
+    createdAt: '2023-10-28T22:51:31.733Z',
+    updatedAt: '2023-10-28T22:51:31.733Z',
+  },
+  {
+    id: '653d8ecfc20284d5744a5f83',
+    name: 'Candy & Chocolate',
+    image: 'https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=800',
+    createdAt: '2023-10-28T22:52:31.733Z',
+    updatedAt: '2023-10-28T22:52:31.733Z',
+  },
+  {
+    id: '653d8ecfc20284d5744a5f84',
+    name: 'Personal Care',
+    image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800',
+    createdAt: '2023-10-28T22:53:31.733Z',
+    updatedAt: '2023-10-28T22:53:31.733Z',
+  },
+  {
+    id: '653d8ecfc20284d5744a5f85',
+    name: 'Household Cleaning',
+    image: 'https://images.unsplash.com/photo-1563453392212-326f5e854473?w=800',
+    createdAt: '2023-10-28T22:54:31.733Z',
+    updatedAt: '2023-10-28T22:54:31.733Z',
   },
 ];

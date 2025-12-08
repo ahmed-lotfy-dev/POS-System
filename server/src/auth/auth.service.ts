@@ -23,9 +23,13 @@ export class AuthService {
       if (isExisted) return { msg: 'User already exist' };
 
       const user = await this.prisma.user.create({
-        data: { username: dto.username, email: dto.email, password: hash },
+        data: {
+          username: dto.username,
+          email: dto.email,
+          password: hash,
+          role: 'VIEWER', // New users are VIEWER by default
+        },
       });
-      console.log(user);
 
       return this.signToken(
         user.id,
@@ -69,7 +73,7 @@ export class AuthService {
     isConfirm: boolean,
     createdAt: Date,
     updatedAt: Date,
-  ): Promise<{ access_token: string }> {
+  ): Promise<{ access_token: string; refresh_token: string }> {
     const payload = {
       sub: userId,
       email,
@@ -79,15 +83,27 @@ export class AuthService {
       createdAt: createdAt.toISOString(),
       updatedAt: updatedAt.toISOString(),
     };
+
     const secret = this.config.get('JWT_SECRET');
 
-    const token = await this.jwt.signAsync(payload, {
+    // Generate access token (15 minutes)
+    const access_token = await this.jwt.signAsync(payload, {
       expiresIn: '15m',
       secret: secret,
     });
 
+    // Generate refresh token (7 days)
+    const refresh_token = await this.jwt.signAsync(
+      { sub: userId, email },
+      {
+        expiresIn: '7d',
+        secret: secret,
+      },
+    );
+
     return {
-      access_token: token,
+      access_token,
+      refresh_token,
     };
   }
 }

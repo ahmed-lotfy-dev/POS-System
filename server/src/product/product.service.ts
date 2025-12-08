@@ -1,5 +1,5 @@
-import { Body, Injectable, Param } from '@nestjs/common';
-import { PrismaService } from '../prisma/prisma.service';
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from 'src/prisma/prisma.service';
 import { ProductDto } from './dto/product.dto';
 
 @Injectable()
@@ -17,22 +17,19 @@ export class ProductService {
         unitId: dto.unitId,
       },
     });
-    console.log(dto);
     return newProduct;
   }
 
   async getAllProducts() {
     const products = await this.prisma.product.findMany();
 
-    console.log(products);
     return products;
   }
 
-  async getSingleProduct(@Param('id') id: string) {
+  async getSingleProduct(id: string) {
     const singleProduct = await this.prisma.product.findFirst({
       where: { id },
     });
-    console.log(singleProduct);
     if (!singleProduct) return { msg: 'product not found' };
     return singleProduct;
   }
@@ -50,17 +47,15 @@ export class ProductService {
           unitId: dto.unitId,
         },
       });
-      console.log({ updatedProduct });
       if (!updatedProduct) return { msg: 'Product not found' };
 
       return updatedProduct;
     } catch (error) {
-      console.error(error);
       throw error;
     }
   }
 
-  async deleteProduct(@Param('id') id: string) {
+  async deleteProduct(id: string) {
     const deletedProduct = await this.prisma.product.delete({
       where: { id },
     });

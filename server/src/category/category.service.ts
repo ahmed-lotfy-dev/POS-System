@@ -1,24 +1,15 @@
-import {
-  Body,
-  ConflictException,
-  Injectable,
-  Param,
-  ParseIntPipe,
-} from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class CategoryService {
   constructor(private prisma: PrismaService) {}
 
-  async addCategory(@Body() dto: { name: string; image: string }) {
+  async addCategory(dto: { name: string; image: string }) {
     try {
-      console.log(dto);
-
       const existed = await this.prisma.category.findFirst({
         where: { name: dto.name },
       });
-      console.log(existed);
       if (existed) {
         throw new ConflictException('Category already exist');
       }
@@ -26,7 +17,6 @@ export class CategoryService {
       const newCategory = await this.prisma.category.create({
         data: { name: dto.name, image: dto.image },
       });
-      console.log(newCategory);
 
       return { msg: 'Category Add Succssfully', newCategory };
     } catch (error) {
@@ -37,15 +27,13 @@ export class CategoryService {
   async getCategories() {
     try {
       const categories = await this.prisma.category.findMany();
-      console.log(categories);
       return categories;
     } catch (error) {
-      console.log(error);
       return { msg: 'No Categoris' };
     }
   }
 
-  async getSingleCategory(@Param('id') id: string) {
+  async getSingleCategory(id: string) {
     try {
       const singleCategory = await this.prisma.category.findFirst({
         where: { id },
@@ -57,7 +45,7 @@ export class CategoryService {
     }
   }
 
-  async editCategory(@Body() dto: { id: string; name: string; image: string }) {
+  async editCategory(dto: { id: string; name: string; image: string }) {
     const { id, name, image } = dto;
     try {
       const updatedCategory = await this.prisma.category.update({
@@ -71,18 +59,15 @@ export class CategoryService {
     }
   }
 
-  async deleteCategory(@Param('id') id: { id: string }) {
-    console.log(id);
+  async deleteCategory(id: { id: string }) {
     try {
       const deletedCategory = await this.prisma.category.delete({
         where: { id: id.id },
       });
       if (!deletedCategory) return { msg: 'category not found' };
-      console.log(id);
 
       return deletedCategory;
     } catch (error) {
-      console.log(error);
       return error;
     }
   }

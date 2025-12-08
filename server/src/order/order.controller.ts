@@ -15,6 +15,7 @@ import { Order, OrderItem } from '@prisma/client';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { Roles } from '../auth/decorator/roles.decorator';
 import { RolesGuard } from '../auth/guard/roles.guard';
+import { Public } from '../auth/decorator/public.decorator';
 import { Role } from '../generated/prisma/client';
 
 @ApiTags('Order')
@@ -24,13 +25,14 @@ export class OrderController {
 
   @Post('add')
   @UseGuards(RolesGuard)
-  @Roles(Role.ADMIN)
+  @Roles(Role.ADMIN, Role.CASHIER)
   @ApiOperation({ summary: 'Create a new order' })
   @ApiResponse({ status: 201, description: 'Order successfully created.' })
   createOrder(@Body() dto: { orderData: Order; orderItems: OrderItem[] }) {
     return this.orderService.createOrder(dto);
   }
 
+  @Public()
   @Get('getAll')
   @ApiOperation({ summary: 'Get all orders' })
   @ApiResponse({ status: 200, description: 'Return all orders.' })
@@ -38,6 +40,7 @@ export class OrderController {
     return this.orderService.getAllOrders();
   }
 
+  @Public()
   @Get('get/:id')
   @ApiOperation({ summary: 'Get a single order by ID' })
   @ApiResponse({ status: 200, description: 'Return the order.' })

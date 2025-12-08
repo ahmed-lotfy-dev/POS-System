@@ -14,6 +14,7 @@ import { CategoryService } from './category.service';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { Roles } from '../auth/decorator/roles.decorator';
 import { RolesGuard } from '../auth/guard/roles.guard';
+import { Public } from '../auth/decorator/public.decorator';
 import { Role } from '../generated/prisma/client';
 
 @ApiTags('Category')
@@ -30,6 +31,7 @@ export class CategoryController {
     return this.categoryService.addCategory(dto);
   }
 
+  @Public()
   @Get('getAll')
   @ApiOperation({ summary: 'Get all categories' })
   @ApiResponse({ status: 200, description: 'Return all categories.' })
@@ -37,6 +39,7 @@ export class CategoryController {
     return this.categoryService.getCategories();
   }
 
+  @Public()
   @Get('get/:id')
   @ApiOperation({ summary: 'Get a single category by ID' })
   @ApiResponse({ status: 200, description: 'Return the category.' })

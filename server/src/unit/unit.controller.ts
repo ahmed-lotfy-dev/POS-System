@@ -6,7 +6,6 @@ import {
   Patch,
   Param,
   Body,
-  ParseIntPipe,
   UseGuards,
 } from '@nestjs/common';
 
@@ -19,6 +18,7 @@ export interface IUnit {
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { Roles } from '../auth/decorator/roles.decorator';
 import { RolesGuard } from '../auth/guard/roles.guard';
+import { Public } from '../auth/decorator/public.decorator';
 import { Role } from '../generated/prisma/client';
 
 @ApiTags('Unit')
@@ -35,6 +35,7 @@ export class UnitController {
     return this.unitService.addUnit(dto);
   }
 
+  @Public()
   @Get('getAll')
   @ApiOperation({ summary: 'Get all units' })
   @ApiResponse({ status: 200, description: 'Return all units.' })
@@ -42,6 +43,7 @@ export class UnitController {
     return this.unitService.getUnits();
   }
 
+  @Public()
   @Get('get/:id')
   @ApiOperation({ summary: 'Get a single unit by ID' })
   @ApiResponse({ status: 200, description: 'Return the unit.' })

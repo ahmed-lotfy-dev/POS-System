@@ -1,4 +1,4 @@
-import { Injectable, Param } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { EditUserDto } from './dto';
 
@@ -8,13 +8,12 @@ export class UserService {
 
   async getAllUsers() {
     const users = await this.prisma.user.findMany();
-    console.log(users);
 
     return users;
   }
 
-  async getuser(@Param() id: string) {
-    console.log(id);
+  async getuser() {
+    // TODO: Implement getuser logic
   }
 
   async editUser(userId: string, dto: EditUserDto) {

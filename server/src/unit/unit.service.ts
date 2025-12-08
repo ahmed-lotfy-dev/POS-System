@@ -1,10 +1,4 @@
-import {
-  Body,
-  ConflictException,
-  Injectable,
-  Param,
-  ParseIntPipe,
-} from '@nestjs/common';
+import { Body, ConflictException, Injectable, Param } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { IUnit } from './unit.controller';
 
@@ -17,7 +11,6 @@ export class UnitService {
       const existed = await this.prisma.unit.findUnique({
         where: { name: dto.name },
       });
-      console.log(existed);
       if (existed) {
         throw new ConflictException('Unit already exist');
       }
@@ -38,7 +31,6 @@ export class UnitService {
   async getUnits() {
     const units = await this.prisma.unit.findMany();
 
-    console.log(units);
     return units;
   }
 
@@ -58,7 +50,6 @@ export class UnitService {
     });
 
     if (!updatedUnit) return { msg: 'unit not found' };
-    console.log(id);
 
     return updatedUnit;
   }

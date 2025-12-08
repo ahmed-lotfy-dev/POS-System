@@ -1,50 +1,96 @@
-export default  [
-  {
-    id: '64e36b9cac2a26d0246e211d',
-    name: 'Pepsi Diet',
-    code: 34343,
-    price: 15,
-    image:
-      'https://pos-images.ahmedlotfy.dev/3636df27-d3a6-4e92-92d3-68faebe5e1e6-103747166-PepsiCo-Diet-Cola-Portfolio.jpg',
-    unitId: '64d29752c4edb24a919c24b1',
-    categoryId: '64e350387ad8a50f8ca3a8e4',
-    createdAt: '2023-08-21T13:50:20.325Z',
-    updatedAt: '2023-10-21T13:06:33.819Z',
-  },
-  {
-    id: '65312459bf20ecb8cb096a9d',
-    name: 'Milk ',
-    code: 45455,
-    price: 50,
-    image:
-      'https://pos-images.ahmedlotfy.dev/9e19022e-c9b0-4fdc-acfe-9ec1f95e02ce-oat-milk-580x764.jpg',
-    unitId: '64e208cd5eb51756ea66397c',
-    categoryId: '64e350387ad8a50f8ca3a8e4',
-    createdAt: '2023-10-19T12:43:05.853Z',
-    updatedAt: '2023-10-19T12:43:05.853Z',
-  },
-  {
-    id: '65312569bf20ecb8cb096a9f',
-    name: 'Fresh Apples',
-    code: 0,
-    price: 30,
-    image:
-      'https://pos-images.ahmedlotfy.dev/48ad99aa-aea6-482d-93fe-742a6656159a-how-to-store-apples-1661477054.jpg',
-    unitId: '64d29752c4edb24a919c24b1',
-    categoryId: '64e2986164006fedbdc89171',
-    createdAt: '2023-10-19T12:47:36.117Z',
-    updatedAt: '2023-10-19T12:47:36.117Z',
-  },
-  {
-    id: '65316737bf20ecb8cb096aa1',
-    name: 'Chicken Eggs',
-    code: 78989,
-    price: 125,
-    image:
-      'https://pos-images.ahmedlotfy.dev/ef0fb4d6-8594-4d6c-afe7-96227ab855c7-Brown-eggs.webp',
-    unitId: '653166e5bf20ecb8cb096aa0',
-    categoryId: '652bf797b4984118901e9f11',
-    createdAt: '2023-10-19T17:28:23.697Z',
-    updatedAt: '2023-10-19T17:28:23.697Z',
-  },
+// Comprehensive product data for a realistic POS system
+// Covers all 16 categories with multiple products each
+export default [
+  // Fruits & Fresh Produce
+  { id: '65312569bf20ecb8cb096a9f', name: 'Fresh Apples', code: 1001, price: 30, image: 'https://pos-images.ahmedlotfy.dev/48ad99aa-aea6-482d-93fe-742a6656159a-how-to-store-apples-1661477054.jpg', unitId: '64d29752c4edb24a919c24b1', categoryId: '64e2986164006fedbdc89171', createdAt: '2023-10-19T12:47:36.117Z', updatedAt: '2023-10-19T12:47:36.117Z' },
+  { id: '65312569bf20ecb8cb096aa0', name: 'Bananas', code: 1002, price: 20, image: 'https://images.unsplash.com/photo-1603833665858-e61d17a86224?w=800', unitId: '64d29752c4edb24a919c24b1', categoryId: '64e2986164006fedbdc89171', createdAt: '2023-10-19T12:48:36.117Z', updatedAt: '2023-10-19T12:48:36.117Z' },
+  { id: '65312569bf20ecb8cb096aa1', name: 'Oranges', code: 1003, price: 35, image: 'https://images.unsplash.com/photo-1580052614034-c55d20bfee3b?w=800', unitId: '64d29752c4edb24a919c24b1', categoryId: '64e2986164006fedbdc89171', createdAt: '2023-10-19T12:49:36.117Z', updatedAt: '2023-10-19T12:49:36.117Z' },
+  { id: '65312569bf20ecb8cb096aa2', name: 'Strawberries', code: 1004, price: 45, image: 'https://images.unsplash.com/photo-1464965911861-746a04b4bca6?w=800', unitId: '653166e5bf20ecb8cb096aa0', categoryId: '64e2986164006fedbdc89171', createdAt: '2023-10-19T12:50:36.117Z', updatedAt: '2023-10-19T12:50:36.117Z' },
+  { id: '65312569bf20ecb8cb096aa3', name: 'Grapes', code: 1005, price: 40, image: 'https://images.unsplash.com/photo-1599819177-bfdde7c97e2c?w=800', unitId: '64d29752c4edb24a919c24b1', categoryId: '64e2986164006fedbdc89171', createdAt: '2023-10-19T12:51:36.117Z', updatedAt: '2023-10-19T12:51:36.117Z' },
+  { id: '65312569bf20ecb8cb096aa4', name: 'Watermelon', code: 1006, price: 25, image: 'https://images.unsplash.com/photo-1587049352846-4a222e784acc?w=800', unitId: '64d29752c4edb24a919c24b1', categoryId: '64e2986164006fedbdc89171', createdAt: '2023-10-19T12:52:36.117Z', updatedAt: '2023-10-19T12:52:36.117Z' },
+  
+  // Beverages & Drinks
+  { id: '64e36b9cac2a26d0246e211d', name: 'Pepsi Diet', code: 2001, price: 15, image: 'https://pos-images.ahmedlotfy.dev/3636df27-d3a6-4e92-92d3-68faebe5e1e6-103747166-PepsiCo-Diet-Cola-Portfolio.jpg', unitId: '64d29752c4edb24a919c24b1', categoryId: '64e350387ad8a50f8ca3a8e4', createdAt: '2023-08-21T13:50:20.325Z', updatedAt: '2023-10-21T13:06:33.819Z' },
+  { id: '65312459bf20ecb8cb096a9d', name: 'Fresh Milk', code: 2002, price: 50, image: 'https://pos-images.ahmedlotfy.dev/9e19022e-c9b0-4fdc-acfe-9ec1f95e02ce-oat-milk-580x764.jpg', unitId: '64e208cd5eb51756ea66397c', categoryId: '64e350387ad8a50f8ca3a8e4', createdAt: '2023-10-19T12:43:05.853Z', updatedAt: '2023-10-19T12:43:05.853Z' },
+  { id: '65312459bf20ecb8cb096a9e', name: 'Coca Cola', code: 2003, price: 15, image: 'https://images.unsplash.com/photo-1554866585-cd94860890b7?w=800', unitId: '64d29752c4edb24a919c24b1', categoryId: '64e350387ad8a50f8ca3a8e4', createdAt: '2023-10-19T12:44:05.853Z', updatedAt: '2023-10-19T12:44:05.853Z' },
+  { id: '65312459bf20ecb8cb096a9f', name: 'Orange Juice', code: 2004, price: 35, image: 'https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=800', unitId: '64e208cd5eb51756ea66397c', categoryId: '64e350387ad8a50f8ca3a8e4', createdAt: '2023-10-19T12:45:05.853Z', updatedAt: '2023-10-19T12:45:05.853Z' },
+  { id: '65312459bf20ecb8cb096aa0', name: 'Mineral Water', code: 2005, price: 10, image: 'https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=800', unitId: '64d29752c4edb24a919c24b1', categoryId: '64e350387ad8a50f8ca3a8e4', createdAt: '2023-10-19T12:46:05.853Z', updatedAt: '2023-10-19T12:46:05.853Z' },
+  { id: '65312459bf20ecb8cb096aa1', name: 'Energy Drink', code: 2006, price: 25, image: 'https://images.unsplash.com/photo-1622543925917-763c34f1f161?w=800', unitId: '64d29752c4edb24a919c24b1', categoryId: '64e350387ad8a50f8ca3a8e4', createdAt: '2023-10-19T12:47:05.853Z', updatedAt: '2023-10-19T12:47:05.853Z' },
+  
+  // Vegetables
+  { id: '65316737bf20ecb8cb096aa1', name: 'Fresh Tomatoes', code: 3001, price: 25, image: 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=800', unitId: '64d29752c4edb24a919c24b1', categoryId: '652bf797b4984118901e9f11', createdAt: '2023-10-19T17:28:23.697Z', updatedAt: '2023-10-19T17:28:23.697Z' },
+  { id: '65316737bf20ecb8cb096aa2', name: 'Potatoes', code: 3002, price: 20, image: 'https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=800', unitId: '64d29752c4edb24a919c24b1', categoryId: '652bf797b4984118901e9f11', createdAt: '2023-10-19T17:29:23.697Z', updatedAt: '2023-10-19T17:29:23.697Z' },
+  { id: '65316737bf20ecb8cb096aa3', name: 'Onions', code: 3003, price: 18, image: 'https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb?w=800', unitId: '64d29752c4edb24a919c24b1', categoryId: '652bf797b4984118901e9f11', createdAt: '2023-10-19T17:30:23.697Z', updatedAt: '2023-10-19T17:30:23.697Z' },
+  { id: '65316737bf20ecb8cb096aa4', name: 'Carrots', code: 3004, price: 22, image: 'https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?w=800', unitId: '64d29752c4edb24a919c24b1', categoryId: '652bf797b4984118901e9f11', createdAt: '2023-10-19T17:31:23.697Z', updatedAt: '2023-10-19T17:31:23.697Z' },
+  { id: '65316737bf20ecb8cb096aa5', name: 'Lettuce', code: 3005, price: 15, image: 'https://images.unsplash.com/photo-1622206151226-18ca2c9ab4a1?w=800', unitId: '653166e5bf20ecb8cb096aa0', categoryId: '652bf797b4984118901e9f11', createdAt: '2023-10-19T17:32:23.697Z', updatedAt: '2023-10-19T17:32:23.697Z' },
+  
+  // Snacks & Chips
+  { id: '65316737bf20ecb8cb096aa6', name: 'Lays Chips', code: 4001, price: 12, image: 'https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=800', unitId: '653166e5bf20ecb8cb096aa0', categoryId: '652e864c932a662532d16782', createdAt: '2023-10-19T17:33:23.697Z', updatedAt: '2023-10-19T17:33:23.697Z' },
+  { id: '65316737bf20ecb8cb096aa7', name: 'Doritos', code: 4002, price: 14, image: 'https://images.unsplash.com/photo-1613919113640-25732ec5e61f?w=800', unitId: '653166e5bf20ecb8cb096aa0', categoryId: '652e864c932a662532d16782', createdAt: '2023-10-19T17:34:23.697Z', updatedAt: '2023-10-19T17:34:23.697Z' },
+  { id: '65316737bf20ecb8cb096aa8', name: 'Pringles', code: 4003, price: 18, image: 'https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=800', unitId: '653166e5bf20ecb8cb096aa0', categoryId: '652e864c932a662532d16782', createdAt: '2023-10-19T17:35:23.697Z', updatedAt: '2023-10-19T17:35:23.697Z' },
+  { id: '65316737bf20ecb8cb096aa9', name: 'Popcorn', code: 4004, price: 10, image: 'https://images.unsplash.com/photo-1578849278619-e73505e9610f?w=800', unitId: '653166e5bf20ecb8cb096aa0', categoryId: '652e864c932a662532d16782', createdAt: '2023-10-19T17:36:23.697Z', updatedAt: '2023-10-19T17:36:23.697Z' },
+  { id: '65316737bf20ecb8cb096aaa', name: 'Nuts Mix', code: 4005, price: 25, image: 'https://images.unsplash.com/photo-1599599810769-bcde5a160d32?w=800', unitId: '653166e5bf20ecb8cb096aa0', categoryId: '652e864c932a662532d16782', createdAt: '2023-10-19T17:37:23.697Z', updatedAt: '2023-10-19T17:37:23.697Z' },
+  
+  // Electronics
+  { id: '65316737bf20ecb8cb096aab', name: 'USB Cable', code: 5001, price: 45, image: 'https://images.unsplash.com/photo-1625948515291-69613efd103f?w=800', unitId: '64d29752c4edb24a919c24b1', categoryId: '653123a7bf20ecb8cb096a9c', createdAt: '2023-10-19T17:38:23.697Z', updatedAt: '2023-10-19T17:38:23.697Z' },
+  { id: '65316737bf20ecb8cb096aac', name: 'Phone Charger', code: 5002, price: 65, image: 'https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=800', unitId: '64d29752c4edb24a919c24b1', categoryId: '653123a7bf20ecb8cb096a9c', createdAt: '2023-10-19T17:39:23.697Z', updatedAt: '2023-10-19T17:39:23.697Z' },
+  { id: '65316737bf20ecb8cb096aad', name: 'Headphones', code: 5003, price: 150, image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800', unitId: '64d29752c4edb24a919c24b1', categoryId: '653123a7bf20ecb8cb096a9c', createdAt: '2023-10-19T17:40:23.697Z', updatedAt: '2023-10-19T17:40:23.697Z' },
+  { id: '65316737bf20ecb8cb096aae', name: 'Power Bank', code: 5004, price: 200, image: 'https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=800', unitId: '64d29752c4edb24a919c24b1', categoryId: '653123a7bf20ecb8cb096a9c', createdAt: '2023-10-19T17:41:23.697Z', updatedAt: '2023-10-19T17:41:23.697Z' },
+  
+  // Bakery & Bread
+  { id: '65316737bf20ecb8cb096aaf', name: 'White Bread', code: 6001, price: 20, image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=800', unitId: '653166e5bf20ecb8cb096aa0', categoryId: '653d8ecfc20284d5744a5f7b', createdAt: '2023-10-19T17:42:23.697Z', updatedAt: '2023-10-19T17:42:23.697Z' },
+  { id: '65316737bf20ecb8cb096ab0', name: 'Croissant', code: 6002, price: 15, image: 'https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=800', unitId: '64d29752c4edb24a919c24b1', categoryId: '653d8ecfc20284d5744a5f7b', createdAt: '2023-10-19T17:43:23.697Z', updatedAt: '2023-10-19T17:43:23.697Z' },
+  { id: '65316737bf20ecb8cb096ab1', name: 'Donuts', code: 6003, price: 25, image: 'https://images.unsplash.com/photo-1551024506-0bccd828d307?w=800', unitId: '653166e5bf20ecb8cb096aa0', categoryId: '653d8ecfc20284d5744a5f7b', createdAt: '2023-10-19T17:44:23.697Z', updatedAt: '2023-10-19T17:44:23.697Z' },
+  { id: '65316737bf20ecb8cb096ab2', name: 'Bagels', code: 6004, price: 18, image: 'https://images.unsplash.com/photo-1551106652-a5bcf4b29ab6?w=800', unitId: '653166e5bf20ecb8cb096aa0', categoryId: '653d8ecfc20284d5744a5f7b', createdAt: '2023-10-19T17:45:23.697Z', updatedAt: '2023-10-19T17:45:23.697Z' },
+  
+  // Dairy & Eggs
+  { id: '65316737bf20ecb8cb096ab3', name: 'Chicken Eggs', code: 7001, price: 125, image: 'https://pos-images.ahmedlotfy.dev/ef0fb4d6-8594-4d6c-afe7-96227ab855c7-Brown-eggs.webp', unitId: '653166e5bf20ecb8cb096aa0', categoryId: '653d8ecfc20284d5744a5f7c', createdAt: '2023-10-19T17:46:23.697Z', updatedAt: '2023-10-19T17:46:23.697Z' },
+  { id: '65316737bf20ecb8cb096ab4', name: 'Cheese', code: 7002, price: 80, image: 'https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d?w=800', unitId: '64d29752c4edb24a919c24b1', categoryId: '653d8ecfc20284d5744a5f7c', createdAt: '2023-10-19T17:47:23.697Z', updatedAt: '2023-10-19T17:47:23.697Z' },
+  { id: '65316737bf20ecb8cb096ab5', name: 'Yogurt', code: 7003, price: 30, image: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?w=800', unitId: '653166e5bf20ecb8cb096aa0', categoryId: '653d8ecfc20284d5744a5f7c', createdAt: '2023-10-19T17:48:23.697Z', updatedAt: '2023-10-19T17:48:23.697Z' },
+  { id: '65316737bf20ecb8cb096ab6', name: 'Butter', code: 7004, price: 55, image: 'https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d?w=800', unitId: '653166e5bf20ecb8cb096aa0', categoryId: '653d8ecfc20284d5744a5f7c', createdAt: '2023-10-19T17:49:23.697Z', updatedAt: '2023-10-19T17:49:23.697Z' },
+  
+  // Meat & Poultry
+  { id: '65316737bf20ecb8cb096ab7', name: 'Chicken Breast', code: 8001, price: 120, image: 'https://images.unsplash.com/photo-1604503468506-a8da13d82791?w=800', unitId: '64d29752c4edb24a919c24b1', categoryId: '653d8ecfc20284d5744a5f7d', createdAt: '2023-10-19T17:50:23.697Z', updatedAt: '2023-10-19T17:50:23.697Z' },
+  { id: '65316737bf20ecb8cb096ab8', name: 'Ground Beef', code: 8002, price: 150, image: 'https://images.unsplash.com/photo-1603048297172-c92544798d5a?w=800', unitId: '64d29752c4edb24a919c24b1', categoryId: '653d8ecfc20284d5744a5f7d', createdAt: '2023-10-19T17:51:23.697Z', updatedAt: '2023-10-19T17:51:23.697Z' },
+  { id: '65316737bf20ecb8cb096ab9', name: 'Sausages', code: 8003, price: 90, image: 'https://images.unsplash.com/photo-1612892483236-52d32a0e0ac1?w=800', unitId: '653166e5bf20ecb8cb096aa0', categoryId: '653d8ecfc20284d5744a5f7d', createdAt: '2023-10-19T17:52:23.697Z', updatedAt: '2023-10-19T17:52:23.697Z' },
+  
+  // Frozen Foods
+  { id: '65316737bf20ecb8cb096aba', name: 'Ice Cream', code: 9001, price: 45, image: 'https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=800', unitId: '653166e5bf20ecb8cb096aa0', categoryId: '653d8ecfc20284d5744a5f7e', createdAt: '2023-10-19T17:53:23.697Z', updatedAt: '2023-10-19T17:53:23.697Z' },
+  { id: '65316737bf20ecb8cb096abb', name: 'Frozen Pizza', code: 9002, price: 75, image: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800', unitId: '64d29752c4edb24a919c24b1', categoryId: '653d8ecfc20284d5744a5f7e', createdAt: '2023-10-19T17:54:23.697Z', updatedAt: '2023-10-19T17:54:23.697Z' },
+  { id: '65316737bf20ecb8cb096abc', name: 'Frozen Vegetables', code: 9003, price: 35, image: 'https://images.unsplash.com/photo-1610348725531-843dff563e2c?w=800', unitId: '653166e5bf20ecb8cb096aa0', categoryId: '653d8ecfc20284d5744a5f7e', createdAt: '2023-10-19T17:55:23.697Z', updatedAt: '2023-10-19T17:55:23.697Z' },
+  
+  // Canned Goods
+  { id: '65316737bf20ecb8cb096abd', name: 'Canned Tuna', code: 10001, price: 28, image: 'https://images.unsplash.com/photo-1580870069867-74c57ee1bb07?w=800', unitId: '64d29752c4edb24a919c24b1', categoryId: '653d8ecfc20284d5744a5f7f', createdAt: '2023-10-19T17:56:23.697Z', updatedAt: '2023-10-19T17:56:23.697Z' },
+  { id: '65316737bf20ecb8cb096abe', name: 'Canned Beans', code: 10002, price: 22, image: 'https://images.unsplash.com/photo-1599459183200-59c7687a0275?w=800', unitId: '64d29752c4edb24a919c24b1', categoryId: '653d8ecfc20284d5744a5f7f', createdAt: '2023-10-19T17:57:23.697Z', updatedAt: '2023-10-19T17:57:23.697Z' },
+  { id: '65316737bf20ecb8cb096abf', name: 'Tomato Sauce', code: 10003, price: 18, image: 'https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=800', unitId: '64d29752c4edb24a919c24b1', categoryId: '653d8ecfc20284d5744a5f7f', createdAt: '2023-10-19T17:58:23.697Z', updatedAt: '2023-10-19T17:58:23.697Z' },
+  
+  // Pasta & Grains
+  { id: '65316737bf20ecb8cb096ac0', name: 'Spaghetti', code: 11001, price: 25, image: 'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=800', unitId: '653166e5bf20ecb8cb096aa0', categoryId: '653d8ecfc20284d5744a5f80', createdAt: '2023-10-19T17:59:23.697Z', updatedAt: '2023-10-19T17:59:23.697Z' },
+  { id: '65316737bf20ecb8cb096ac1', name: 'White Rice', code: 11002, price: 40, image: 'https://images.unsplash.com/photo-1586201375761-83865001e31c?w=800', unitId: '64d29752c4edb24a919c24b1', categoryId: '653d8ecfc20284d5744a5f80', createdAt: '2023-10-19T18:00:23.697Z', updatedAt: '2023-10-19T18:00:23.697Z' },
+  { id: '65316737bf20ecb8cb096ac2', name: 'Macaroni', code: 11003, price: 22, image: 'https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?w=800', unitId: '653166e5bf20ecb8cb096aa0', categoryId: '653d8ecfc20284d5744a5f80', createdAt: '2023-10-19T18:01:23.697Z', updatedAt: '2023-10-19T18:01:23.697Z' },
+  
+  // Condiments & Sauces
+  { id: '65316737bf20ecb8cb096ac3', name: 'Ketchup', code: 12001, price: 20, image: 'https://images.unsplash.com/photo-1528751014936-863e6e7a319c?w=800', unitId: '64d29752c4edb24a919c24b1', categoryId: '653d8ecfc20284d5744a5f81', createdAt: '2023-10-19T18:02:23.697Z', updatedAt: '2023-10-19T18:02:23.697Z' },
+  { id: '65316737bf20ecb8cb096ac4', name: 'Mayonnaise', code: 12002, price: 25, image: 'https://images.unsplash.com/photo-1472476443507-c7a5948772fc?w=800', unitId: '64d29752c4edb24a919c24b1', categoryId: '653d8ecfc20284d5744a5f81', createdAt: '2023-10-19T18:03:23.697Z', updatedAt: '2023-10-19T18:03:23.697Z' },
+  { id: '65316737bf20ecb8cb096ac5', name: 'Mustard', code: 12003, price: 18, image: 'https://images.unsplash.com/photo-1582169296194-e4d644c48063?w=800', unitId: '64d29752c4edb24a919c24b1', categoryId: '653d8ecfc20284d5744a5f81', createdAt: '2023-10-19T18:04:23.697Z', updatedAt: '2023-10-19T18:04:23.697Z' },
+  
+  // Breakfast & Cereal
+  { id: '65316737bf20ecb8cb096ac6', name: 'Corn Flakes', code: 13001, price: 35, image: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?w=800', unitId: '653166e5bf20ecb8cb096aa0', categoryId: '653d8ecfc20284d5744a5f82', createdAt: '2023-10-19T18:05:23.697Z', updatedAt: '2023-10-19T18:05:23.697Z' },
+  { id: '65316737bf20ecb8cb096ac7', name: 'Oatmeal', code: 13002, price: 30, image: 'https://images.unsplash.com/photo-1517673132405-a56a62b18caf?w=800', unitId: '653166e5bf20ecb8cb096aa0', categoryId: '653d8ecfc20284d5744a5f82', createdAt: '2023-10-19T18:06:23.697Z', updatedAt: '2023-10-19T18:06:23.697Z' },
+  { id: '65316737bf20ecb8cb096ac8', name: 'Granola', code: 13003, price: 40, image: 'https://images.unsplash.com/photo-1526318896980-cf78c088247c?w=800', unitId: '653166e5bf20ecb8cb096aa0', categoryId: '653d8ecfc20284d5744a5f82', createdAt: '2023-10-19T18:07:23.697Z', updatedAt: '2023-10-19T18:07:23.697Z' },
+  
+  // Candy & Chocolate
+  { id: '65316737bf20ecb8cb096ac9', name: 'Chocolate Bar', code: 14001, price: 15, image: 'https://images.unsplash.com/photo-1481391319762-47dff72954d9?w=800', unitId: '64d29752c4edb24a919c24b1', categoryId: '653d8ecfc20284d5744a5f83', createdAt: '2023-10-19T18:08:23.697Z', updatedAt: '2023-10-19T18:08:23.697Z' },
+  { id: '65316737bf20ecb8cb096aca', name: 'Gummy Bears', code: 14002, price: 12, image: 'https://images.unsplash.com/photo-1582058091505-f87a2e55a40f?w=800', unitId: '653166e5bf20ecb8cb096aa0', categoryId: '653d8ecfc20284d5744a5f83', createdAt: '2023-10-19T18:09:23.697Z', updatedAt: '2023-10-19T18:09:23.697Z' },
+  { id: '65316737bf20ecb8cb096acb', name: 'Lollipops', code: 14003, price: 8, image: 'https://images.unsplash.com/photo-1514517521153-1be72277b32f?w=800', unitId: '653166e5bf20ecb8cb096aa0', categoryId: '653d8ecfc20284d5744a5f83', createdAt: '2023-10-19T18:10:23.697Z', updatedAt: '2023-10-19T18:10:23.697Z' },
+  
+  // Personal Care
+  { id: '65316737bf20ecb8cb096acc', name: 'Shampoo', code: 15001, price: 55, image: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800', unitId: '64d29752c4edb24a919c24b1', categoryId: '653d8ecfc20284d5744a5f84', createdAt: '2023-10-19T18:11:23.697Z', updatedAt: '2023-10-19T18:11:23.697Z' },
+  { id: '65316737bf20ecb8cb096acd', name: 'Toothpaste', code: 15002, price: 25, image: 'https://images.unsplash.com/photo-1622597467836-f3285f2131b8?w=800', unitId: '64d29752c4edb24a919c24b1', categoryId: '653d8ecfc20284d5744a5f84', createdAt: '2023-10-19T18:12:23.697Z', updatedAt: '2023-10-19T18:12:23.697Z' },
+  { id: '65316737bf20ecb8cb096ace', name: 'Soap', code: 15003, price: 18, image: 'https://images.unsplash.com/photo-1600857544200-b9f666ba5c91?w=800', unitId: '653166e5bf20ecb8cb096aa0', categoryId: '653d8ecfc20284d5744a5f84', createdAt: '2023-10-19T18:13:23.697Z', updatedAt: '2023-10-19T18:13:23.697Z' },
+  
+  // Household Cleaning
+  { id: '65316737bf20ecb8cb096acf', name: 'Dish Soap', code: 16001, price: 30, image: 'https://images.unsplash.com/photo-1563453392212-326f5e854473?w=800', unitId: '64d29752c4edb24a919c24b1', categoryId: '653d8ecfc20284d5744a5f85', createdAt: '2023-10-19T18:14:23.697Z', updatedAt: '2023-10-19T18:14:23.697Z' },
+  { id: '65316737bf20ecb8cb096ad0', name: 'Laundry Detergent', code: 16002, price: 65, image: 'https://images.unsplash.com/photo-1610557892470-55d9e80c0bce?w=800', unitId: '64d29752c4edb24a919c24b1', categoryId: '653d8ecfc20284d5744a5f85', createdAt: '2023-10-19T18:15:23.697Z', updatedAt: '2023-10-19T18:15:23.697Z' },
+  { id: '65316737bf20ecb8cb096ad1', name: 'All-Purpose Cleaner', code: 16003, price: 35, image: 'https://images.unsplash.com/photo-1585421514738-01798e348b17?w=800', unitId: '64d29752c4edb24a919c24b1', categoryId: '653d8ecfc20284d5744a5f85', createdAt: '2023-10-19T18:16:23.697Z', updatedAt: '2023-10-19T18:16:23.697Z' },
 ];

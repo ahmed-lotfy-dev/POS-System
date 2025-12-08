@@ -1,65 +1,31 @@
+// Password for all users: 00000000
+// These are DEMO accounts for testing purposes only
 export default [
   {
-    id: '64d27f7bb1465bdd4c34109e',
-    username: 'Ahmed Lotfy',
-    email: 'elshenawy19@gmail.com',
-    password:
-      '$argon2id$v=19$m=65536,t=3,p=4$wXf+mNNieBXJXYQsQFRa8A$0Da8yYXcVpb29c2Flx9AnZTghGkO01OGTqjf6KwDBio',
+    id: '8836bd24f656d262bb4460d5',
+    username: 'Admin Demo',
+    email: 'admin@demo.com',
+    password: '$argon2id$v=19$m=65536,t=3,p=4$9xbUJbxqgmo6ghkibkW3Ew$pW7R5QDFO/x68biq3Nsf4qt8Dc9hWGeDftSCNfJoUOc',
     role: 'ADMIN',
-    isConfirm: false,
-    createdAt: '2023-08-08T17:46:35.415Z',
-    updatedAt: '2023-08-08T17:47:01.469Z',
-  },
-  {
-    id: '653c3ad7239382733bea24dc',
-    username: 'Alotfy',
-    email: 'alotfy2019@gmail.com',
-    password:
-      '$argon2id$v=19$m=65536,t=3,p=4$i07Mhiod0EHVjcdCJg+y3g$qe6lGByBcccuva5cBms1YnPBiZ5/DqpSiz6bdNlfgqE',
-    role: 'VIEWER',
-    isConfirm: false,
-    createdAt: '2023-10-27T22:33:59.786Z',
-    updatedAt: '2023-10-27T22:33:59.786Z',
-  },
-  {
-    id: '653c3c286d4fe44a9bdf4570',
-    username: 'example name',
-    email: 'example@gmail.com',
-    password:
-      '$argon2id$v=19$m=65536,t=3,p=4$OrOyKmEx9ZdILxtu8qumxw$HwwcKQfaiPQWwMCOc4yqGOa5tuT29H02CQXQzBlbmHo',
-    role: 'VIEWER',
-    isConfirm: false,
-    createdAt: '2023-10-27T22:39:36.023Z',
-    updatedAt: '2023-10-27T22:39:36.023Z',
-  },
-  {
-    id: '653d1f16cf16a1beb5e30df7',
-    username: 'alotfy',
-    email: 'mohadsfdsfdsmmad.halaweh11@gmail.com',
-    password:
-      '$argon2id$v=19$m=65536,t=3,p=4$BxbmLLIjXZJUOQdyA9tEnQ$IvhGy68VeqBd1SJv4heqUkqTvadNNoWE63JOsnJQm50',
-    role: 'VIEWER',
-    isConfirm: false,
-    createdAt: '2023-10-28T14:47:50.388Z',
-    updatedAt: '2023-10-28T14:47:50.388Z',
-  },
-  {
-    id: '6636bd24f656d262bb4460d3',
-    username: 'test',
-    email: 'test123@gmail.com',
-    password:
-      '$argon2id$v=19$m=65536,t=3,p=4$K4upFx/Qn/5Z8oUdHBoWIg$Oo9Qebmdq36YGj3oLO8i7O9tIfEVWZc+sulI/HqarRk',
-    role: 'VIEWER',
-    isConfirm: false,
+    isConfirm: true,
     createdAt: '2024-05-04T22:56:36.131Z',
     updatedAt: '2024-05-04T22:56:36.131Z',
   },
   {
-    id: '7736bd24f656d262bb4460d4',
-    username: 'Test Viewer',
-    email: 'test@gmail.com',
-    password:
-      '$argon2id$v=19$m=65536,t=3,p=4$wXf+mNNieBXJXYQsQFRa8A$0Da8yYXcVpb29c2Flx9AnZTghGkO01OGTqjf6KwDBio', // Same hash as admin for simplicity, or generate new one. Using admin hash for now as I can't generate argon2 here easily without library. Wait, user said password: 0000. I should probably try to generate it or use a known hash for 0000 if possible. I will use the hash for '123456' from the first user and assume it's fine for dev, or just use the first user's hash. The user asked for password '0000'. I'll use a placeholder hash and let them know.
+    id: '9936bd24f656d262bb4460d6',
+    username: 'Cashier Demo',
+    email: 'cashier@demo.com',
+    password: '$argon2id$v=19$m=65536,t=3,p=4$9xbUJbxqgmo6ghkibkW3Ew$pW7R5QDFO/x68biq3Nsf4qt8Dc9hWGeDftSCNfJoUOc',
+    role: 'CASHIER',
+    isConfirm: true,
+    createdAt: '2024-05-04T22:56:36.131Z',
+    updatedAt: '2024-05-04T22:56:36.131Z',
+  },
+  {
+    id: 'aa36bd24f656d262bb4460d7',
+    username: 'Viewer Demo',
+    email: 'viewer@demo.com',
+    password: '$argon2id$v=19$m=65536,t=3,p=4$9xbUJbxqgmo6ghkibkW3Ew$pW7R5QDFO/x68biq3Nsf4qt8Dc9hWGeDftSCNfJoUOc',
     role: 'VIEWER',
     isConfirm: true,
     createdAt: '2024-05-04T22:56:36.131Z',

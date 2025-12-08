@@ -12,6 +12,7 @@ import { ProductService } from './product.service';
 import { ProductDto } from './dto/product.dto';
 import { Roles } from '../auth/decorator/roles.decorator';
 import { RolesGuard } from '../auth/guard/roles.guard';
+import { Public } from '../auth/decorator/public.decorator';
 import { Role } from '../generated/prisma/client';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 
@@ -20,6 +21,7 @@ import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 export class ProductController {
   constructor(private productService: ProductService) {}
 
+  @Public()
   @Get('getAll')
   @ApiOperation({ summary: 'Get all products' })
   @ApiResponse({ status: 200, description: 'Return all products.' })
@@ -27,6 +29,7 @@ export class ProductController {
     return this.productService.getAllProducts();
   }
 
+  @Public()
   @Get('get/:id')
   @ApiOperation({ summary: 'Get a single product by ID' })
   @ApiResponse({ status: 200, description: 'Return the product.' })

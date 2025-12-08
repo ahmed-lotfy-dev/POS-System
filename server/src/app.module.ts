@@ -1,15 +1,15 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { APP_GUARD } from '@nestjs/core';
 
 import { AuthModule } from './auth/auth.module';
+import { JwtGuard } from './auth/guard/jwt.guard';
 import { CategoryModule } from './category/category.module';
 import { ProductModule } from './product/product.module';
 import { UnitModule } from './unit/unit.module';
 import { UserModule } from './user/users.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { UploadModule } from './upload/upload.module';
-import { OrderService } from './order/order.service';
-import { OrderController } from './order/order.controller';
 import { OrderModule } from './order/order.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 
@@ -26,7 +26,12 @@ import { DashboardModule } from './dashboard/dashboard.module';
     OrderModule,
     DashboardModule,
   ],
-  providers: [OrderService],
-  controllers: [OrderController],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: JwtGuard,
+    },
+  ],
+  controllers: [],
 })
 export class AppModule {}
