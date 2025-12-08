@@ -1,148 +1,118 @@
-import { useDispatch, useSelector } from "react-redux";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
 import { RootState } from "../../../store/store";
-import { setUser } from "../../../store/features/user/userSlice";
-
-import { TbBrandGoogleHome, TbLayoutDashboard, TbLogout } from "react-icons/tb";
-import { BsBoxSeam } from "react-icons/bs";
-import { GiWeight } from "react-icons/gi";
-import { FiShoppingBag } from "react-icons/fi";
+import { Divider } from "@heroui/react";
+import {
+  TbHome,
+  TbLayoutDashboard,
+  TbCategory,
+  TbPackage,
+  TbScale,
+  TbShoppingBag,
+  TbShoppingCart,
+} from "react-icons/tb";
 import { useLocation } from "react-router-dom";
-import { ThemeToggle } from "@/components/ThemeToggle/theme-toggle";
+import { ThemeSwitcher } from "@/components/shared/ThemeSwitcher";
+import { UserProfile } from "@/components/shared/UserProfile";
 
 function AsideNav() {
   const user = useSelector((state: RootState) => state.user);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
   const location = useLocation().pathname;
 
-  const handleLogout = () => {
-    localStorage.removeItem("user");
-    dispatch(setUser(null));
-    navigate("/");
-  };
+  const NavItem = ({
+    to,
+    icon: Icon,
+    label,
+    end = false,
+  }: {
+    to: string;
+    icon: any;
+    label: string;
+    end?: boolean;
+  }) => (
+    <NavLink to={to} end={end}>
+      {({ isActive }) => (
+        <div
+          className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
+            isActive
+              ? "bg-primary text-primary-foreground shadow-md"
+              : "hover:bg-default-100 text-foreground"
+          }`}
+        >
+          <Icon size={22} />
+          <span className="font-medium">{label}</span>
+        </div>
+      )}
+    </NavLink>
+  );
 
   return (
-    <nav className="w-[300px] h-full gap-6 bg-card flex flex-col justify-between border-r-2 border-border">
-      <div className="p-5 text-5xl font-extrabold">
-        <h1>P</h1>
-      </div>
-      <ul className="flex flex-col justify-start items-start space-y-8 p-4 grow">
-        <div className="flex space-x-2 cursor-pointer">
-          <TbBrandGoogleHome size={25} className="m-auto" />
-          <NavLink
-            className={({ isActive, isPending }) =>
-              isPending
-                ? "pending cursor-pointer font-bold"
-                : isActive
-                ? "text-orange-700 cursor-pointer font-bold"
-                : ""
-            }
-            to="/"
-          >
-            Home
-          </NavLink>
+    <nav className="w-[420px] h-screen sticky top-0 bg-background border-r border-divider flex flex-col">
+      {/* Logo/Brand */}
+      <div className="p-6">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+            <TbShoppingCart size={24} className="text-white" />
+          </div>
+          <div>
+            <h1 className="text-xl font-bold text-foreground">POS System</h1>
+            <p className="text-xs text-default-500">Point of Sale</p>
+          </div>
         </div>
-        {user.user ? (
-          <div className="flex space-x-2 cursor-pointer">
-            <TbLayoutDashboard size={25} className="m-auto" />
-            <NavLink
-              to="/dashboard"
-              end
-              className={({ isActive, isPending }) =>
-                isPending
-                  ? "pending cursor-pointer font-bold"
-                  : isActive
-                  ? "text-orange-700 cursor-pointer font-bold"
-                  : ""
-              }
-            >
-              Dashboard
-            </NavLink>
-          </div>
-        ) : null}
-        {location.includes("dashboard") ? (
-          <>
-            <div className="flex space-x-2 cursor-pointer">
-              <BsBoxSeam size={25} className="m-auto" />
-              <NavLink
-                to="/dashboard/categories"
-                className={({ isActive, isPending }) =>
-                  isPending
-                    ? "pending cursor-pointer font-bold"
-                    : isActive
-                    ? "text-orange-700 cursor-pointer font-bold"
-                    : ""
-                }
-              >
-                Categories
-              </NavLink>
-            </div>
-            <div className="flex space-x-2 cursor-pointer">
-              <BsBoxSeam size={25} className="m-auto" />
-              <NavLink
-                className={({ isActive, isPending }) =>
-                  isPending
-                    ? "pending cursor-pointer font-bold"
-                    : isActive
-                    ? "text-orange-700 cursor-pointer font-bold"
-                    : ""
-                }
-                to="/dashboard/products"
-              >
-                Products
-              </NavLink>
-            </div>
-            <div className="flex space-x-2 cursor-pointer">
-              <GiWeight size={25} className="m-auto" />
-              <NavLink
-                className={({ isActive, isPending }) =>
-                  isPending
-                    ? "pending cursor-pointer font-bold"
-                    : isActive
-                    ? "text-orange-700 cursor-pointer font-bold"
-                    : ""
-                }
-                to="/dashboard/units"
-              >
-                Units
-              </NavLink>
-            </div>
-            <div className="flex space-x-2 cursor-pointer">
-              <FiShoppingBag size={25} className="m-auto" />
-              <NavLink
-                className={({ isActive, isPending }) =>
-                  isPending
-                    ? "pending cursor-pointer font-bold"
-                    : isActive
-                    ? "text-orange-700 cursor-pointer font-bold"
-                    : ""
-                }
-                to="/dashboard/orders"
-              >
-                Orders
-              </NavLink>
-            </div>
-          </>
-        ) : (
-          ""
-        )}
-      </ul>
-      <ThemeToggle />
-
-      <div className="px-4 cursor-pointer">
-        {user.user ? (
-          <div
-            className="flex space-x-2 mb-5 cursor-pointer"
-            onClick={handleLogout}
-          >
-            <div className="cursor-pointer font-bold">
-              <TbLogout size={25} />
-            </div>
-            <span className="cursor-pointer font-bold">LogOut</span>
-          </div>
-        ) : null}
       </div>
+
+      <Divider />
+
+      {/* Navigation Links */}
+      <div className="flex-1 overflow-y-auto px-4 py-6 space-y-2">
+        <NavItem to="/" icon={TbHome} label="Home" end />
+
+        {user.user && (
+          <>
+            <NavItem
+              to="/dashboard"
+              icon={TbLayoutDashboard}
+              label="Dashboard"
+              end
+            />
+
+            {location.includes("dashboard") && (
+              <>
+                <Divider className="my-4" />
+                <p className="text-xs font-semibold text-default-500 px-4 mb-2">
+                  MANAGEMENT
+                </p>
+                <NavItem
+                  to="/dashboard/categories"
+                  icon={TbCategory}
+                  label="Categories"
+                />
+                <NavItem
+                  to="/dashboard/products"
+                  icon={TbPackage}
+                  label="Products"
+                />
+                <NavItem to="/dashboard/units" icon={TbScale} label="Units" />
+                <NavItem
+                  to="/dashboard/orders"
+                  icon={TbShoppingBag}
+                  label="Orders"
+                />
+              </>
+            )}
+          </>
+        )}
+      </div>
+
+      <Divider />
+
+      {/* Theme Switcher Component */}
+      <ThemeSwitcher />
+
+      <Divider />
+
+      {/* User Profile Component */}
+      <UserProfile />
     </nav>
   );
 }
