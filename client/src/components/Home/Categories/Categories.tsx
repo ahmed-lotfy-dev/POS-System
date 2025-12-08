@@ -1,61 +1,72 @@
-import { useRouteLoaderData } from "react-router-dom"
-import { AllDataResponse } from "../../../types/globals"
-import { Button } from "@/components/ui/button"
-import { MouseEventHandler } from "react"
-import { useDispatch } from "react-redux"
-import { setActiveCategory } from "@/store/features/category/categorySlice"
-import { setProducts } from "@/store/features/products/productSlice"
+import { useRouteLoaderData } from "react-router-dom";
+import { AllDataResponse } from "../../../types/globals";
+import { Button, Chip } from "@heroui/react";
+import { useDispatch, useSelector } from "react-redux";
+import { setActiveCategory } from "@/store/features/category/categorySlice";
+import { setProducts } from "@/store/features/products/productSlice";
+import { RootState } from "@/store/store";
+import { TbCategory } from "react-icons/tb";
 
-type Props = {}
+type Props = {};
 
 function Categories({}: Props) {
-  const { categories, products } = useRouteLoaderData("root") as AllDataResponse
-  console.log(products)
-
-  const dispatch = useDispatch()
+  const { categories, products } = useRouteLoaderData(
+    "root"
+  ) as AllDataResponse;
+  const dispatch = useDispatch();
+  const activeCategory = useSelector(
+    (state: RootState) => state.category.categoryId
+  );
 
   const activeCategoryHandler = (category: any) => {
     dispatch(
       setActiveCategory({
         categoryId: category.id,
       })
-    )
-  }
+    );
+  };
 
   const allProductsHandler = () => {
-    dispatch(setProducts(products))
-    dispatch(setActiveCategory({ categoryId: "all" }))
-  }
+    dispatch(setProducts(products));
+    dispatch(setActiveCategory({ categoryId: "all" }));
+  };
 
   return (
-    <div className="bg-card text-foreground w-full justify-start items-start h-8 mb-36 flex flex-col ">
-      <div className="pl-6">
-        <h1 className="font-bold text-foreground">Categories</h1>
+    <div className="px-6 py-4">
+      <div className="flex items-center gap-2 mb-4">
+        <TbCategory size={20} className="text-gray-700 dark:text-gray-300" />
+        <h2 className="text-lg font-bold text-gray-900 dark:text-white">
+          Categories
+        </h2>
       </div>
-      <div className="bg-card text-foreground w-full flex justify-start items-start ml-6 mt-3">
-        <Button
-          variant={"outline"}
-          className="hover:bg-accent font-bold text-lg text-left mr-1"
-          onClick={() => allProductsHandler()}
+      <div className="flex flex-wrap gap-2">
+        <Chip
+          color={
+            activeCategory === "all" || !activeCategory ? "primary" : "default"
+          }
+          variant={
+            activeCategory === "all" || !activeCategory ? "solid" : "flat"
+          }
+          onClick={allProductsHandler}
+          className="cursor-pointer"
         >
-          All
-        </Button>
+          All Products
+        </Chip>
         {categories &&
-          categories?.map((category) => (
-            <Button
+          categories.map((category) => (
+            <Chip
               key={category.id}
-              variant={"outline"}
-              className="hover:bg-accent mx-1 bg-card text-foreground"
+              color={activeCategory === category.id ? "primary" : "default"}
+              variant={activeCategory === category.id ? "solid" : "flat"}
               onClick={() => activeCategoryHandler(category)}
+              className="cursor-pointer"
             >
-              <h2 className="font-bold text-lg text-left bg-card text-foreground">{`${category.name
-                .slice(0, 1)
-                .toUpperCase()}${category.name.slice(1)}`}</h2>
-            </Button>
+              {category.name.charAt(0).toUpperCase() + category.name.slice(1)}
+            </Chip>
           ))}
       </div>
     </div>
-  )
+  );
 }
 
-export { Categories }
+export { Categories };

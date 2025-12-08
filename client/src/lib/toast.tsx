@@ -1,9 +1,26 @@
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { addToast } from "@heroui/react";
 
-export const notify = (message: string, status: string) => {
-  if (status === "success") toast.success(message, { position: "top-center" });
-  if (status === "fail") toast.warn(message, { position: "top-center" });
-  if (status === "info") toast.info(message, { position: "top-center" });
-  if (status === "error") toast.error(message, { position: "top-center" });
+export const notify = (message: string | any, status: string) => {
+  const colorMap: Record<
+    string,
+    "default" | "primary" | "secondary" | "success" | "warning" | "danger"
+  > = {
+    success: "success",
+    error: "danger",
+    fail: "danger",
+    info: "primary",
+    warning: "warning",
+  };
+
+  // Ensure message is always a string
+  const messageText =
+    typeof message === "string"
+      ? message
+      : message?.message || JSON.stringify(message) || "An error occurred";
+
+  addToast({
+    title: messageText,
+    color: colorMap[status] || "default",
+    timeout: 3000,
+  });
 };

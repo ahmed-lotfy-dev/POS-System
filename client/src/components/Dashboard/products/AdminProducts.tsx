@@ -1,6 +1,6 @@
 import { TableComponent } from "../Table/Table";
 import { Link, useRouteLoaderData } from "react-router-dom";
-import axios from "axios";
+import axios from "@/lib/axios";
 import { useRevalidator } from "react-router-dom";
 import { ChangeEvent, useState } from "react";
 import { AllDataResponse, Product } from "../../../types/globals";

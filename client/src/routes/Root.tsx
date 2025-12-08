@@ -7,7 +7,9 @@ const Root = () => {
   const theme = useSelector((state: RootState) => state.theme.theme);
 
   return (
-    <div className={`w-full h-screen flex bg-gray-200 ${theme ? "dark" : ""}`}>
+    <div
+      className={`w-full min-h-screen flex bg-gray-200 ${theme ? "dark" : ""}`}
+    >
       <AsideNav />
       <Outlet />
     </div>

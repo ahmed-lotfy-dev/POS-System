@@ -16,16 +16,16 @@ const Home = () => {
   console.log(products);
 
   return (
-    <>
-      <div className="h-full bg-card text-foreground w-full flex flex-col">
+    <div className="flex min-h-screen">
+      <div className="flex-1 bg-card text-foreground flex flex-col">
         <Search />
         <Categories />
         <Products />
       </div>
-      <div className="flex-1">
+      <div className="w-[360px] flex-shrink-0 sticky top-0 h-screen">
         <Cart />
       </div>
-    </>
+    </div>
   );
 };
 

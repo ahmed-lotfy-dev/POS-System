@@ -1,5 +1,5 @@
 import { TableComponent } from "../Table/Table";
-import axios from "axios";
+import axios from "@/lib/axios";
 import { useRevalidator, useRouteLoaderData } from "react-router-dom";
 import { AllDataResponse, Unit } from "../../../types/globals";
 import { AlertDialog, AlertDialogTrigger } from "@/components/ui/alert-dialog";

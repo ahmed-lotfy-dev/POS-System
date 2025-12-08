@@ -12,6 +12,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { Loader } from "@/components/ui/loader";
+import { WelcomeHeader } from "../shared/WelcomeHeader";
 
 type DashboardStats = {
   totalProducts: number;
@@ -76,6 +77,10 @@ const Dashboard = () => {
 
   return (
     <div className="w-full h-full overflow-auto p-6 space-y-8">
+      <WelcomeHeader
+        subtitle="Here's what's happening with your business today"
+        showTimeGreeting={true}
+      />
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
           Dashboard Overview

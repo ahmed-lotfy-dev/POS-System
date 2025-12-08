@@ -8,6 +8,8 @@ import {
   TableCell,
   Button,
   Avatar,
+  Modal,
+  ModalContent,
 } from "@heroui/react";
 
 import { ChangeEvent } from "react";
@@ -17,7 +19,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setItem } from "../../../store/features/Item/itemSlice";
 import { RootState } from "../../../store/store";
 import { useLocation, useRouteLoaderData } from "react-router-dom";
-import { AlertDialog, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+
 import { EditCategory } from "../categories/EditCategory";
 import { AllDataResponse } from "@/types/globals";
 import { EditProduct } from "../products/EditProduct";
@@ -28,6 +30,46 @@ type TableProps<T> = {
   handleSave: (data: T) => Promise<void>;
   handleDelete: (id: string) => Promise<void>;
   uploadHandler?: (event: ChangeEvent<HTMLInputElement>) => Promise<void>;
+};
+
+// Separate component to handle modal state
+const EditDialogCell = ({
+  data,
+  location,
+  onEditHandler,
+}: {
+  data: any;
+  location: string;
+  onEditHandler: (data: any) => void;
+}) => {
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  return (
+    <>
+      <button
+        onClick={() => {
+          onEditHandler(data);
+          setIsOpen(true);
+        }}
+        className="inline-flex items-center justify-center w-10 h-10 rounded-md hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
+      >
+        <TbEdit size={20} className="text-blue-600 dark:text-blue-400" />
+      </button>
+      <Modal isOpen={isOpen} onOpenChange={setIsOpen} scrollBehavior="inside">
+        <ModalContent>
+          {location === "categories" && (
+            <EditCategory onClose={() => setIsOpen(false)} />
+          )}
+          {location === "products" && (
+            <EditProduct onClose={() => setIsOpen(false)} />
+          )}
+          {location === "units" && (
+            <EditUnit onClose={() => setIsOpen(false)} />
+          )}
+        </ModalContent>
+      </Modal>
+    </>
+  );
 };
 
 const TableComponent = <T extends Record<string, any>>({
@@ -103,24 +145,11 @@ const TableComponent = <T extends Record<string, any>>({
           );
         case "update":
           return (
-            <AlertDialog>
-              <AlertDialogTrigger asChild>
-                <Button
-                  isIconOnly
-                  variant="light"
-                  onPress={() => onEditHandler(data)}
-                  className="hover:bg-gray-100 dark:hover:bg-gray-600"
-                >
-                  <TbEdit
-                    size={20}
-                    className="text-blue-600 dark:text-blue-400"
-                  />
-                </Button>
-              </AlertDialogTrigger>
-              {location === "categories" && <EditCategory />}
-              {location === "products" && <EditProduct />}
-              {location === "units" && <EditUnit />}
-            </AlertDialog>
+            <EditDialogCell
+              data={data}
+              location={location}
+              onEditHandler={onEditHandler}
+            />
           );
         case "remove":
           return (

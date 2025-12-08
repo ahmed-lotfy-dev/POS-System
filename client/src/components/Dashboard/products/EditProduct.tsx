@@ -16,15 +16,14 @@ import {
   Select,
   SelectItem,
 } from "@heroui/react";
-import { ToastContainer } from "react-toastify";
 import { useRevalidator, useRouteLoaderData } from "react-router-dom";
-import axios from "axios";
+import axios from "@/lib/axios";
 import { AllDataResponse } from "@/types/globals";
 type Props = {
-  onClose: () => void;
+  onClose?: () => void;
 };
 
-function EditProduct({ onClose }: Props) {
+function EditProduct({ onClose = () => {} }: Props) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const editItem = useSelector((state: RootState) => state.item.item);
@@ -141,13 +140,13 @@ function EditProduct({ onClose }: Props) {
               <img
                 src={imageLink}
                 alt={`${editItem.name} image`}
-                className="w-20 h-20 object-cover m-auto rounded-md"
+                className="object-cover m-auto rounded-md"
               />
             ) : (
               <img
                 src={editItem ? editItem.image : ""}
                 alt="Product"
-                className="w-20 h-20 object-cover m-auto rounded-md"
+                className="object-cover m-auto rounded-md"
               />
             )}
           </div>

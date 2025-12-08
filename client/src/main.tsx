@@ -15,7 +15,8 @@ import { ApiResponse } from "./types/api.js";
 import { HeroUIProvider } from "@heroui/react";
 
 import { ThemeProvider } from "@/components/ThemeToggle/theme-provider.js";
-import { ToastContainer } from "react-toastify";
+import { ToastProvider } from "@heroui/react";
+import { ErrorBoundary } from "@/components/ErrorBoundary/ErrorBoundary";
 
 import {
   createRoutesFromElements,
@@ -74,7 +75,12 @@ const allData = async (): Promise<AllDataResponse> => {
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route id="root" loader={allData} element={<Outlet />}>
+    <Route
+      id="root"
+      loader={allData}
+      element={<Outlet />}
+      errorElement={<ErrorBoundary />}
+    >
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignUp />} />
 
@@ -100,12 +106,16 @@ const router = createBrowserRouter(
             path="/dashboard/orders/:id"
             element={<OrderItems />}
             loader={async ({ params }) => {
-              console.log(params.id);
               const { data } = await axios.get(
                 `${import.meta.env.VITE_BACKEND_URL}/order/get/${params.id}`
               );
-              console.log(data);
-              return { orderItems: data.orderItems };
+              // Backend returns { msg: 'order not found' } when order doesn't exist
+              if (data && typeof data === "object" && "msg" in data) {
+                return null;
+              }
+              // Backend wraps response in { code, message, data }
+              // Return the actual order data
+              return data.data || data;
             }}
           />
         </Route>
@@ -120,9 +130,9 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
       <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
         <Provider store={store}>
           <RouterProvider router={router} />
-          <ToastContainer />
         </Provider>
       </ThemeProvider>
     </HeroUIProvider>
+    <ToastProvider />
   </React.StrictMode>
 );

@@ -1,6 +1,5 @@
-import axios from "axios";
+import axios from "@/lib/axios";
 
-import { ToastContainer } from "react-toastify";
 import { notify } from "@/lib/toast";
 
 import { ChangeEvent, FormEvent, useRef, useState } from "react";
@@ -145,7 +144,6 @@ const AddCategory = () => {
           )}
         </ModalContent>
       </CustomModal>
-      <ToastContainer />
     </>
   );
 };

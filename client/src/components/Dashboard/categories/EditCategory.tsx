@@ -2,26 +2,23 @@ import { RootState } from "../../../store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { ChangeEvent, useRef } from "react";
 import { useUploadImage } from "../../../hooks/useUploadImage";
-// import { Loader } from "@mantine/core";
 import { Loader } from "@/components/ui/loader";
-
 import { setItem } from "../../../store/features/Item/itemSlice";
 import {
-  ModalContent,
   ModalHeader,
   ModalBody,
   ModalFooter,
   Button,
   Input,
 } from "@heroui/react";
-import { ToastContainer } from "react-toastify";
 import { useRevalidator } from "react-router-dom";
-import axios from "axios";
+import axios from "@/lib/axios";
+
 type Props = {
-  onClose: () => void;
+  onClose?: () => void;
 };
 
-function EditCategory({ onClose }: Props) {
+function EditCategory({ onClose = () => {} }: Props) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const formRef = useRef<HTMLFormElement>(null);
   const editItem = useSelector((state: RootState) => state.item.item);
@@ -39,16 +36,11 @@ function EditCategory({ onClose }: Props) {
     dispatch(setItem({}));
   };
 
-  const {
-    uploadImage,
-    imageLink,
-    isPending,
-    //error
-  } = useUploadImage();
+  const { uploadImage, imageLink, isPending } = useUploadImage();
 
   const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    const updatedItem = { ...editItem, [name]: value }; // Update the corresponding property
+    const updatedItem = { ...editItem, [name]: value };
     dispatch(setItem(updatedItem));
   };
 

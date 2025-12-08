@@ -13,15 +13,14 @@ import {
   Button,
   Input,
 } from "@heroui/react";
-import { ToastContainer } from "react-toastify";
 import { useRevalidator } from "react-router-dom";
-import axios from "axios";
+import axios from "@/lib/axios";
 
 type Props = {
-  onClose: () => void;
+  onClose?: () => void;
 };
 
-function EditUnit({ onClose }: Props) {
+function EditUnit({ onClose = () => {} }: Props) {
   const formRef = useRef<HTMLFormElement>(null);
   const editItem = useSelector((state: RootState) => state.item.item);
   const dispatch = useDispatch();

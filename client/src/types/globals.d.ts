@@ -1,5 +1,7 @@
 export {};
 
+export type Role = "ADMIN" | "CASHIER" | "VIEWER";
+
 declare global {
   interface Window {
     my_modal_2: HTMLDialogElement;

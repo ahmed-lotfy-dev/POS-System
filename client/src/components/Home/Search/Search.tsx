@@ -1,37 +1,46 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 import { setSearchValue } from "../../../store/features/search/searchSlice";
-import { ChangeEvent } from "react";
-import { FcSearch } from "react-icons/fc";
+import { ChangeEvent, useState, useEffect } from "react";
+import { TbSearch } from "react-icons/tb";
 import { Input } from "@/components/ui/input";
 
 function Search() {
   const searchValue = useSelector((state: RootState) => state.search.value);
   const dispatch = useDispatch();
+  const [localValue, setLocalValue] = useState(searchValue);
+
+  // Debounce effect: Update Redux store only after user stops typing for 300ms
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      dispatch(setSearchValue(localValue));
+    }, 300);
+
+    // Cleanup: Cancel the timeout if user types again before 300ms
+    return () => clearTimeout(timeoutId);
+  }, [localValue, dispatch]);
 
   const searchHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    dispatch(setSearchValue(e.target.value));
-    console.log(e.target.value);
+    setLocalValue(e.target.value);
   };
-  const user = useSelector((state: RootState) => state.user);
 
   return (
-    <div className="bg-background flex justify-between ">
-      {/* <div className="">
-        <h2 className="text-2xl font-semibold mt-10">
-          welcome {user.user?.username}
-        </h2>
-      </div> */}
-      <Input
-        className="font-extrabold w-1/5 relative bg-background rounded-md px-5 py-2 placeholder:text-muted-foreground text-foreground m-10 border-[0.5px] border-border"
-        name="search"
-        value={searchValue}
-        type="search"
-        onChange={searchHandler}
-        placeholder="Search..."
-      />
-      <div className="absolute left-[24.5%] top-[3%] mt-[1%]">
-        <FcSearch size={25} color="black" />
+    <div className="px-6 py-4">
+      <div className="relative max-w-md">
+        {/* Search Icon */}
+        <div className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none">
+          <TbSearch size={20} className="text-gray-400 dark:text-gray-500" />
+        </div>
+
+        {/* Search Input */}
+        <Input
+          className="pl-10 pr-4 py-2 w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent"
+          name="search"
+          value={localValue}
+          type="search"
+          onChange={searchHandler}
+          placeholder="Search products..."
+        />
       </div>
     </div>
   );

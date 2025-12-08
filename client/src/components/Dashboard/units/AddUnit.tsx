@@ -1,6 +1,5 @@
-import axios from "axios";
+import axios from "@/lib/axios";
 
-import { ToastContainer } from "react-toastify";
 import { notify } from "../../../lib/toast";
 
 import { ChangeEvent, FormEvent, useRef, useState } from "react";
@@ -33,6 +32,7 @@ const AddUnit = () => {
   const handleOpen = () => {
     if (user?.role !== "ADMIN") {
       notify("You don't have admin privileges (View Only)", "info");
+      return;
     }
     onOpen();
   };
@@ -99,7 +99,6 @@ const AddUnit = () => {
           )}
         </ModalContent>
       </CustomModal>
-      <ToastContainer />
     </>
   );
 };

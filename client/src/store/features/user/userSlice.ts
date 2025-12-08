@@ -1,10 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+import { Role } from "@/types/globals";
+
 export interface User {
   id: string;
   email: string;
   username?: string;
-  role: "ADMIN" | "VIEWER";
+  role: Role;
   sub: string;
   isConfirm: boolean;
   createdAt: Date;

@@ -15,8 +15,13 @@ const OrderItems = ({}: Props) => {
   const navigate = useNavigate();
   const order = useLoaderData() as any;
 
-  // Safety check
-  if (!order || !order.orderDate) {
+  // Debug: Log the order data
+  console.log("📦 Order data received:", order);
+  console.log("📦 Order keys:", Object.keys(order || {}));
+  console.log("📦 Full order JSON:", JSON.stringify(order, null, 2));
+
+  // Safety check - if order is empty object or null
+  if (!order || Object.keys(order).length === 0) {
     return (
       <div className="w-full h-full overflow-auto p-6">
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md border border-gray-200 dark:border-gray-700 p-10">
@@ -38,7 +43,13 @@ const OrderItems = ({}: Props) => {
     return value < 10 ? `0${value}` : `${value}`;
   }
 
-  const orderDate = new Date(order.orderDate);
+  // Use orderDate if it exists, otherwise use createdAt, otherwise use current date
+  const dateField =
+    order.orderDate ||
+    order.createdAt ||
+    order.created_at ||
+    new Date().toISOString();
+  const orderDate = new Date(dateField);
   const formattedTime = `${formatTimeWithLeadingZero(
     orderDate.getHours()
   )}:${formatTimeWithLeadingZero(orderDate.getMinutes())}`;
@@ -48,7 +59,7 @@ const OrderItems = ({}: Props) => {
     year: "numeric",
   });
 
-  const orderItems = order.orderItems || [];
+  const orderItems = order.orderItems || order.order_items || [];
 
   return (
     <div className="w-full h-full overflow-auto p-6 space-y-6">
@@ -65,7 +76,7 @@ const OrderItems = ({}: Props) => {
             Order Details
           </h1>
           <p className="text-gray-500 dark:text-gray-400 mt-1">
-            Order #{order.orderNumber}
+            Order #{order.orderNumber || order.order_number || order.id}
           </p>
         </div>
       </div>
@@ -86,7 +97,7 @@ const OrderItems = ({}: Props) => {
             </span>
           </div>
           <p className="text-xl font-bold text-gray-900 dark:text-white">
-            #{order.orderNumber}
+            #{order.orderNumber || order.order_number || order.id}
           </p>
         </div>
 
@@ -146,7 +157,7 @@ const OrderItems = ({}: Props) => {
             </span>
           </div>
           <p className="text-2xl font-bold text-green-800 dark:text-green-100">
-            ${order.totalAmount.toLocaleString()}
+            ${(order.totalAmount || order.total_amount || 0).toLocaleString()}
           </p>
         </div>
       </div>
@@ -227,7 +238,12 @@ const OrderItems = ({}: Props) => {
                   Total:
                 </td>
                 <td className="px-6 py-4 text-right font-bold text-2xl text-green-600 dark:text-green-400">
-                  ${order.totalAmount.toLocaleString()}
+                  $
+                  {(
+                    order.totalAmount ||
+                    order.total_amount ||
+                    0
+                  ).toLocaleString()}
                 </td>
               </tr>
             </tfoot>
