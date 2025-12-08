@@ -1,24 +1,24 @@
 # Base image
-FROM oven/bun:alpine AS builder
+FROM node:22-alpine AS builder
 
 WORKDIR /app
 
-COPY package.json bun.lock ./
+COPY package*.json ./
 COPY prisma ./prisma/
 
 # Install dependencies
-RUN --mount=type=cache,target=/root/.bun/install/cache bun install --frozen-lockfile
+RUN npm install
 
 COPY . .
 
 # Generate Prisma Client
-RUN bun run prisma generate
+RUN npx prisma generate
 
 # Build the app
-RUN bun run build
+RUN npm run build
 
 # Production image
-FROM oven/bun:alpine
+FROM node:22-alpine
 
 WORKDIR /app
 
@@ -29,4 +29,4 @@ COPY --from=builder /app/prisma ./prisma
 
 EXPOSE 8000
 
-CMD [ "bun", "run", "start:prod" ]
+CMD [ "npm", "run", "start:prod" ]
