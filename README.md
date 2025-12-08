@@ -1,106 +1,176 @@
-# Modern POS System
+# 🛒 Modern POS System
 
-A full-stack Point of Sale (POS) application built with modern web technologies. This project demonstrates a scalable architecture for managing products, categories, orders, and user authentication.
+> A comprehensive Point of Sale (POS) solution built for modern retail businesses, featuring a powerful dashboard, inventory management, and a seamless checkout experience.
 
-## 🚀 Tech Stack
+![Project Banner](placeholder-for-banner-image.png)
+
+## 📖 Project Overview
+
+This POS System is a full-stack web application designed to streamline retail operations. It provides a robust backend for managing products, categories, units, and users, coupled with a responsive and interactive frontend for point-of-sale transactions. The system is built to be scalable, secure, and user-friendly, catering to roles such as Admins and Cashiers.
+
+### 🌟 Key Features
+
+-   **Role-Based Access Control (RBAC)**: Secure authentication and authorization with distinct roles (Admin, Cashier, Viewer).
+-   **Product Management**: comprehensive CRUD operations for products, categories, and units.
+-   **Inventory Tracking**: Manage stock levels and product details.
+-   **Point of Sale Interface**: Fast and intuitive checkout process with cart management.
+-   **Dashboard Analytics**: Visual insights into sales performance and key metrics.
+-   **Secure Authentication**: JWT-based auth with refresh token rotation and Argon2 password hashing.
+-   **Image Uploads**: Integration with AWS S3/Cloudflare R2 for product and category images.
+-   **Dockerized**: Fully containerized setup for easy development and deployment.
+
+## 🛠 Tech Stack
 
 ### Frontend (Client)
-
-- **Framework:** [React](https://react.dev/) (via [Vite](https://vitejs.dev/))
-  - **Why:** For building a fast, interactive, and component-based user interface. Vite ensures lightning-fast build times.
-- **State Management:** [Redux Toolkit](https://redux-toolkit.js.org/)
-  - **Why:** To manage complex global state (user sessions, cart items, theme preferences) efficiently across the application.
-- **Styling:** [Tailwind CSS](https://tailwindcss.com/)
-  - **Why:** For rapid UI development using utility-first classes, ensuring a consistent and responsive design system.
-- **Routing:** [React Router v6](https://reactrouter.com/)
-  - **Why:** To handle client-side navigation with advanced features like loaders and protected routes.
-- **HTTP Client:** [Axios](https://axios-http.com/)
-  - **Why:** For robust API communication with the backend.
+-   **React 18**: Library for building user interfaces.
+-   **Vite**: Next-generation frontend tooling for fast builds.
+-   **TypeScript**: Static typing for better developer experience and code quality.
+-   **Tailwind CSS**: Utility-first CSS framework for rapid UI development.
+-   **Material Tailwind / Radix UI / MUI**: UI component libraries for polished design.
+-   **Redux Toolkit**: State management for predictable application state.
+-   **React Router**: Declarative routing for React applications.
+-   **Axios**: Promise-based HTTP client for API requests.
+-   **Recharts**: Composable charting library for dashboard analytics.
+-   **Framer Motion**: Production-ready motion library for React.
 
 ### Backend (Server)
+-   **NestJS**: Progressive Node.js framework for building efficient server-side applications.
+-   **Prisma**: Next-generation ORM for Node.js and TypeScript.
+-   **PostgreSQL**: Powerful, open-source object-relational database system.
+-   **Passport & JWT**: Authentication middleware for Node.js.
+-   **Argon2**: Secure password hashing algorithm.
+-   **Swagger**: API documentation tool.
+-   **AWS SDK**: For interacting with AWS services (S3/R2).
 
-- **Framework:** [NestJS](https://nestjs.com/)
-  - **Why:** A progressive Node.js framework that provides a modular architecture (Modules, Controllers, Services) inspired by Angular. It enforces code organization and scalability.
-- **Database ORM:** [Prisma](https://www.prisma.io/)
-  - **Why:** For type-safe database access. Prisma's schema definition is intuitive, and its client provides auto-completion for database queries, reducing runtime errors.
-- **Database:** [PostgreSQL](https://www.postgresql.org/)
-  - **Why:** A powerful, open-source relational database known for reliability and data integrity.
-- **Authentication:** [Passport.js](https://www.passportjs.org/) & [JWT](https://jwt.io/)
-  - **Why:** To secure the API using stateless JSON Web Tokens. `Argon2` is used for secure password hashing.
+### Infrastructure
+-   **Docker & Docker Compose**: Containerization for consistent development and production environments.
 
-## 🛠️ Features
+## 📂 Project Structure
 
-- **Authentication:** Secure Sign Up and Sign In functionality with JWT.
-- **Dashboard:** Admin dashboard for managing store resources.
-- **Product Management:** Create, read, update, and delete (CRUD) products.
-- **Category Management:** Organize products into categories.
-- **Order System:** Process orders and track sales.
-- **Responsive Design:** Works seamlessly on desktop and tablet devices.
-- **Theme Support:** Light and Dark mode toggle.
+```
+pos-system/
+├── client/                 # React Frontend
+│   ├── src/
+│   │   ├── assets/         # Static assets
+│   │   ├── components/     # Reusable UI components
+│   │   ├── hooks/          # Custom React hooks
+│   │   ├── routes/         # Route definitions
+│   │   ├── store/          # Redux slices and store config
+│   │   └── types/          # TypeScript type definitions
+│   └── Dockerfile          # Frontend Docker config
+├── server/                 # NestJS Backend
+│   ├── src/
+│   │   ├── auth/           # Authentication module
+│   │   ├── category/       # Category management
+│   │   ├── product/        # Product management
+│   │   ├── user/           # User management
+│   │   ├── order/          # Order processing
+│   │   └── main.ts         # Application entry point
+│   ├── prisma/             # Database schema and seeds
+│   └── Dockerfile          # Backend Docker config
+├── docker-compose.yml      # Docker multi-container setup
+└── README.md               # Project documentation
+```
 
-## 📦 Installation & Setup
+## � Installation & Setup
 
 ### Prerequisites
+-   **Node.js**: v18+ (if running locally without Docker)
+-   **Docker & Docker Compose**: Required for containerized setup.
+-   **PostgreSQL**: (Optional if running locally, included in typical setups but project uses external DB in recent configs).
 
-- Node.js (v18+)
-- PostgreSQL installed and running
-- Bun or PNPM (optional, but recommended)
+### Environment Variables
 
-### 1. Clone the Repository
+Create `.env` files in both `client` and `server` directories based on the following templates.
 
-```bash
-git clone <repository-url>
-cd pos-system
+**Server (`server/.env`)**
+```env
+PORT=8000
+DATABASE_URL="postgresql://user:password@host:5432/dbname?schema=public"
+JWT_SECRET="your_super_secret_jwt_key"
+AWS_ACCESS_KEY_ID="your_aws_key"
+AWS_SECRET_ACCESS_KEY="your_aws_secret"
+AWS_REGION="us-east-1"
+AWS_BUCKET_NAME="your_bucket_name"
 ```
 
-### 2. Backend Setup
-
-```bash
-cd server
-
-# Install dependencies
-npm install
-
-# Set up Environment Variables
-# Create a .env file in the server directory and add:
-# DATABASE_URL="postgresql://user:password@localhost:5432/pos_db?schema=public"
-# JWT_SECRET="your_super_secret_key"
-
-# Run Database Migrations
-npx prisma migrate dev
-
-# Start the Server
-npm run start:dev
+**Client (`client/.env`)**
+```env
+VITE_API_URL="http://localhost:8000"
 ```
 
-The server will start on `http://localhost:3000` (default NestJS port).
+### Running with Docker (Recommended)
 
-### 3. Frontend Setup
+1.  **Build and Start Containers**
+    ```bash
+    docker-compose up --build
+    ```
+    This command will build the images for both client and server and start them. Uses ports `3000` (Client) and `8000` (Server).
 
-```bash
-cd ../client
+### Local Development
 
-# Install dependencies
-npm install
+**Backend**
+1.  Navigate to server directory: `cd server`
+2.  Install dependencies: `npm install`
+3.  Generate Prisma Client: `npx prisma generate`
+4.  Start server: `npm run start:dev`
 
-# Set up Environment Variables
-# Create a .env file in the client directory and add:
-# VITE_BACKEND_URL="http://localhost:3000"
+**Frontend**
+1.  Navigate to client directory: `cd client`
+2.  Install dependencies: `npm install`
+3.  Start dev server: `npm run dev`
 
-# Start the Development Server
-npm run dev
-```
+## 📚 API Documentation
 
-The client will start on `http://localhost:5173` (default Vite port).
+The backend provides a Swagger UI for exploring the API.
+Once the server is running, visit:
+**[http://localhost:8000/api](http://localhost:8000/api)** (Check your `main.ts` for the exact path, usually `/api` or `/docs`).
 
-## 🧪 How It Works
+### Key Endpoints
+*   `POST /auth/signin`: Login user.
+*   `POST /auth/signup`: Register new user.
+*   `GET /product/getAll`: Fetch all products.
+*   `POST /order`: Create a new order.
 
-1.  **Request Flow:** The React client sends HTTP requests (via Axios) to the NestJS server.
-2.  **Validation:** The server uses DTOs (Data Transfer Objects) and `class-validator` to ensure incoming data is correct.
-3.  **Business Logic:** Services in NestJS handle the business logic (e.g., calculating totals, hashing passwords).
-4.  **Data Persistence:** Prisma translates the logic into SQL queries to interact with the PostgreSQL database.
-5.  **Response:** The server returns JSON data, which the React client uses to update the Redux store and UI.
+## 📸 Features & Screenshots
 
-## 📝 License
+### 1. Dashboard Overview
+Gain insights into your business performance with interactive charts and real-time statistics.
+![Dashboard Screenshot](path/to/dashboard-screenshot.png)
 
-This project is licensed under the MIT License.
+### 2. Point of Sale (POS)
+A streamlined interface for cashiers to process orders quickly. Add items to cart, select variants, and complete transactions.
+![POS Screenshot](path/to/pos-screenshot.png)
+
+### 3. Product Management
+Easily add, edit, and categorize products. Manage inventory stock and upload product images.
+![Product Management Screenshot](path/to/product-management-screenshot.png)
+
+### 4. Order History
+View and track past orders. Filter by status, date, or customer.
+![Order History Screenshot](path/to/order-history-screenshot.png)
+
+## 🧱 Architecture & Design Decisions
+
+*   **Monorepo-style Structure**: Keeps frontend and backend code in the same repository for better code visibility and shared context.
+*   **NestJS Modular Architecture**: Ensures separation of concerns and maintainability.
+*   **Prisma ORM**: Provides type-safe database access and easy schema management.
+*   **Redux Toolkit**: Chosen for global state management to handle complex cart and user session states efficiently.
+
+## 🤝 Contributing
+
+Contributions are welcome!
+1.  Fork the repository.
+2.  Create your feature branch: `git checkout -b feature/AmazingFeature`
+3.  Commit your changes: `git commit -m 'Add some AmazingFeature'`
+4.  Push to the branch: `git push origin feature/AmazingFeature`
+5.  Open a Pull Request.
+
+## � License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+## 📞 Contact
+
+Project Maintainer - [ahmed-lotfy-dev]
+Project Link: [https://github.com/ahmed-lotfy-dev/pos-system](https://github.com/yourusername/pos-system)
