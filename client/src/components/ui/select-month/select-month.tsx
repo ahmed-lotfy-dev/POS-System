@@ -13,7 +13,7 @@ import {
 import { DateRange } from "react-day-picker";
 
 type SelectMonthProps = {
-  className: string;
+  className?: string;
   date: Date | undefined;
   setDate: React.Dispatch<React.SetStateAction<Date | undefined>>;
 };
