@@ -8,8 +8,8 @@
   "scripts": {
     "db:dev:deploy": "pnpm prisma migrate deploy",
     "db:seed": "tsx prisma/seed.ts",
-    "postinstall": "rm -rf node_modules/@prisma/client && prisma generate",
-    "build": "rm -rf node_modules/@prisma/client && prisma generate && nest build",
+    "postinstall": "prisma generate",
+    "build": "prisma generate && nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
@@ -28,6 +28,7 @@
     "@nestjs/platform-express": "^11.1.9",
     "@prisma/adapter-pg": "^7.1.0",
     "@prisma/client": "^7.1.0",
+    "@prisma/extension-accelerate": "^3.0.1",
     "@types/pg": "^8.15.6",
     "argon2": "^0.44.0",
     "dotenv": "^17.2.3",
