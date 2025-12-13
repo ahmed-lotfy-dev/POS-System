@@ -117,7 +117,7 @@ const AddProduct = () => {
   };
 
   return (
-    <>
+    <div className="mb-5">
       <Button onPress={handleOpen} color="primary" className="mt-10">
         Add Product
       </Button>
@@ -218,7 +218,7 @@ const AddProduct = () => {
           )}
         </ModalContent>
       </CustomModal>
-    </>
+    </div>
   );
 };
 

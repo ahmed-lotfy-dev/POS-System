@@ -1,53 +1,25 @@
 import { useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
-import { RootState } from "../../../store/store";
-import { Divider } from "@heroui/react";
+import { useLocation } from "react-router-dom";
+import { NavItem } from "./NavItem";
 import {
+  TbShoppingCart,
   TbHome,
   TbLayoutDashboard,
   TbCategory,
   TbPackage,
   TbScale,
   TbShoppingBag,
-  TbShoppingCart,
 } from "react-icons/tb";
-import { useLocation } from "react-router-dom";
-import { ThemeSwitcher } from "@/components/shared/ThemeSwitcher";
-import { UserProfile } from "@/components/shared/UserProfile";
+import { Divider } from "@heroui/react";
+import { ThemeSwitcher } from "../../shared/ThemeSwitcher";
+import { UserProfile } from "../../shared/UserProfile";
 
-function AsideNav() {
-  const user = useSelector((state: RootState) => state.user);
+export function AsideNav() {
+  const user = useSelector((state: any) => state.user);
   const location = useLocation().pathname;
 
-  const NavItem = ({
-    to,
-    icon: Icon,
-    label,
-    end = false,
-  }: {
-    to: string;
-    icon: any;
-    label: string;
-    end?: boolean;
-  }) => (
-    <NavLink to={to} end={end}>
-      {({ isActive }) => (
-        <div
-          className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
-            isActive
-              ? "bg-primary text-primary-foreground shadow-md"
-              : "hover:bg-default-100 text-foreground"
-          }`}
-        >
-          <Icon size={22} />
-          <span className="font-medium">{label}</span>
-        </div>
-      )}
-    </NavLink>
-  );
-
   return (
-    <nav className="w-[420px] h-screen sticky top-0 bg-background border-r border-divider flex flex-col">
+    <nav className="w-[420px] h-screen sticky top-0 bg-background border-r border-divider flex flex-col overflow-y-auto">
       {/* Logo/Brand */}
       <div className="p-6">
         <div className="flex items-center gap-3">
@@ -64,7 +36,7 @@ function AsideNav() {
       <Divider />
 
       {/* Navigation Links */}
-      <div className="flex-1 overflow-y-auto px-4 py-6 space-y-2">
+      <div className="flex-1 px-4 py-6 space-y-2">
         <NavItem to="/" icon={TbHome} label="Home" end />
 
         {user.user && (
@@ -116,5 +88,3 @@ function AsideNav() {
     </nav>
   );
 }
-
-export { AsideNav };

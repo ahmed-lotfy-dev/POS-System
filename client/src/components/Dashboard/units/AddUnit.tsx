@@ -65,7 +65,7 @@ const AddUnit = () => {
   };
 
   return (
-    <>
+    <div className="mb-5">
       <Button onPress={handleOpen} color="primary" className="mt-10">
         Add Unit
       </Button>
@@ -99,7 +99,7 @@ const AddUnit = () => {
           )}
         </ModalContent>
       </CustomModal>
-    </>
+    </div>
   );
 };
 

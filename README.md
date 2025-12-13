@@ -2,7 +2,7 @@
 
 > A comprehensive Point of Sale (POS) solution built for modern retail businesses, featuring a powerful dashboard, inventory management, and a seamless checkout experience.
 
-![Project Banner](placeholder-for-banner-image.png)
+![Project Banner](docs/screenshots/screencapture-pos-system-app-ahmedlotfy-site-1.png)
 
 ## 📖 Project Overview
 
@@ -136,19 +136,19 @@ Once the server is running, visit:
 
 ### 1. Dashboard Overview
 Gain insights into your business performance with interactive charts and real-time statistics.
-![Dashboard Screenshot](path/to/dashboard-screenshot.png)
+![Dashboard Screenshot](docs/screenshots/screencapture-pos-system-app-ahmedlotfy-site-4.png)
 
 ### 2. Point of Sale (POS)
 A streamlined interface for cashiers to process orders quickly. Add items to cart, select variants, and complete transactions.
-![POS Screenshot](path/to/pos-screenshot.png)
+![POS Screenshot](docs/screenshots/screencapture-pos-system-app-ahmedlotfy-site-2.png)
 
 ### 3. Product Management
 Easily add, edit, and categorize products. Manage inventory stock and upload product images.
-![Product Management Screenshot](path/to/product-management-screenshot.png)
+![Product Management Screenshot](docs/screenshots/screencapture-pos-system-app-ahmedlotfy-site-5.png)
 
 ### 4. Order History
 View and track past orders. Filter by status, date, or customer.
-![Order History Screenshot](path/to/order-history-screenshot.png)
+![Order History Screenshot](docs/screenshots/screencapture-pos-system-app-ahmedlotfy-site-6.png)
 
 ## 🧱 Architecture & Design Decisions
 

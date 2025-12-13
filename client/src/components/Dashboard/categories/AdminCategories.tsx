@@ -53,7 +53,7 @@ function AdminCategories() {
   };
 
   return (
-    <div className="w-full h-full overflow-auto p-6">
+    <div className="w-full h-full p-6">
       <AddCategory />
       <TableComponent<Category>
         tableData={categories}

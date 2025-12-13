@@ -113,9 +113,9 @@ const TableComponent = <T extends Record<string, any>>({
     })),
     ...(user?.role === "ADMIN"
       ? [
-          { key: "update", label: "Update" },
-          { key: "remove", label: "Remove" },
-        ]
+        { key: "update", label: "Update" },
+        { key: "remove", label: "Remove" },
+      ]
       : []),
   ];
 
@@ -171,7 +171,7 @@ const TableComponent = <T extends Record<string, any>>({
   );
 
   return (
-    <div className="w-full h-full overflow-auto">
+    <div className="w-full h-full">
       {data.length > 0 ? (
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md border border-gray-200 dark:border-gray-700 p-4">
           <Table
