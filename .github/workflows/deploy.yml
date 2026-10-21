@@ -15,6 +15,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # prisma.config.ts requires DATABASE_URL to be present during `prisma generate`
+      # (it never connects to it in a build). Runtime uses compose env_file instead.
+      - name: Prisma build env
+        run: printf 'DATABASE_URL="postgresql://prisma:prisma@localhost:5432/build"\n' > ./server/.env
+
       - uses: docker/login-action@v3
         with:
           registry: ghcr.io
