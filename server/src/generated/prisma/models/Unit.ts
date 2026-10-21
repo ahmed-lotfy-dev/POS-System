@@ -151,7 +151,7 @@ export type UnitGroupByOutputType = {
   _max: UnitMaxAggregateOutputType | null
 }
 
-type GetUnitGroupByPayload<T extends UnitGroupByArgs> = Prisma.PrismaPromise<
+export type GetUnitGroupByPayload<T extends UnitGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<UnitGroupByOutputType, T['by']> &
       {
@@ -1058,6 +1058,11 @@ export type UnitFindManyArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
    * Skip the first `n` Units.
    */
   skip?: number
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+   * 
+   * Filter by unique combinations of Units.
+   */
   distinct?: Prisma.UnitScalarFieldEnum | Prisma.UnitScalarFieldEnum[]
 }
 
