@@ -6,7 +6,7 @@ WORKDIR /app
 COPY package*.json ./
 COPY prisma ./prisma/
 
-# Install dependencies
+# Install dependencies (unchanged so the finished ~70min install layer stays cached)
 RUN npm install
 
 COPY . .
@@ -16,6 +16,9 @@ RUN npx prisma generate
 
 # Build the app
 RUN npm run build
+
+# Drop devDependencies — keeps the prod image ~50% smaller and the final copy fast
+RUN npm prune --omit=dev --no-audit --no-fund
 
 # Production image
 FROM node:22-alpine
