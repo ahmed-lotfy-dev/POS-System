@@ -33,8 +33,15 @@ async function bootstrap() {
 
   app.enableCors({
     credentials: true,
-    origin: ['https://pos-system-app.ahmedlotfy.site', 'http://localhost:3000'],
     allowedHeaders: '*',
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+      const allowed =
+        origin === 'http://localhost:3000' ||
+        origin === 'https://pos-system-app.ahmedlotfy.site' ||
+        /^https:\/\/[a-z0-9-]+\.alotfy\.site$/.test(origin);
+      callback(null, allowed);
+    },
   });
 
   await app.listen(process.env.PORT || 8000);
