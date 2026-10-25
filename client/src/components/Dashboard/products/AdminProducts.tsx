@@ -13,7 +13,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 
 const AdminProducts = () => {
-  const { products } = useRouteLoaderData("root") as AllDataResponse;
+  const { products } = (useRouteLoaderData("data-root") as AllDataResponse) ?? { products: [] };
   console.log(products);
   const [imageLink, setImageLink] = useState<string>("");
   const user = useSelector((state: RootState) => state.user.user);

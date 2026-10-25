@@ -46,8 +46,8 @@ const AddProduct = () => {
     unitId: "",
   });
   const revalidator = useRevalidator();
-  const { categories } = useRouteLoaderData("root") as AllDataResponse;
-  const { units } = useRouteLoaderData("root") as AllDataResponse;
+  const { categories } = (useRouteLoaderData("data-root") as AllDataResponse) ?? { categories: [] };
+  const { units } = (useRouteLoaderData("data-root") as AllDataResponse) ?? { units: [] };
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const user = useSelector((state: RootState) => state.user.user);
 

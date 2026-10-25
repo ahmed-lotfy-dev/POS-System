@@ -31,6 +31,17 @@ export class UploadService {
     }
   }
 
+  // Streams an object from R2 for the public /upload/:key route below.
+  async getImage(s3: S3Client, key: string) {
+    if (!key) throw new Error('No Image Provided');
+    return s3.send(
+      new GetObjectCommand({
+        Bucket: this.config.get('CF_BUCKET_NAME'),
+        Key: key,
+      }),
+    );
+  }
+
   async deleteImage(s3: S3Client, dto: { image: string }) {
     const image = dto.image;
     if (!image) throw new Error('No Image Provided');

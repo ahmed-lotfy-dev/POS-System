@@ -11,7 +11,7 @@ import { AllDataResponse } from "@/types/globals";
 import { setProducts } from "@/store/features/products/productSlice";
 
 const Home = () => {
-  const { products } = useRouteLoaderData("root") as AllDataResponse;
+  const { products } = (useRouteLoaderData("home-data") as AllDataResponse) ?? { products: [] };
   const dispatch = useDispatch();
   console.log(products);
 

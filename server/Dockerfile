@@ -6,8 +6,10 @@ WORKDIR /app
 COPY package*.json ./
 COPY prisma ./prisma/
 
-# Install dependencies (unchanged so the finished ~70min install layer stays cached)
-RUN npm install
+# Install dependencies (untouched since the final product ~70min install layer stays cached)
+# cache-mount keeps the npm tarball cache on disk across cold rebuilds so a lost layer
+# still re-installs from cache instead of re-downloading; npm ci is deterministic (lockfile).
+RUN --mount=type=cache,target=/root/.npm npm ci --no-audit --no-fund
 
 COPY . .
 

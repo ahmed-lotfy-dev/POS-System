@@ -16,7 +16,7 @@ import { TbShoppingCart, TbPackage } from "react-icons/tb";
 import { useState, useMemo } from "react";
 
 function Products() {
-  const { products } = useRouteLoaderData("root") as AllDataResponse;
+  const { products } = (useRouteLoaderData("home-data") as AllDataResponse) ?? { products: [] };
 
   const dispatch = useDispatch();
   const cartItems = useSelector((state: RootState) => state.cart.items) || [];

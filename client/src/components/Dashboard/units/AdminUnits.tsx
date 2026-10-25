@@ -10,7 +10,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 
 const AdminUnits = () => {
-  const { units } = useRouteLoaderData("root") as AllDataResponse;
+  const { units } = (useRouteLoaderData("data-root") as AllDataResponse) ?? { units: [] };
   console.log(units);
   const revalidator = useRevalidator();
   const user = useSelector((state: RootState) => state.user.user);

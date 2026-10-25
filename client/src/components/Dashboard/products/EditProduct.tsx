@@ -30,8 +30,8 @@ function EditProduct({ onClose = () => {} }: Props) {
   const dispatch = useDispatch();
   const revalidator = useRevalidator();
 
-  const { categories } = useRouteLoaderData("root") as AllDataResponse;
-  const { units } = useRouteLoaderData("root") as AllDataResponse;
+  const { categories } = (useRouteLoaderData("data-root") as AllDataResponse) ?? { categories: [] };
+  const { units } = (useRouteLoaderData("data-root") as AllDataResponse) ?? { units: [] };
 
   const onSaveHandler = async () => {
     console.log(editItem);

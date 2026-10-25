@@ -21,6 +21,7 @@ import { ErrorBoundary } from "@/components/ErrorBoundary/ErrorBoundary";
 import {
   createRoutesFromElements,
   createBrowserRouter,
+  redirect,
   Route,
   RouterProvider,
   Outlet,
@@ -47,7 +48,9 @@ const normalizeData = <T,>(res: any): T[] => {
 };
 
 const allData = async (): Promise<AllDataResponse> => {
-  const [category, product, unit, order] = await Promise.all([
+  // allSettled: one failing endpoint returns an empty list instead of
+  // rejecting the whole navigation
+  const settled = await Promise.allSettled([
     axios.get<ApiResponse<Category[]>>(
       `${import.meta.env.VITE_BACKEND_URL}/category/getAll`
     ),
@@ -63,41 +66,94 @@ const allData = async (): Promise<AllDataResponse> => {
   ]);
 
   return {
-    categories: normalizeData(category.data),
-    products: normalizeData(product.data),
-    units: normalizeData(unit.data),
-    orders: normalizeData(order.data),
+    categories:
+      settled[0].status === "fulfilled" ? normalizeData(settled[0].value.data) : [],
+    products:
+      settled[1].status === "fulfilled" ? normalizeData(settled[1].value.data) : [],
+    units:
+      settled[2].status === "fulfilled" ? normalizeData(settled[2].value.data) : [],
+    orders:
+      settled[3].status === "fulfilled" ? normalizeData(settled[3].value.data) : [],
   };
 };
-// const orderData = async ({ }) => {
-//   console.log("order OrderItems");
-// };
+
+const EMPTY_DATA: AllDataResponse = {
+  categories: [],
+  products: [],
+  units: [],
+  orders: [],
+};
+
+// Dashboard route data: catalog + stats all fetched CONCURRENTLY in one wave.
+export type DashboardLoaderData = AllDataResponse & {
+  dashboardStats?: unknown;
+};
+
+const dashboardData = async (): Promise<DashboardLoaderData> => {
+  const [data, stats] = await Promise.allSettled([
+    allData(),
+    axios.get("/dashboard/stats?period=all"),
+  ]);
+
+  return {
+    ...(data.status === "fulfilled" ? data.value : EMPTY_DATA),
+    dashboardStats:
+      stats.status === "fulfilled"
+        ? stats.value.data.data || stats.value.data
+        : undefined,
+  };
+};
+
+// Loader-level auth gate: runs BEFORE child loaders, so an unauthenticated
+// visit to a protected route redirects to /signin WITHOUT firing data calls.
+const authGuard = () => {
+  const token = localStorage.getItem("user");
+  let valid: any = token;
+  if (typeof token === "string") {
+    try {
+      valid = JSON.parse(token);
+    } catch {
+      valid = null;
+    }
+  }
+  if (!token || !valid) {
+    return redirect("/signin");
+  }
+  return null;
+};
+
+// Shown while the auth/dashboard loaders run on the very first mount —
+// replaces the previous blank-screen-pause + the react-router
+// "No HydrateFallback element provided" console warning.
+const BootFallback = () => (
+  <div className="flex min-h-screen w-full items-center justify-center">
+    <div className="h-10 w-10 animate-spin rounded-full border-4 border-gray-200 border-t-gray-600" />
+  </div>
+);
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route
       id="root"
-      loader={allData}
+      hydrateFallbackElement={<BootFallback />}
       element={<Outlet />}
       errorElement={<ErrorBoundary />}
     >
+      {/* Public routes — fetch NOTHING */}
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignUp />} />
 
-      <Route element={<ProtectedRoute />}>
-        <Route path="/" element={<Root />}>
+      <Route loader={authGuard} element={<ProtectedRoute />}>
+        {/* "/" branch serves its own catalog wave (Home/Products/Categories read
+            it via useRouteLoaderData("home-data"); the parent authGuard has
+            already run, so these fetches only happen for authenticated users) */}
+        <Route path="/" id="home-data" loader={allData} element={<Root />}>
           <Route index element={<Home />} />
           <Route path="*" element={<NoMatch />} />
         </Route>
-        <Route path="/dashboard" element={<DashboardLayout />}>
-          <Route
-            index
-            element={<Dashboard />}
-            loader={async () => {
-              const { data } = await axios.get("/dashboard/stats?period=all");
-              return { dashboardStats: data.data || data };
-            }}
-          />
+        {/* One loader = one concurrent wave: catalog + stats in parallel */}
+        <Route path="/dashboard" id="data-root" loader={dashboardData} element={<DashboardLayout />}>
+          <Route index element={<Dashboard />} />
           <Route path="/dashboard/categories" element={<AdminCategories />} />
           <Route path="/dashboard/products" element={<AdminProducts />} />
           <Route path="/dashboard/units" element={<AdminUnits />} />
@@ -132,7 +188,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
           <RouterProvider router={router} />
         </Provider>
       </ThemeProvider>
+      <ToastProvider />
     </HeroUIProvider>
-    <ToastProvider />
   </React.StrictMode>
 );

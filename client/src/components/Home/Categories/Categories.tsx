@@ -10,9 +10,7 @@ import { TbCategory } from "react-icons/tb";
 type Props = {};
 
 function Categories({}: Props) {
-  const { categories, products } = useRouteLoaderData(
-    "root"
-  ) as AllDataResponse;
+  const { categories, products } = (useRouteLoaderData("home-data") as AllDataResponse) ?? { categories: [], products: [] };
   const dispatch = useDispatch();
   const activeCategory = useSelector(
     (state: RootState) => state.category.categoryId

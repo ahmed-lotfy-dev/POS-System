@@ -12,7 +12,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../store/store";
 
 function AdminCategories() {
-  const { categories } = useRouteLoaderData("root") as AllDataResponse;
+  const { categories } = (useRouteLoaderData("data-root") as AllDataResponse) ?? { categories: [] };
   const [imageLink, setImageLink] = useState<string>("");
   const user = useSelector((state: RootState) => state.user.user);
 

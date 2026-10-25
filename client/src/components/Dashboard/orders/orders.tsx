@@ -24,7 +24,7 @@ import {
 type Props = {};
 
 const Orders = ({}: Props) => {
-  const { orders } = useRouteLoaderData("root") as AllDataResponse;
+  const { orders } = (useRouteLoaderData("data-root") as AllDataResponse) ?? { orders: [] };
 
   const [date, setDate] = useState<Date>();
 

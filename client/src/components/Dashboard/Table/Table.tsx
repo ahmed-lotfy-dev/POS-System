@@ -85,8 +85,8 @@ const TableComponent = <T extends Record<string, any>>({
 
   const location = useLocation().pathname.split("/dashboard/")[1];
 
-  const { categories } = useRouteLoaderData("root") as AllDataResponse;
-  const { units } = useRouteLoaderData("root") as AllDataResponse;
+  const { categories } = (useRouteLoaderData("data-root") as AllDataResponse) ?? { categories: [] };
+  const { units } = (useRouteLoaderData("data-root") as AllDataResponse) ?? { units: [] };
 
   const onEditHandler = (data: T) => {
     dispatch(setItem({ ...data }));

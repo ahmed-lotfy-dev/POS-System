@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "@/lib/axios";
-import { useLoaderData, useRevalidator } from "react-router-dom";
+import { useRouteLoaderData, useRevalidator } from "react-router-dom";
 import {
   BarChart,
   Bar,
@@ -26,9 +26,23 @@ type DashboardStats = {
 type Period = "today" | "week" | "month" | "year" | "all";
 
 const Dashboard = () => {
-  const loaderData = useLoaderData() as { dashboardStats: DashboardStats };
+  // data-root loader ALWAYS returns an object, but be defensive anyway —
+  // a destructure of undefined here blue-screens the whole dashboard.
+  const loaderData = (useRouteLoaderData("data-root") ?? {}) as {
+    dashboardStats?: DashboardStats;
+  };
   const revalidator = useRevalidator();
-  const [stats, setStats] = useState<DashboardStats>(loaderData.dashboardStats);
+  const EMPTY_STATS: DashboardStats = {
+    totalProducts: 0,
+    totalCategories: 0,
+    totalOrders: 0,
+    totalUnits: 0,
+    totalRevenue: 0,
+    chartData: [],
+  };
+  const [stats, setStats] = useState<DashboardStats>(
+    loaderData.dashboardStats ?? EMPTY_STATS
+  );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [period, setPeriod] = useState<Period>("all");
